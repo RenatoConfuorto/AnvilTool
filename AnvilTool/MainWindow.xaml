@@ -1,0 +1,88 @@
+﻿<Window x:Class="AnvilTool.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Const="clr-namespace:AnvilTool.Constants"
+        Title="Anvil Helper" Height="520" Width="720">
+    <Grid Margin="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Barra di progresso con target -->
+        <StackPanel Grid.Row="0">
+            <TextBlock Text="Progress" FontWeight="Bold"/>
+            <Grid Height="40" Margin="0,6">
+                <ProgressBar Minimum="0" Maximum="150"
+                             Value="{Binding CurrentPos}" Height="12" VerticalAlignment="Center"/>
+            </Grid>
+            <TextBlock Text="{Binding StatusLine}" Margin="0,6,0,0"/>
+            <TextBlock Text="Intervallo possibile:" FontWeight="Bold"/>
+            <TextBlock Text="{Binding IntervalDisplay}" />
+        </StackPanel>
+
+        <!-- Pulsanti di controllo -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,8">
+            <Button Content="Record Final Sequence" Command="{Binding StartRecordFinalCmd}" Margin="0,0,6,0"/>
+            <Button Content="Start Exploration" Command="{Binding ToggleExploreCmd}" Margin="0,0,6,0"/>
+            <Button Content="Mark Direction Change" Command="{Binding MarkDirectionChangeCmd}" Margin="0,0,6,0"/>
+            <Button Content="Found Exact" Command="{Binding FoundExactCmd}" />
+        </StackPanel>
+
+        <!-- Mosse e sequenze -->
+        <Grid Grid.Row="2" Margin="0,8,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Pulsanti mosse -->
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Available Moves" FontWeight="Bold"/>
+                <ItemsControl ItemsSource="{x:Static Const:Consts.Moves}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel FlowDirection="LeftToRight"
+                                       MaxWidth="320"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Content="{Binding Label}"
+                                    Command="{Binding DataContext.PressMoveCmd, RelativeSource={RelativeSource AncestorType=Window}}"
+                                    CommandParameter="{Binding .}"
+                                    MinWidth="75"
+                                    Margin="2"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+
+            <!-- Sequenze -->
+            <StackPanel Grid.Column="1">
+                <TextBlock Text="Final Sequence (3 mosse obbligatorie)" FontWeight="Bold"/>
+                <ItemsControl ItemsSource="{Binding FinalSequence}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" Margin="4"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <Button Content="Compute Shortest Sequence" 
+                        Command="{Binding ComputeShortestCmd}" 
+                        Margin="0,6,0,0"/>
+
+                <TextBlock Text="Sequenza calcolata:" FontWeight="Bold" Margin="0,8,0,0"/>
+                <ItemsControl ItemsSource="{Binding ComputedSequence}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" Margin="2"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
