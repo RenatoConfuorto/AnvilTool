@@ -1,7 +1,7 @@
 ﻿<Window x:Class="AnvilTool.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:Const="clr-namespace:AnvilTool.Constants"
+        xmlns:Const="clr-namespace:AnvilTool.Constants" xmlns:usercontrols="clr-namespace:AnvilTool.UserControls"
         Title="Anvil Helper" Height="520" Width="720">
     <Grid Margin="8">
         <Grid.RowDefinitions>
@@ -24,7 +24,7 @@
 
         <!-- Pulsanti di controllo -->
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,8">
-            <Button Content="Record Final Sequence" Command="{Binding StartRecordFinalCmd}" Margin="0,0,6,0"/>
+            <!--<Button Content="Record Final Sequence" Command="{Binding StartRecordFinalCmd}" Margin="0,0,6,0"/>-->
             <Button Content="Start Exploration" Command="{Binding ToggleExploreCmd}" Margin="0,0,6,0"/>
             <Button Content="Mark Direction Change" Command="{Binding MarkDirectionChangeCmd}" Margin="0,0,6,0"/>
             <Button Content="Found Exact" Command="{Binding FoundExactCmd}" />
@@ -49,11 +49,13 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Button Content="{Binding Label}"
+                            <!--<Button Content="{Binding Label}"
                                     Command="{Binding DataContext.PressMoveCmd, RelativeSource={RelativeSource AncestorType=Window}}"
                                     CommandParameter="{Binding .}"
                                     MinWidth="75"
-                                    Margin="2"/>
+                                    Margin="2"/>-->
+                            <usercontrols:MoveButton Move="{Binding .}"
+                                                     MoveClickCommand="{Binding DataContext.PressMoveCmd, RelativeSource={RelativeSource AncestorType=Window}}"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
@@ -63,9 +65,14 @@
             <StackPanel Grid.Column="1">
                 <TextBlock Text="Final Sequence (3 mosse obbligatorie)" FontWeight="Bold"/>
                 <ItemsControl ItemsSource="{Binding FinalSequence}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding}" Margin="4"/>
+                            <usercontrols:MoveButton Move="{Binding .}"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
@@ -76,9 +83,14 @@
 
                 <TextBlock Text="Sequenza calcolata:" FontWeight="Bold" Margin="0,8,0,0"/>
                 <ItemsControl ItemsSource="{Binding ComputedSequence}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel FlowDirection="LeftToRight"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding}" Margin="2"/>
+                            <usercontrols:MoveButton Move="{Binding .}"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

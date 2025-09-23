@@ -9,7 +9,9 @@ namespace AnvilTool.Entities
     public class Move
     { 
         public string Label { get; set; } 
-        public int Delta { get; set; } 
+        public int Delta { get; set; }
+
+        public override string ToString() => $"{Label} {Delta}";
     }
 
 }

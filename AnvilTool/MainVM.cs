@@ -15,9 +15,8 @@ using System.Windows.Input;
 
 public class MainVM : NotifyPropertyChangedBase
 {
-    //public ObservableCollection<MoveButton> Moves { get; } = new ObservableCollection<MoveButton>();
     public ObservableCollection<Move> FinalSequence { get; } = new ObservableCollection<Move>(); // stored in input order, left is last
-    public ObservableCollection<string> ComputedSequence { get; } = new ObservableCollection<string>();
+    public ObservableCollection<Move> ComputedSequence { get; set; } = new ObservableCollection<Move>();
 
 
     #region Current Pos
@@ -27,6 +26,7 @@ public class MainVM : NotifyPropertyChangedBase
         get => _currentPos;
         set
         {
+            // Clamp value between min and max
             SetProperty(ref _currentPos, Math.Max(Consts.MIN_POS, Math.Min(Consts.MAX_POS, value)));
             RaisePropertyChanged(nameof(StatusLine));
         }
@@ -44,10 +44,11 @@ public class MainVM : NotifyPropertyChangedBase
 
     public bool IsRecordingFinal { get; private set; } = false;
     public bool IsTargetKnown => _minPossible == _maxPossible;
+    private bool explorationActive = false;
 
     #region Commands Definitions
     public ICommand PressMoveCmd { get; }
-    public ICommand StartRecordFinalCmd { get; }
+    //public ICommand StartRecordFinalCmd { get; }
     public ICommand ToggleExploreCmd { get; }
     public ICommand MarkDirectionChangeCmd { get; }
     public ICommand FoundExactCmd { get; }
@@ -56,63 +57,64 @@ public class MainVM : NotifyPropertyChangedBase
 
     public MainVM()
     {
-        PressMoveCmd = new RelayCommand<Move>(PressMove);
-        StartRecordFinalCmd = new RelayCommand<object>(_ => StartRecordFinal());
-        ToggleExploreCmd = new RelayCommand<object>(_ => ToggleExplore());
-        MarkDirectionChangeCmd = new RelayCommand<object>(_ => MarkDirectionChange());
-        FoundExactCmd = new RelayCommand<object>(_ => FoundExact());
-        ComputeShortestCmd = new RelayCommand<object>(_ => ComputeShortest());
-    }
-
-    private bool explorationActive = false;
-    private void ToggleExplore()
-    {
-        explorationActive = !explorationActive;
-        if (explorationActive)
-        {
-            // reset for exploration session
-            CurrentPos = 0;
-            markers.Clear();
-            _minPossible = 0; _maxPossible = 150;
-            FinalSequence.Clear(); // or keep? In spec final seq recorded in phase 1
-        }
-        RaisePropertyChanged(nameof(IntervalDisplay));
-        RaisePropertyChanged(nameof(IsTargetKnown));
-    }
-
-    private void StartRecordFinal()
-    {
         IsRecordingFinal = true;
-        FinalSequence.Clear();
-        // user must press 3 moves; handle in PressMove: if IsRecordingFinal add to FinalSequence
+        PressMoveCmd = new RelayCommand<Move>(PressMove, CanPressMove);
+        //StartRecordFinalCmd = new RelayCommand<object>(_ => StartRecordFinal());
+        ToggleExploreCmd = new RelayCommand<object>(ToggleExplore, CanToggleExplore);
+        MarkDirectionChangeCmd = new RelayCommand<object>(MarkDirectionChange, CanMarkDirectionChanged);
+        FoundExactCmd = new RelayCommand<object>(FoundExact, CanFoundExact);
+        ComputeShortestCmd = new RelayCommand<object>(ComputeShortest, CanComputeShortest);
     }
 
+    #region Commands methods
+
+    #region Press Move
     public void PressMove(Move _m)
     {
         // if recording final sequence: record (we record deltas; left=last)
         if (IsRecordingFinal)
         {
+            if (FinalSequence.Count >= Consts.MAX_FINAL_SEQ_NUM)
+                FinalSequence.RemoveAt(0);
+
             FinalSequence.Add(_m);
-            if (FinalSequence.Count >= 3)
-            {
-                // stop recording when we have 3 (FinalSequence[0] is first clicked, which we'll treat as last in game)
-                IsRecordingFinal = false;
-            }
+            return;
         }
 
         // apply move normally
         lastMoveDelta = _m.Delta;
         CurrentPos += _m.Delta;
 
-        // clamp 0..150
-        if (CurrentPos < Consts.MIN_POS) CurrentPos = Consts.MIN_POS;
-        if (CurrentPos > Consts.MAX_POS) CurrentPos = Consts.MAX_POS;
-
         // notify
         RaisePropertyChanged(nameof(CurrentPos));
     }
 
-    public void MarkDirectionChange()
+    private bool CanPressMove(object param) => true;
+    #endregion
+
+    #region ToggleExplore
+    private void ToggleExplore(object param)
+    {
+        explorationActive = !explorationActive;
+        if (explorationActive)
+        {
+            // reset for exploration session
+            CurrentPos = Consts.MIN_POS;
+            markers.Clear();
+            _minPossible = Consts.MIN_POS; 
+            _maxPossible = Consts.MAX_POS;
+            IsRecordingFinal = false;
+            //FinalSequence.Clear();
+        }
+        RaisePropertyChanged(nameof(IntervalDisplay));
+        RaisePropertyChanged(nameof(IsTargetKnown));
+    }
+
+    private bool CanToggleExplore(object param) => true;
+    #endregion
+
+    #region MarkDirectionchanged
+    public void MarkDirectionChange(object param)
     {
         if (lastMoveDelta == 0)
         {
@@ -137,9 +139,14 @@ public class MainVM : NotifyPropertyChangedBase
         }
         RaisePropertyChanged(nameof(IntervalDisplay));
         RaisePropertyChanged(nameof(IsTargetKnown));
+        lastMoveDelta = 0;
     }
 
-    public void FoundExact()
+    private bool CanMarkDirectionChanged(object param) => true;
+    #endregion
+
+    #region FoundExact
+    public void FoundExact(object param)
     {
         // user signals the exact value is CurrentPos
         _minPossible = CurrentPos;
@@ -147,9 +154,34 @@ public class MainVM : NotifyPropertyChangedBase
         RaisePropertyChanged(nameof(IntervalDisplay));
         RaisePropertyChanged(nameof(IsTargetKnown));
     }
+    private bool CanFoundExact(object param) => true;
+    #endregion
+
+    #region ComputeShortest
+    private void ComputeShortest(object param)
+    {
+        if(_minPossible != _maxPossible)
+        {
+            MessageBox.Show("Il target non è stato identificato con precisione. Il minimo verrà utilizzato per il calcolo"
+                , "ATTENZIONE"
+                , MessageBoxButton.OK
+                , MessageBoxImage.Warning);
+
+            _minPossible += 1;
+        }
+        ComputedSequence = new ObservableCollection<Move>
+            (
+                ComputeShortes.Compute(CurrentPos, _minPossible - 1, FinalSequence.ToList())
+            );
+        RaisePropertyChanged(nameof(ComputedSequence));
+    }
+    private bool CanComputeShortest(object param) => true;
+    #endregion
+
+    #endregion
 
     // BFS to compute shortest sequence from 0 to target, with final suffix enforced
-    public void ComputeShortest()
+    public void ComputeShortestOld()
     {
         //if (_minPossible != _maxPossible)
         //{
@@ -206,15 +238,15 @@ public class MainVM : NotifyPropertyChangedBase
         //ComputeShortes.ComputeShortest(CurrentPos, _minPossible, lastMoveDelta);
     }
 
-    private bool EndsWithSuffix(List<int> last, int[] suffix)
-    {
-        if (last.Count < 3) return false;
-        for (int i = 0; i < 3; i++) if (last[last.Count - 3 + i] != suffix[i]) return false;
-        return true;
-    }
+    //private bool EndsWithSuffix(List<int> last, int[] suffix)
+    //{
+    //    if (last.Count < 3) return false;
+    //    for (int i = 0; i < 3; i++) if (last[last.Count - 3 + i] != suffix[i]) return false;
+    //    return true;
+    //}
 
-    private string EncodeState(int pos, List<int> last)
-    {
-        return pos + "|" + string.Join(",", last);
-    }
+    //private string EncodeState(int pos, List<int> last)
+    //{
+    //    return pos + "|" + string.Join(",", last);
+    //}
 }

@@ -16,6 +16,7 @@ namespace AnvilTool.Constants
         public const int MAX_POS = 150;
 
         public const int MAX_ITER = 100;
+        public const int MAX_FINAL_SEQ_NUM = 3;
 
         public static readonly ObservableCollection<Move> Moves = new ObservableCollection<Move>()
         {

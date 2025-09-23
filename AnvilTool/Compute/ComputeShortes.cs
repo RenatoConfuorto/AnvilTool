@@ -13,7 +13,7 @@ namespace AnvilTool.Compute
 {
     public static class ComputeShortes
     {
-        public static List<Move> ComputeShortest(
+        public static List<Move> Compute(
             int startingPos
             , int targetPos
             , List<Move> lastMoves
@@ -31,9 +31,6 @@ namespace AnvilTool.Compute
 
             int iter = 1;
             bool solFound = false;
-
-
-
 
             ////////////////////////
             var deltas = Consts.Moves.Select(m => m.Delta).ToList();
@@ -57,7 +54,9 @@ namespace AnvilTool.Compute
                 // Se il valore corrente è il target, abbiamo trovato la soluzione
                 if (currentValue == target)
                 {
-                    return ConvertSequenceToMoves(currentPath);
+                    var list = ConvertSequenceToMoves(currentPath, lastMoves);
+                    if(VerifySequence(startingPos, targetPos, list))
+                        return list;
                 }
 
                 // Applica i delta e aggiungi i nuovi valori alla coda
@@ -80,9 +79,35 @@ namespace AnvilTool.Compute
             return null;
         }
 
-        private static List<Move> ConvertSequenceToMoves(List<int> seq)
+        private static List<Move> ConvertSequenceToMoves(List<int> seq, List<Move> finalSeq)
         {
-            return new List<Move>();
+            List<Move> computedSeq = new List<Move>();
+            for(int i = 1; i < seq.Count; i++)
+            {
+                int delta = seq[i] - seq[i - 1];
+                Move move = Consts.Moves.FirstOrDefault(m => m.Delta == delta);
+                if (move == null)
+                    throw new Exception($"Cannot find move for delta {delta}");
+                
+                computedSeq.Add(move);
+            }
+
+            if (finalSeq.Count == 0) return computedSeq;
+
+            for(int i = finalSeq.Count - 1; i >= 0; i--)
+            {
+                computedSeq.Add(finalSeq[i]);
+            }
+
+            return computedSeq;
+        }
+
+        private static bool VerifySequence(int startPos, int targetPos, List<Move> moves)
+        {
+            foreach (Move move in moves)
+                startPos += move.Delta;
+
+            return startPos == targetPos;
         }
     }
 }
