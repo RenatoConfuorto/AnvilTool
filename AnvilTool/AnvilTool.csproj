@@ -55,6 +55,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Compute\Base\ComputeShortesBase.cs" />
+    <Compile Include="Interfaces\IComputeShortest.cs" />
     <Compile Include="UserControls\MoveButton.xaml.cs">
       <DependentUpon>MoveButton.xaml</DependentUpon>
     </Compile>
@@ -67,7 +69,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Entities\Move.cs" />
-    <Compile Include="Compute\ComputeShortes.cs" />
+    <Compile Include="Compute\BfsComputeShortes.cs" />
     <Compile Include="Constants\Consts.cs" />
     <Compile Include="MainVM.cs" />
     <Compile Include="NotifyPropertyChanged\NotifyPropertyChangedBase.cs" />
@@ -107,8 +109,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

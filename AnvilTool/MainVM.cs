@@ -3,6 +3,7 @@ using AnvilTool.Commands;
 using AnvilTool.Compute;
 using AnvilTool.Constants;
 using AnvilTool.Entities;
+using AnvilTool.Interfaces;
 using AnvilTool.NotifyPropertyChanged;
 
 using System;
@@ -18,6 +19,7 @@ public class MainVM : NotifyPropertyChangedBase
     public ObservableCollection<Move> FinalSequence { get; } = new ObservableCollection<Move>(); // stored in input order, left is last
     public ObservableCollection<Move> ComputedSequence { get; set; } = new ObservableCollection<Move>();
 
+    IComputeShortest computeShortest;
 
     #region Current Pos
     private int _currentPos = 0;
@@ -58,6 +60,8 @@ public class MainVM : NotifyPropertyChangedBase
 
     public MainVM()
     {
+        computeShortest = new BfsComputeShortes();
+
         IsRecordingFinal = true;
         PressMoveCmd = new RelayCommand<Move>(PressMove, CanPressMove);
         //StartRecordFinalCmd = new RelayCommand<object>(_ => StartRecordFinal());
@@ -183,9 +187,12 @@ public class MainVM : NotifyPropertyChangedBase
         }
         ComputedSequence = new ObservableCollection<Move>
             (
-                ComputeShortes.Compute(CurrentPos, _minPossible - 1, FinalSequence.ToList())
+                computeShortest.Compute(CurrentPos, _minPossible - 1, FinalSequence.ToList())
             );
         RaisePropertyChanged(nameof(ComputedSequence));
+
+        // Apply the sequence to update current position
+        CurrentPos += ComputedSequence.Sum(s => s.Delta);
     }
     private bool CanComputeShortest(object param) => true;
     #endregion

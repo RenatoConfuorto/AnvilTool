@@ -1,4 +1,5 @@
 ﻿using AnvilTool.Commands;
+using AnvilTool.Compute.Base;
 using AnvilTool.Constants;
 using AnvilTool.Entities;
 
@@ -11,13 +12,9 @@ using System.Threading.Tasks;
 
 namespace AnvilTool.Compute
 {
-    public static class ComputeShortes
+    public class BfsComputeShortes : ComputeShortesBase
     {
-        public static List<Move> Compute(
-            int startingPos
-            , int targetPos
-            , List<Move> lastMoves
-            )
+        public override List<Move> Compute(int startingPos, int targetPos, List<Move> lastMoves)
         {
             if (lastMoves == null || lastMoves.Count == 0)
                 throw new ArgumentException("Last moves not setted");
@@ -74,37 +71,6 @@ namespace AnvilTool.Compute
 
             // Se la coda si svuota e non troviamo il target, non c'è soluzione
             return null;
-        }
-
-        private static List<Move> ConvertSequenceToMoves(List<int> seq, List<Move> finalSeq)
-        {
-            List<Move> computedSeq = new List<Move>();
-            for(int i = 1; i < seq.Count; i++)
-            {
-                int delta = seq[i] - seq[i - 1];
-                Move move = Consts.Moves.FirstOrDefault(m => m.Delta == delta);
-                if (move == null)
-                    throw new Exception($"Cannot find move for delta {delta}");
-                
-                computedSeq.Add(move);
-            }
-
-            if (finalSeq.Count == 0) return computedSeq;
-
-            for(int i = finalSeq.Count - 1; i >= 0; i--)
-            {
-                computedSeq.Add(finalSeq[i]);
-            }
-
-            return computedSeq;
-        }
-
-        private static bool VerifySequence(int startPos, int targetPos, List<Move> moves)
-        {
-            foreach (Move move in moves)
-                startPos += move.Delta;
-
-            return startPos == targetPos;
         }
     }
 }
