@@ -39,7 +39,8 @@ public class MainVM : NotifyPropertyChangedBase
     public string StatusLine => $"Pos: {CurrentPos}";
 
     // markers: list of (position, lastMoveSign)
-    private List<(int pos, int sign)> markers = new List<(int pos, int sign)>();
+    //private List<(int pos, int sign)> markers = new List<(int pos, int sign)>();
+    private Dictionary<int, int> markers = new Dictionary<int, int>() { { -1, Consts.MIN_POS} , { 1, Consts.MAX_POS} };
     private int lastMoveDelta = 0;
 
     public bool IsRecordingFinal { get; private set; } = false;
@@ -100,7 +101,7 @@ public class MainVM : NotifyPropertyChangedBase
         {
             // reset for exploration session
             CurrentPos = Consts.MIN_POS;
-            markers.Clear();
+            //markers.Clear();
             _minPossible = Consts.MIN_POS; 
             _maxPossible = Consts.MAX_POS;
             IsRecordingFinal = false;
@@ -122,21 +123,29 @@ public class MainVM : NotifyPropertyChangedBase
             return;
         }
         int sign = Math.Sign(lastMoveDelta);
-        markers.Add((CurrentPos, sign));
+        //markers.Add((CurrentPos, sign));
 
-        // if there is an earlier marker with opposite sign, tighten interval
-        for (int i = 0; i < markers.Count - 1; i++)
-        {
-            var a = markers[i];
-            var b = markers[markers.Count - 1];
-            if (a.sign != b.sign)
-            {
-                int low = Math.Min(a.pos, b.pos);
-                int high = Math.Max(a.pos, b.pos);
-                _minPossible = Math.Max(_minPossible, low);
-                _maxPossible = Math.Min(_maxPossible, high);
-            }
-        }
+        // Save Marker
+        if (sign == 1)
+            markers[sign] = Math.Min(markers[sign], CurrentPos);
+        else
+            markers[sign] = Math.Max(markers[sign], CurrentPos);
+
+        _minPossible = markers[-1];
+        _maxPossible = markers[1];
+            //// if there is an earlier marker with opposite sign, tighten interval
+            //for (int i = 0; i < markers.Count - 1; i++)
+            //{
+            //    var a = markers[i];
+            //    var b = markers[markers.Count - 1];
+            //    if (a.sign != b.sign)
+            //    {
+            //        int low = Math.Min(a.pos, b.pos);
+            //        int high = Math.Max(a.pos, b.pos);
+            //        _minPossible = Math.Max(_minPossible, low);
+            //        _maxPossible = Math.Min(_maxPossible, high);
+            //    }
+            //}
         RaisePropertyChanged(nameof(IntervalDisplay));
         RaisePropertyChanged(nameof(IsTargetKnown));
         lastMoveDelta = 0;
@@ -167,7 +176,10 @@ public class MainVM : NotifyPropertyChangedBase
                 , MessageBoxButton.OK
                 , MessageBoxImage.Warning);
 
-            _minPossible += 1;
+            _minPossible++;
+            markers[-1]++;
+            RaisePropertyChanged(nameof(IntervalDisplay));
+            RaisePropertyChanged(nameof(IsTargetKnown));
         }
         ComputedSequence = new ObservableCollection<Move>
             (

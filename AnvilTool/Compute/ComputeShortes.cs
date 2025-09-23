@@ -27,10 +27,7 @@ namespace AnvilTool.Compute
             // Calculate the total offset of the last moves
             int lastOffset = lastMoves.Sum(m => m.Delta);
             // Final position before doing last movements
-            int posBeforeLast = startingPos - lastOffset;
-
-            int iter = 1;
-            bool solFound = false;
+            int posBeforeLast = startingPos - lastOffset; // TODO check that we don't go below 0
 
             ////////////////////////
             var deltas = Consts.Moves.Select(m => m.Delta).ToList();
