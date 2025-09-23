@@ -60,7 +60,8 @@ public class MainVM : NotifyPropertyChangedBase
 
     public MainVM()
     {
-        computeShortest = new BfsComputeShortes();
+        //computeShortest = new BfsComputeShortes();
+        computeShortest = new DirectStepCalcComputeShortest();
 
         IsRecordingFinal = true;
         PressMoveCmd = new RelayCommand<Move>(PressMove, CanPressMove);

@@ -56,6 +56,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Compute\Base\ComputeShortesBase.cs" />
+    <Compile Include="Compute\DirectStepCalcComputeShortest.cs" />
     <Compile Include="Interfaces\IComputeShortest.cs" />
     <Compile Include="UserControls\MoveButton.xaml.cs">
       <DependentUpon>MoveButton.xaml</DependentUpon>

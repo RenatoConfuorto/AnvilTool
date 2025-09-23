@@ -48,7 +48,7 @@ namespace AnvilTool.Compute
                 // Se il valore corrente è il target, abbiamo trovato la soluzione
                 if (currentValue == target)
                 {
-                    var list = ConvertSequenceToMoves(currentPath, lastMoves);
+                    var list = GetFinalSeq(currentPath, lastMoves);
                     if(VerifySequence(startingPos, targetPos, list))
                         return list;
                 }

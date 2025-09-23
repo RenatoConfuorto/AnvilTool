@@ -18,6 +18,10 @@ namespace AnvilTool.Constants
         public const int MAX_ITER = 100;
         public const int MAX_FINAL_SEQ_NUM = 3;
 
+        //DirectStepCalcComputeShortest
+        public const int MAX_SEQ_LENGHT = 15;       // Maximum allowed number of elements accepted in the sequece
+        public const int EXIT_SEQ_LEN = 5;          // If a sequence has less than this number, than is automatically accepted
+
         public static readonly ObservableCollection<Move> Moves = new ObservableCollection<Move>()
         {
             { new Move { Label = "Light Hit", Delta = -3 } },
