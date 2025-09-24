@@ -32,9 +32,17 @@ public class MainVM : NotifyPropertyChangedBase
             SetProperty(ref _currentPos, Math.Max(Consts.MIN_POS, Math.Min(Consts.MAX_POS, value)));
             RaisePropertyChanged(nameof(StatusLine));
         }
-    } 
+    }
     #endregion
 
+    #region ActualTarget
+    private int _actualTarget;
+    public int ActualTarget
+    {
+        get => _actualTarget;
+        set => SetProperty(ref _actualTarget, value);
+    }
+    #endregion
 
     private int _minPossible = Consts.MIN_POS, _maxPossible = Consts.MAX_POS;
     public string IntervalDisplay => $"[{_minPossible}, {_maxPossible}]";
@@ -154,6 +162,9 @@ public class MainVM : NotifyPropertyChangedBase
         _minPossible = markers[-1];
         _maxPossible = markers[1];
 
+        if(ActualTarget < _minPossible) ActualTarget = _minPossible;
+        if(ActualTarget > _maxPossible) ActualTarget = _maxPossible;
+
         RaisePropertyChanged(nameof(IntervalDisplay));
         RaisePropertyChanged(nameof(IsTargetKnown));
         lastMoveDelta = 0;
@@ -179,27 +190,37 @@ public class MainVM : NotifyPropertyChangedBase
     #region ComputeShortest
     private void ComputeShortest(object param)
     {
-        if(_minPossible != _maxPossible)
-        {
-            MessageBox.Show("Il target non è stato identificato con precisione. Il minimo verrà utilizzato per il calcolo"
-                , "ATTENZIONE"
-                , MessageBoxButton.OK
-                , MessageBoxImage.Warning);
+        //if(_minPossible != _maxPossible)
+        //{
+        //    MessageBox.Show("Il target non è stato identificato con precisione. Il minimo verrà utilizzato per il calcolo"
+        //        , "ATTENZIONE"
+        //        , MessageBoxButton.OK
+        //        , MessageBoxImage.Warning);
 
-            _minPossible++;
-            markers[-1]++;
-            RaisePropertyChanged(nameof(IntervalDisplay));
-            RaisePropertyChanged(nameof(IsTargetKnown));
-            ComputedSequence = new ObservableCollection<Move>
-            (
-                computeShortest.Compute(CurrentPos, _minPossible - 1, FinalSequence.ToList())
-            );
+        //    _minPossible++;
+        //    markers[-1]++;
+        //    RaisePropertyChanged(nameof(IntervalDisplay));
+        //    RaisePropertyChanged(nameof(IsTargetKnown));
+        //    ComputedSequence = new ObservableCollection<Move>
+        //    (
+        //        computeShortest.Compute(CurrentPos, _minPossible - 1, FinalSequence.ToList())
+        //    );
+        //}
+        //else
+        //    ComputedSequence = new ObservableCollection<Move>
+        //        (
+        //            computeShortest.Compute(CurrentPos, _minPossible, FinalSequence.ToList())
+        //        );
+
+        var seq = computeShortest.Compute(CurrentPos, ActualTarget, FinalSequence.ToList());
+
+        if(seq == null)
+        {
+            MessageBox.Show("Impossibile calcolare la sequenza", "ERRORE", MessageBoxButton.OK, MessageBoxImage.Error);
+            return;
         }
-        else
-            ComputedSequence = new ObservableCollection<Move>
-                (
-                    computeShortest.Compute(CurrentPos, _minPossible, FinalSequence.ToList())
-                );
+
+        ComputedSequence = new ObservableCollection<Move>(seq);
         RaisePropertyChanged(nameof(ComputedSequence));
 
         // Apply the sequence to update current position

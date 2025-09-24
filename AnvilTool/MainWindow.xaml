@@ -5,7 +5,7 @@
         Title="Anvil Helper" Height="520" Width="720">
     <Grid Margin="8">
         <Grid.RowDefinitions>
-            <RowDefinition Height="150"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -13,13 +13,27 @@
         <!-- Barra di progresso con target -->
         <StackPanel Grid.Row="0">
             <TextBlock Text="Progress" FontWeight="Bold"/>
-            <Grid Height="40" Margin="0,6">
+            <Grid Height="Auto" Margin="0,6">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
                 <ProgressBar Minimum="0" Maximum="150"
+                             Grid.Row="0"
                              Value="{Binding CurrentPos}" Height="12" VerticalAlignment="Center"/>
+                
+                <StackPanel Grid.Row="1" Orientation="Horizontal">
+                    <StackPanel Margin="2 2">
+                        <TextBlock Text="{Binding StatusLine}" Margin="0,6,0,0"/>
+                        <TextBlock Text="Intervallo possibile:" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding IntervalDisplay}" />
+                    </StackPanel>
+                    <StackPanel Margin="10 2">
+                        <TextBlock Text="Target Attuale"/>
+                        <TextBox   Text="{Binding ActualTarget, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+                </StackPanel>
             </Grid>
-            <TextBlock Text="{Binding StatusLine}" Margin="0,6,0,0"/>
-            <TextBlock Text="Intervallo possibile:" FontWeight="Bold"/>
-            <TextBlock Text="{Binding IntervalDisplay}" />
         </StackPanel>
 
         <!-- Pulsanti di controllo -->
