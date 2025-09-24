@@ -39,9 +39,10 @@
         <!-- Pulsanti di controllo -->
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,8">
             <!--<Button Content="Record Final Sequence" Command="{Binding StartRecordFinalCmd}" Margin="0,0,6,0"/>-->
-            <Button Content="Start Exploration" Command="{Binding ToggleExploreCmd}" Margin="0,0,6,0"/>
-            <Button Content="Mark Direction Change" Command="{Binding MarkDirectionChangeCmd}" Margin="0,0,6,0"/>
-            <Button Content="Found Exact" Command="{Binding FoundExactCmd}" />
+            <Button MinWidth="75" Content="Start Exploration" Command="{Binding ToggleExploreCmd}" Margin="0,0,6,0"/>
+            <Button MinWidth="75" Content="Mark Direction Change" Command="{Binding MarkDirectionChangeCmd}" Margin="0,0,6,0"/>
+            <Button MinWidth="75" Content="Found Exact" Command="{Binding FoundExactCmd}" Margin="0,0,6,0"/>
+            <Button MinWidth="75" Content="Reset" Command="{Binding ResetCmd}" Margin="0,0,6,0"/>
         </StackPanel>
 
         <!-- Mosse e sequenze -->
@@ -77,7 +78,7 @@
 
             <!-- Sequenze -->
             <StackPanel Grid.Column="1">
-                <TextBlock Text="Final Sequence (3 mosse obbligatorie)" FontWeight="Bold"/>
+                <TextBlock Text="Final Sequence" FontWeight="Bold"/>
                 <ItemsControl ItemsSource="{Binding FinalSequence}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>

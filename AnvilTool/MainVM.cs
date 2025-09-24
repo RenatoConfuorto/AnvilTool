@@ -16,8 +16,8 @@ using System.Windows.Input;
 
 public class MainVM : NotifyPropertyChangedBase
 {
-    public ObservableCollection<Move> FinalSequence { get; } = new ObservableCollection<Move>(); // stored in input order, left is last
-    public ObservableCollection<Move> ComputedSequence { get; set; } = new ObservableCollection<Move>();
+    public ObservableCollection<Move> FinalSequence { get; private set; } = new ObservableCollection<Move>(); // stored in input order, left is last
+    public ObservableCollection<Move> ComputedSequence { get; private set; } = new ObservableCollection<Move>();
 
     IComputeShortest computeShortest;
 
@@ -50,7 +50,7 @@ public class MainVM : NotifyPropertyChangedBase
 
     // markers: list of (position, lastMoveSign)
     //private List<(int pos, int sign)> markers = new List<(int pos, int sign)>();
-    private Dictionary<int, int> markers = new Dictionary<int, int>() { { -1, Consts.MIN_POS} , { 1, Consts.MAX_POS} };
+    private Dictionary<int, int> markers;
     private int lastMoveDelta = 0;
 
     public bool IsRecordingFinal { get; private set; } = false;
@@ -64,6 +64,7 @@ public class MainVM : NotifyPropertyChangedBase
     public ICommand MarkDirectionChangeCmd { get; }
     public ICommand FoundExactCmd { get; }
     public ICommand ComputeShortestCmd { get; } 
+    public ICommand ResetCmd { get; } 
     #endregion
 
     public MainVM()
@@ -71,17 +72,43 @@ public class MainVM : NotifyPropertyChangedBase
         //computeShortest = new BfsComputeShortes();
         computeShortest = new DirectStepCalcComputeShortest();
 
-        IsRecordingFinal = true;
         PressMoveCmd = new RelayCommand(PressMove, CanPressMove);
         //StartRecordFinalCmd = new RelayCommand(_ => StartRecordFinal());
         ToggleExploreCmd = new RelayCommand(ToggleExplore, CanToggleExplore);
         MarkDirectionChangeCmd = new RelayCommand(MarkDirectionChange, CanMarkDirectionChanged);
         FoundExactCmd = new RelayCommand(FoundExact, CanFoundExact);
         ComputeShortestCmd = new RelayCommand(ComputeShortest, CanComputeShortest);
+        ResetCmd = new RelayCommand(Reset, CanReset);
 
+        SetInitialConditions();
+    }
+
+    private void SetInitialConditions()
+    {
+        IsRecordingFinal = true;
+        _minPossible = Consts.MIN_POS;
+        _maxPossible = Consts.MAX_POS;
+        CurrentPos = _minPossible;
+        ActualTarget = _minPossible;
+        lastMoveDelta = 0;
+
+        markers = new Dictionary<int, int>() { { -1, Consts.MIN_POS }, { 1, Consts.MAX_POS } };
+        FinalSequence = new ObservableCollection<Move>();
+        ComputedSequence = new ObservableCollection<Move>();
+        RaisePropertyChanged(nameof(FinalSequence));
+        RaisePropertyChanged(nameof(ComputedSequence));
+
+
+        UpdateApplicationData();
         RaiseCommandExecutionChanged();
     }
 
+    private void UpdateApplicationData()
+    {
+        RaisePropertyChanged(nameof(IntervalDisplay));
+        RaisePropertyChanged(nameof(IsTargetKnown));
+        RaisePropertyChanged(nameof(CurrentPos));
+    }
     #region Commands methods
 
     private void RaiseCommandExecutionChanged()
@@ -111,10 +138,8 @@ public class MainVM : NotifyPropertyChangedBase
             // apply move normally
             lastMoveDelta = _m.Delta;
             CurrentPos += _m.Delta;
-
-            // notify
-            RaisePropertyChanged(nameof(CurrentPos));
         }
+        UpdateApplicationData();
         RaiseCommandExecutionChanged();
     }
 
@@ -124,19 +149,15 @@ public class MainVM : NotifyPropertyChangedBase
     #region ToggleExplore
     private void ToggleExplore(object param)
     {
-        explorationActive = !explorationActive;
-        if (explorationActive)
-        {
-            // reset for exploration session
-            CurrentPos = Consts.MIN_POS;
-            //markers.Clear();
-            _minPossible = Consts.MIN_POS; 
-            _maxPossible = Consts.MAX_POS;
-            IsRecordingFinal = false;
-            //FinalSequence.Clear();
-        }
-        RaisePropertyChanged(nameof(IntervalDisplay));
-        RaisePropertyChanged(nameof(IsTargetKnown));
+        explorationActive = true;
+        // reset for exploration session
+        CurrentPos = Consts.MIN_POS;
+        //markers.Clear();
+        _minPossible = Consts.MIN_POS; 
+        _maxPossible = Consts.MAX_POS;
+        IsRecordingFinal = false;
+        //FinalSequence.Clear();
+        UpdateApplicationData();
         RaiseCommandExecutionChanged();
     }
 
@@ -165,8 +186,7 @@ public class MainVM : NotifyPropertyChangedBase
         if(ActualTarget < _minPossible) ActualTarget = _minPossible;
         if(ActualTarget > _maxPossible) ActualTarget = _maxPossible;
 
-        RaisePropertyChanged(nameof(IntervalDisplay));
-        RaisePropertyChanged(nameof(IsTargetKnown));
+        UpdateApplicationData();
         lastMoveDelta = 0;
         RaiseCommandExecutionChanged();
     }
@@ -180,8 +200,7 @@ public class MainVM : NotifyPropertyChangedBase
         // user signals the exact value is CurrentPos
         _minPossible = CurrentPos;
         _maxPossible = CurrentPos;
-        RaisePropertyChanged(nameof(IntervalDisplay));
-        RaisePropertyChanged(nameof(IsTargetKnown));
+        UpdateApplicationData();
         RaiseCommandExecutionChanged();
     }
     private bool CanFoundExact(object param) => !IsRecordingFinal;
@@ -228,6 +247,17 @@ public class MainVM : NotifyPropertyChangedBase
         RaiseCommandExecutionChanged();
     }
     private bool CanComputeShortest(object param) => !IsRecordingFinal;
+    #endregion
+
+    #region Reset
+    private void Reset(object param)
+    {
+        if(MessageBox.Show("Resettare tutti i dati?", "Reset", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+        {
+            SetInitialConditions();
+        }
+    }
+    private bool CanReset(object param) => true;
     #endregion
 
     #endregion
