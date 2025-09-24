@@ -100,8 +100,8 @@ namespace AnvilTool.Compute
             }
 
             // No solution found
-            if(finalSeq != null )
-                finalSeq = GetFinalSeq(finalSeq, lastMoves);
+            //if(finalSeq != null )
+            //    finalSeq = GetFinalSeq(finalSeq, lastMoves);
 
             return finalSeq;
         }
