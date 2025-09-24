@@ -57,9 +57,17 @@
     </ApplicationDefinition>
     <Compile Include="Compute\Base\ComputeShortesBase.cs" />
     <Compile Include="Compute\DirectStepCalcComputeShortest.cs" />
+    <Compile Include="Entities\Base\EntityBase.cs" />
+    <Compile Include="Entities\StoredData\Material.cs" />
+    <Compile Include="Entities\StoredData\Product.cs" />
+    <Compile Include="Entities\StoredData\Server.cs" />
     <Compile Include="Interfaces\IComputeShortest.cs" />
     <Compile Include="UserControls\MoveButton.xaml.cs">
       <DependentUpon>MoveButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\RecepiesPopupViewModel.cs" />
+    <Compile Include="Views\RecepiesPopup.xaml.cs">
+      <DependentUpon>RecepiesPopup.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -80,6 +88,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="UserControls\MoveButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RecepiesPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

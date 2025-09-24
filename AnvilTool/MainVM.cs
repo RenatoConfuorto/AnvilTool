@@ -5,6 +5,7 @@ using AnvilTool.Constants;
 using AnvilTool.Entities;
 using AnvilTool.Interfaces;
 using AnvilTool.NotifyPropertyChanged;
+using AnvilTool.Views;
 
 using System;
 using System.Collections.Generic;
@@ -65,6 +66,8 @@ public class MainVM : NotifyPropertyChangedBase
     public ICommand FoundExactCmd { get; }
     public ICommand ComputeShortestCmd { get; } 
     public ICommand ResetCmd { get; } 
+    public ICommand SaveCmd { get; } 
+    public ICommand OpenRecepiesCmd { get; } 
     #endregion
 
     public MainVM()
@@ -79,6 +82,8 @@ public class MainVM : NotifyPropertyChangedBase
         FoundExactCmd = new RelayCommand(FoundExact, CanFoundExact);
         ComputeShortestCmd = new RelayCommand(ComputeShortest, CanComputeShortest);
         ResetCmd = new RelayCommand(Reset, CanReset);
+        SaveCmd = new RelayCommand(Save, CanSave);
+        OpenRecepiesCmd = new RelayCommand(OpenRecepies, CanOpenRecepies);
 
         SetInitialConditions();
     }
@@ -191,7 +196,7 @@ public class MainVM : NotifyPropertyChangedBase
         RaiseCommandExecutionChanged();
     }
 
-    private bool CanMarkDirectionChanged(object param) => !IsRecordingFinal;
+    private bool CanMarkDirectionChanged(object param) => explorationActive;
     #endregion
 
     #region FoundExact
@@ -203,7 +208,7 @@ public class MainVM : NotifyPropertyChangedBase
         UpdateApplicationData();
         RaiseCommandExecutionChanged();
     }
-    private bool CanFoundExact(object param) => !IsRecordingFinal;
+    private bool CanFoundExact(object param) => explorationActive;
     #endregion
 
     #region ComputeShortest
@@ -246,7 +251,7 @@ public class MainVM : NotifyPropertyChangedBase
         CurrentPos += ComputedSequence.Sum(s => s.Delta);
         RaiseCommandExecutionChanged();
     }
-    private bool CanComputeShortest(object param) => !IsRecordingFinal;
+    private bool CanComputeShortest(object param) => explorationActive;
     #endregion
 
     #region Reset
@@ -258,6 +263,26 @@ public class MainVM : NotifyPropertyChangedBase
         }
     }
     private bool CanReset(object param) => true;
+    #endregion
+
+    #region Save
+    private void Save(object param)
+    {
+        if(MessageBox.Show("Salvare la configurazione attuale?", "Save", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+        {
+            //SetInitialConditions();
+        }
+    }
+    private bool CanSave(object param) => explorationActive;
+    #endregion
+
+    #region Save
+    private void OpenRecepies(object param)
+    {
+        RecepiesPopup p = new RecepiesPopup();
+        p.Open();
+    }
+    private bool CanOpenRecepies(object param) => true;
     #endregion
 
     #endregion

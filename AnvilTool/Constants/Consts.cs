@@ -26,7 +26,7 @@ namespace AnvilTool.Constants
         public static readonly ObservableCollection<Move> Moves = new ObservableCollection<Move>()
         {
             { new Move { Label = "Light Hit", Delta = -3 } },
-            { new Move { Label = "Madium Hit", Delta = -6 } },
+            { new Move { Label = "Medium Hit", Delta = -6 } },
             { new Move { Label = "Punch", Delta = +2 } },
             { new Move { Label = "Bend", Delta = +7 } },
             { new Move { Label = "Hard hit", Delta = -9 } },
