@@ -20,7 +20,8 @@ namespace AnvilTool.Constants
 
         //DirectStepCalcComputeShortest
         public const int MAX_SEQ_LENGHT = 15;       // Maximum allowed number of elements accepted in the sequece
-        public const int EXIT_SEQ_LEN = 5;          // If a sequence has less than this number, than is automatically accepted
+        public const int EXIT_SEQ_LEN = 6;          // If a sequence has less than this number, than is automatically accepted
+        public const int START_SEQ_TOL = 2;
 
         public static readonly ObservableCollection<Move> Moves = new ObservableCollection<Move>()
         {

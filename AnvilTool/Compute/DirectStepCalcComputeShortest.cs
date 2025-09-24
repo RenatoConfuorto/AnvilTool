@@ -36,31 +36,54 @@ namespace AnvilTool.Compute
                 int current, max, min;
                 current = max = min = start;
 
-                Console.WriteLine($"Iteration number {iter}. Starting Pos {current} - Target {target}");
-                List<Move> currentSeq = new List<Move>();
+                Log($"Iteration number {iter}. Starting Pos {current} - Target {target}");
+                List<Move> currentSeq = new List<Move>(startSeq);
 
-                foreach(var m in startSeq)
-                    currentSeq.Add(m);
+                // Apply deltas from starting seq
+                current += startSeq.Sum(m => m.Delta);
+                //foreach(var m in startSeq)
+                //    currentSeq.Add(m);7
 
-                while(currentSeq.Count <  Consts.MAX_SEQ_LENGHT)
+                //max = min = 0; // Reset max and min
+                while (currentSeq.Count <  Consts.MAX_SEQ_LENGHT)
                 {
                     // Calculate the distance from target
                     int diff = current - target;
                     if(diff == 0)
                     {
-                        Console.WriteLine("SOLUTION FOUND--------------------");
+                        Log("SOLUTION FOUND--------------------");
                         // TODO check if there can be a better solution
                         //if (currentSeq.Count - startSeq.Count < Consts.EXIT_SEQ_LEN)
                         //    return GetFinalSeq(currentSeq, lastMoves);
                         //else finalSeq = currentSeq;
 
-                        return GetFinalSeq(currentSeq, lastMoves);
+                        if (currentSeq.Count - startSeq.Count < Consts.EXIT_SEQ_LEN)
+                        {
+                            Log("Current solution is small enough. Exiting calculation");
+                            return GetFinalSeq(currentSeq, lastMoves);      // Return directly the sequence
+                        }
+                        else
+                        {
+                            // If there is no final sequence, or the last one is longer, save the found seq
+                            if(finalSeq == null || finalSeq.Count - lastMoves.Count > currentSeq.Count)
+                            {
+                                Log("Saving current calculated solution");
+                                finalSeq = GetFinalSeq(currentSeq, lastMoves);
+                            }
+
+                            // Update starting seq
+                            startSeq = GetStartingMoves(startSeq, max, min, target);
+                            break;// Next iter
+                        }
+
+
+                        //return GetFinalSeq(currentSeq, lastMoves);
                     }
                     var m = TakeMove(diff);
                     currentSeq.Add(m);
                     current += m.Delta;
                     SaveMaxMin(ref max, ref min, current);
-                    Console.WriteLine($"Diff {diff} - Selected move {m} - New Pos {current} - Seq Len {currentSeq.Count}");
+                    Log($"Diff {diff} - Selected move {m} - New Pos {current} - Seq Len {currentSeq.Count}");
                 }
                 iter++;
             }
@@ -80,6 +103,7 @@ namespace AnvilTool.Compute
 
         private List<Move> GetStartingMoves(List<Move> originalStarting, int max, int min, int target)
         {
+            Log($"Calculationg starting sequence. Total delta {originalStarting.Sum(m => m.Delta)} - Count {originalStarting.Count}");
             Move _m = null;
             List<Move> temp = new List<Move>(originalStarting);
 
@@ -93,11 +117,60 @@ namespace AnvilTool.Compute
             else _m = TakeSmallestPositive();
 
             temp.Add(_m);
-            int sum = temp.Sum(m => m.Delta);
-            int ogSum = originalStarting.Sum(m => m.Delta);
-            // I Check if I can reduce the number of starting Sequence
 
-            return temp;
+            int currentSum = temp.Sum(m => m.Delta);
+
+            // check if we can reduce the number of elements
+            List<Move> bestComb = new List<Move>(temp);
+            int bestSum = bestComb.Sum(m => m.Delta);
+
+            // Iterate through all possible moves from the predefined list
+            foreach (Move predefinedMove in Consts.Moves)
+            {
+                // Try replacing subsets of the originalStarting sequence with the predefinedMove
+                // We'll look for a subset of at least two moves to ensure we are actually reducing the count
+                for (int i = 0; i < originalStarting.Count - 1; i++) // Start with subsets of size 2
+                {
+                    int subsetSum = 0;
+                    for (int j = i; j < originalStarting.Count; j++)
+                    {
+                        subsetSum += originalStarting[j].Delta;
+
+                        // Construct a new candidate list by removing the subset and adding the predefinedMove
+                        List<Move> newCandidate = new List<Move>();
+
+                        // Add moves before the subset
+                        for (int k = 0; k < i; k++)
+                        {
+                            newCandidate.Add(originalStarting[k]);
+                        }
+
+                        // Add moves after the subset
+                        for (int k = j + 1; k < originalStarting.Count; k++)
+                        {
+                            newCandidate.Add(originalStarting[k]);
+                        }
+
+                        newCandidate.Add(predefinedMove);
+
+                        // Now, check if this new, shorter sequence is a better solution
+                        int candidateSum = newCandidate.Sum(m => m.Delta);
+
+                        // A better combination is one that is shorter AND its sum is within tolerance
+                        // of the current best sum.
+                        if (newCandidate.Count < bestComb.Count && Math.Abs(candidateSum - bestSum) <= Consts.START_SEQ_TOL)
+                        {
+                            bestComb = newCandidate;
+                            bestSum = candidateSum; // Update the new best sum
+                                                    // A more robust search would continue, but for simplicity, we can break
+                                                    // and return the first better solution found.
+                        }
+                    }
+                }
+            }
+
+            Log($"Final solution found. Total delta {bestComb.Sum(m => m.Delta)} - Count {bestComb.Count}");
+            return bestComb;
         }
 
         #region Take Move
@@ -154,5 +227,12 @@ namespace AnvilTool.Compute
             .OrderByDescending(m => m.Delta)
             .FirstOrDefault();
         #endregion
+
+        private void Log(string message)
+        {
+#if DEBUG
+            Console.WriteLine(message);
+#endif
+        }
     }
 }
