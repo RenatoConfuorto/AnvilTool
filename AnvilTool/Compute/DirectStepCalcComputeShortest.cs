@@ -80,6 +80,17 @@ namespace AnvilTool.Compute
                         //return GetFinalSeq(currentSeq, lastMoves);
                     }
                     var m = TakeMove(diff);
+                    int newPos = current + m.Delta;
+                    if(newPos <= Consts.MIN_POS || newPos >= Consts.MAX_POS)
+                    {
+                        Log("-------------------------");
+                        Log($"Selected move {m} would exceed bounds. Current position: {current}, new position: {newPos}. Skipping this path.");
+
+                        startSeq = GetStartingMoves(startSeq, max, min, target);
+                        break;
+                    }
+
+
                     currentSeq.Add(m);
                     current += m.Delta;
                     SaveMaxMin(ref max, ref min, current);
