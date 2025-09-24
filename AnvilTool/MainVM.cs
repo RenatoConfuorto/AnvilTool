@@ -64,19 +64,31 @@ public class MainVM : NotifyPropertyChangedBase
         computeShortest = new DirectStepCalcComputeShortest();
 
         IsRecordingFinal = true;
-        PressMoveCmd = new RelayCommand<Move>(PressMove, CanPressMove);
-        //StartRecordFinalCmd = new RelayCommand<object>(_ => StartRecordFinal());
-        ToggleExploreCmd = new RelayCommand<object>(ToggleExplore, CanToggleExplore);
-        MarkDirectionChangeCmd = new RelayCommand<object>(MarkDirectionChange, CanMarkDirectionChanged);
-        FoundExactCmd = new RelayCommand<object>(FoundExact, CanFoundExact);
-        ComputeShortestCmd = new RelayCommand<object>(ComputeShortest, CanComputeShortest);
+        PressMoveCmd = new RelayCommand(PressMove, CanPressMove);
+        //StartRecordFinalCmd = new RelayCommand(_ => StartRecordFinal());
+        ToggleExploreCmd = new RelayCommand(ToggleExplore, CanToggleExplore);
+        MarkDirectionChangeCmd = new RelayCommand(MarkDirectionChange, CanMarkDirectionChanged);
+        FoundExactCmd = new RelayCommand(FoundExact, CanFoundExact);
+        ComputeShortestCmd = new RelayCommand(ComputeShortest, CanComputeShortest);
+
+        RaiseCommandExecutionChanged();
     }
 
     #region Commands methods
 
-    #region Press Move
-    public void PressMove(Move _m)
+    private void RaiseCommandExecutionChanged()
     {
+        this.GetType()
+            .GetProperties()
+            .Where(p => p.PropertyType == typeof(ICommand))
+            .ToList()
+            .ForEach(_c => (_c.GetValue(this) as RelayCommand).RaiseCanExecuteChanged());
+    }
+
+    #region Press Move
+    public void PressMove(object param)
+    {
+        Move _m = (Move)param;
         // if recording final sequence: record (we record deltas; left=last)
         if (IsRecordingFinal)
         {
@@ -86,13 +98,16 @@ public class MainVM : NotifyPropertyChangedBase
             FinalSequence.Add(_m);
             return;
         }
+        else
+        {
+            // apply move normally
+            lastMoveDelta = _m.Delta;
+            CurrentPos += _m.Delta;
 
-        // apply move normally
-        lastMoveDelta = _m.Delta;
-        CurrentPos += _m.Delta;
-
-        // notify
-        RaisePropertyChanged(nameof(CurrentPos));
+            // notify
+            RaisePropertyChanged(nameof(CurrentPos));
+        }
+        RaiseCommandExecutionChanged();
     }
 
     private bool CanPressMove(object param) => true;
@@ -114,9 +129,10 @@ public class MainVM : NotifyPropertyChangedBase
         }
         RaisePropertyChanged(nameof(IntervalDisplay));
         RaisePropertyChanged(nameof(IsTargetKnown));
+        RaiseCommandExecutionChanged();
     }
 
-    private bool CanToggleExplore(object param) => true;
+    private bool CanToggleExplore(object param) => IsRecordingFinal;
     #endregion
 
     #region MarkDirectionchanged
@@ -128,7 +144,6 @@ public class MainVM : NotifyPropertyChangedBase
             return;
         }
         int sign = Math.Sign(lastMoveDelta);
-        //markers.Add((CurrentPos, sign));
 
         // Save Marker
         if (sign == 1)
@@ -138,25 +153,14 @@ public class MainVM : NotifyPropertyChangedBase
 
         _minPossible = markers[-1];
         _maxPossible = markers[1];
-            //// if there is an earlier marker with opposite sign, tighten interval
-            //for (int i = 0; i < markers.Count - 1; i++)
-            //{
-            //    var a = markers[i];
-            //    var b = markers[markers.Count - 1];
-            //    if (a.sign != b.sign)
-            //    {
-            //        int low = Math.Min(a.pos, b.pos);
-            //        int high = Math.Max(a.pos, b.pos);
-            //        _minPossible = Math.Max(_minPossible, low);
-            //        _maxPossible = Math.Min(_maxPossible, high);
-            //    }
-            //}
+
         RaisePropertyChanged(nameof(IntervalDisplay));
         RaisePropertyChanged(nameof(IsTargetKnown));
         lastMoveDelta = 0;
+        RaiseCommandExecutionChanged();
     }
 
-    private bool CanMarkDirectionChanged(object param) => true;
+    private bool CanMarkDirectionChanged(object param) => !IsRecordingFinal;
     #endregion
 
     #region FoundExact
@@ -167,8 +171,9 @@ public class MainVM : NotifyPropertyChangedBase
         _maxPossible = CurrentPos;
         RaisePropertyChanged(nameof(IntervalDisplay));
         RaisePropertyChanged(nameof(IsTargetKnown));
+        RaiseCommandExecutionChanged();
     }
-    private bool CanFoundExact(object param) => true;
+    private bool CanFoundExact(object param) => !IsRecordingFinal;
     #endregion
 
     #region ComputeShortest
@@ -199,8 +204,9 @@ public class MainVM : NotifyPropertyChangedBase
 
         // Apply the sequence to update current position
         CurrentPos += ComputedSequence.Sum(s => s.Delta);
+        RaiseCommandExecutionChanged();
     }
-    private bool CanComputeShortest(object param) => true;
+    private bool CanComputeShortest(object param) => !IsRecordingFinal;
     #endregion
 
     #endregion

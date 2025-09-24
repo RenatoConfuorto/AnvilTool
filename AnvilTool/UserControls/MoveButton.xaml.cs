@@ -40,14 +40,14 @@ namespace AnvilTool.UserControls
         #endregion
 
         #region MoveClickCommand
-        public RelayCommand<Move> MoveClickCommand
+        public RelayCommand MoveClickCommand
         {
-            get { return (RelayCommand<Move>)GetValue(MoveClickCommandProperty); }
+            get { return (RelayCommand )GetValue(MoveClickCommandProperty); }
             set { SetValue(MoveClickCommandProperty, value); }
         }
 
         public static readonly DependencyProperty MoveClickCommandProperty =
-            DependencyProperty.Register("MoveClickCommand", typeof(RelayCommand<Move>), typeof(MoveButton));
+            DependencyProperty.Register("MoveClickCommand", typeof(RelayCommand ), typeof(MoveButton));
 
         #endregion
     }
