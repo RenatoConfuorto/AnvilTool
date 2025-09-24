@@ -185,11 +185,16 @@ public class MainVM : NotifyPropertyChangedBase
             markers[-1]++;
             RaisePropertyChanged(nameof(IntervalDisplay));
             RaisePropertyChanged(nameof(IsTargetKnown));
-        }
-        ComputedSequence = new ObservableCollection<Move>
+            ComputedSequence = new ObservableCollection<Move>
             (
                 computeShortest.Compute(CurrentPos, _minPossible - 1, FinalSequence.ToList())
             );
+        }
+        else
+            ComputedSequence = new ObservableCollection<Move>
+                (
+                    computeShortest.Compute(CurrentPos, _minPossible, FinalSequence.ToList())
+                );
         RaisePropertyChanged(nameof(ComputedSequence));
 
         // Apply the sequence to update current position

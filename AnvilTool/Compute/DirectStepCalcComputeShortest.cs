@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Windows.Media.TextFormatting;
 
 namespace AnvilTool.Compute
 {
@@ -29,11 +30,18 @@ namespace AnvilTool.Compute
             int iter = 1;
 
             List<Move> finalSeq = null;
+            List<Move> startSeq = new List<Move>();
             while(iter < Consts.MAX_ITER)
             {
-                int current = start;
+                int current, max, min;
+                current = max = min = start;
+
                 Console.WriteLine($"Iteration number {iter}. Starting Pos {current} - Target {target}");
                 List<Move> currentSeq = new List<Move>();
+
+                foreach(var m in startSeq)
+                    currentSeq.Add(m);
+
                 while(currentSeq.Count <  Consts.MAX_SEQ_LENGHT)
                 {
                     // Calculate the distance from target
@@ -42,13 +50,16 @@ namespace AnvilTool.Compute
                     {
                         Console.WriteLine("SOLUTION FOUND--------------------");
                         // TODO check if there can be a better solution
-                        //ConvertSequenceToMoves(currentSeq.Select(m => m.Delta).ToList(), lastMoves);
-                        if(currentSeq.Count < Consts.EXIT_SEQ_LEN)
-                            return GetFinalSeq(currentSeq, lastMoves);
+                        //if (currentSeq.Count - startSeq.Count < Consts.EXIT_SEQ_LEN)
+                        //    return GetFinalSeq(currentSeq, lastMoves);
+                        //else finalSeq = currentSeq;
+
+                        return GetFinalSeq(currentSeq, lastMoves);
                     }
                     var m = TakeMove(diff);
                     currentSeq.Add(m);
                     current += m.Delta;
+                    SaveMaxMin(ref max, ref min, current);
                     Console.WriteLine($"Diff {diff} - Selected move {m} - New Pos {current} - Seq Len {currentSeq.Count}");
                 }
                 iter++;
@@ -59,6 +70,34 @@ namespace AnvilTool.Compute
                 finalSeq = GetFinalSeq(finalSeq, lastMoves);
 
             return finalSeq;
+        }
+
+        private void SaveMaxMin(ref int max, ref int min, int current)
+        {
+            if(current > max) max = current;
+            if(current < min) min = current;
+        }
+
+        private List<Move> GetStartingMoves(List<Move> originalStarting, int max, int min, int target)
+        {
+            Move _m = null;
+            List<Move> temp = new List<Move>(originalStarting);
+
+            // Check the deviations from target of max and min
+            int maxDev = Math.Abs(max - target);
+            int minDev = Math.Abs(min - target);
+
+            // If the maxDev is higher, I try to reduce the starting position
+            if (maxDev > minDev)
+                _m = TakeSmallestNegative();
+            else _m = TakeSmallestPositive();
+
+            temp.Add(_m);
+            int sum = temp.Sum(m => m.Delta);
+            int ogSum = originalStarting.Sum(m => m.Delta);
+            // I Check if I can reduce the number of starting Sequence
+
+            return temp;
         }
 
         #region Take Move
