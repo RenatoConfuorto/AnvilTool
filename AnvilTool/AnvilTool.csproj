@@ -69,8 +69,8 @@
       <DependentUpon>MoveButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\RecepiesPopupViewModel.cs" />
-    <Compile Include="Views\RecepiesPopup.xaml.cs">
-      <DependentUpon>RecepiesPopup.xaml</DependentUpon>
+    <Compile Include="Views\RecipesPopup.xaml.cs">
+      <DependentUpon>RecipesPopup.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -94,7 +94,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\RecepiesPopup.xaml">
+    <Page Include="Views\RecipesPopup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

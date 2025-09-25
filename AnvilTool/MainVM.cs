@@ -3,6 +3,7 @@ using AnvilTool.Commands;
 using AnvilTool.Compute;
 using AnvilTool.Constants;
 using AnvilTool.Entities;
+using AnvilTool.Entities.StoredData;
 using AnvilTool.Interfaces;
 using AnvilTool.NotifyPropertyChanged;
 using AnvilTool.Views;
@@ -17,7 +18,12 @@ using System.Windows.Input;
 
 public class MainVM : NotifyPropertyChangedBase
 {
-    public ObservableCollection<Move> FinalSequence { get; private set; } = new ObservableCollection<Move>(); // stored in input order, left is last
+    private ObservableCollection<Move> _finalSequence;
+    public ObservableCollection<Move> FinalSequence 
+    {
+        get => _finalSequence; 
+        private set => SetProperty(ref _finalSequence, value);
+    } 
     public ObservableCollection<Move> ComputedSequence { get; private set; } = new ObservableCollection<Move>();
 
     IComputeShortest computeShortest;
@@ -67,13 +73,15 @@ public class MainVM : NotifyPropertyChangedBase
     public ICommand ComputeShortestCmd { get; } 
     public ICommand ResetCmd { get; } 
     public ICommand SaveCmd { get; } 
-    public ICommand OpenRecepiesCmd { get; } 
+    public ICommand OpenRecipesCmd { get; } 
+    public ICommand LoadRecipeCmd { get; } 
     #endregion
 
     public MainVM()
     {
         //computeShortest = new BfsComputeShortes();
         computeShortest = new DirectStepCalcComputeShortest();
+        FinalSequence = new ObservableCollection<Move>(); // stored in input order, left is last
 
         PressMoveCmd = new RelayCommand(PressMove, CanPressMove);
         //StartRecordFinalCmd = new RelayCommand(_ => StartRecordFinal());
@@ -83,7 +91,8 @@ public class MainVM : NotifyPropertyChangedBase
         ComputeShortestCmd = new RelayCommand(ComputeShortest, CanComputeShortest);
         ResetCmd = new RelayCommand(Reset, CanReset);
         SaveCmd = new RelayCommand(Save, CanSave);
-        OpenRecepiesCmd = new RelayCommand(OpenRecepies, CanOpenRecepies);
+        OpenRecipesCmd = new RelayCommand(OpenRecipes, CanOpenRecipes);
+        LoadRecipeCmd = new RelayCommand(LoadRecipe, CanLoadRecipe);
 
         SetInitialConditions();
     }
@@ -91,6 +100,7 @@ public class MainVM : NotifyPropertyChangedBase
     private void SetInitialConditions()
     {
         IsRecordingFinal = true;
+        explorationActive = false;
         _minPossible = Consts.MIN_POS;
         _maxPossible = Consts.MAX_POS;
         CurrentPos = _minPossible;
@@ -100,9 +110,7 @@ public class MainVM : NotifyPropertyChangedBase
         markers = new Dictionary<int, int>() { { -1, Consts.MIN_POS }, { 1, Consts.MAX_POS } };
         FinalSequence = new ObservableCollection<Move>();
         ComputedSequence = new ObservableCollection<Move>();
-        RaisePropertyChanged(nameof(FinalSequence));
         RaisePropertyChanged(nameof(ComputedSequence));
-
 
         UpdateApplicationData();
         RaiseCommandExecutionChanged();
@@ -278,12 +286,48 @@ public class MainVM : NotifyPropertyChangedBase
     #endregion
 
     #region Save
-    private void OpenRecepies(object param)
+    private void OpenRecipes(object param)
     {
-        RecepiesPopup p = new RecepiesPopup();
+        RecipesPopup p = new RecipesPopup(Consts.RecipesMode.SaveRecipe);
         p.Open();
     }
-    private bool CanOpenRecepies(object param) => true;
+    private bool CanOpenRecipes(object param) => true;
+    #endregion
+
+    #region Load Recipe
+    private void LoadRecipe(object param)
+    {
+        RecipesPopup p = new RecipesPopup(Consts.RecipesMode.SelectRecipe);
+        object r = p.Open();
+        if(r is Product recipe)
+        {
+            // Apply recipe
+            // Reset the application
+            SetInitialConditions();
+            ActualTarget = recipe.Target;
+            FinalSequence = recipe.FinalSeq;
+            // Set Statuses
+            IsRecordingFinal = false;
+            explorationActive = true;
+            RaiseCommandExecutionChanged(); // Reset commands
+
+            // Calculate sequence
+            var seq = computeShortest.Compute(CurrentPos, ActualTarget, FinalSequence.ToList());
+            if (seq == null)
+            {
+                MessageBox.Show("Impossibile calcolare la sequenza", "ERRORE", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            ComputedSequence = new ObservableCollection<Move>(seq);
+            RaisePropertyChanged(nameof(ComputedSequence));
+
+            // Apply the sequence to update current position
+            CurrentPos += ComputedSequence.Sum(s => s.Delta);
+            RaiseCommandExecutionChanged();
+        }
+    }
+    private bool CanLoadRecipe(object param) => true;
     #endregion
 
     #endregion

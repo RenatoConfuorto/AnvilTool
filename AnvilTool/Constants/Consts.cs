@@ -34,5 +34,12 @@ namespace AnvilTool.Constants
             { new Move { Label = "Upset", Delta = +13 } },
             { new Move { Label = "Shrink", Delta = +16 } },
         };
+
+
+        public enum RecipesMode
+        {
+            SelectRecipe,
+            SaveRecipe
+        }
     }
 }

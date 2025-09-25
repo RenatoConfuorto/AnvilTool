@@ -1,4 +1,4 @@
-﻿<Window x:Class="AnvilTool.Views.RecepiesPopup"
+﻿<Window x:Class="AnvilTool.Views.RecipesPopup"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,9 +9,30 @@
         xmlns:Helpers="clr-namespace:AnvilTool.Helpers"
         xmlns:Entities="clr-namespace:AnvilTool.Entities"
         xmlns:StoredData="clr-namespace:AnvilTool.Entities.StoredData" xmlns:usercontrols="clr-namespace:AnvilTool.UserControls"
-        Title="RecepiesPopup" Height="450" Width="800">
+        Title="RecipesPopup" Height="450" Width="600">
     <Grid>
-        <TreeView ItemsSource="{Binding Servers}" x:Name="treeView">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0"
+                    Orientation="Horizontal">
+            <Button Content="Select"
+                    MinWidth="75"
+                    Margin="6 2"
+                    Command="{Binding SelectCmd}"
+                    Visibility="{Binding SelectButtonVisibility}"/>
+            <Button Content="Save"
+                    MinWidth="75"
+                    Margin="6 2"
+                    Command="{Binding SaveCmd}"
+                    Visibility="{Binding SaveButtonVisibility}"/>
+        </StackPanel>
+        
+        <TreeView ItemsSource="{Binding Servers}" 
+                  x:Name="treeView"
+                  Grid.Row="1">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectedItemChanged">
                     <i:InvokeCommandAction Command="{Binding SelectedItemCommand}"

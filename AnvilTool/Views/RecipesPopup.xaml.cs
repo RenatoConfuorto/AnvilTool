@@ -1,4 +1,5 @@
-﻿using AnvilTool.ViewModels;
+﻿using AnvilTool.Entities.StoredData;
+using AnvilTool.ViewModels;
 
 using System;
 using System.Collections.Generic;
@@ -14,24 +15,31 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+using static AnvilTool.Constants.Consts;
+
 namespace AnvilTool.Views
 {
     /// <summary>
-    /// Logica di interazione per RecepiesPopup.xaml
+    /// Logica di interazione per RecipesPopup.xaml
     /// </summary>
-    public partial class RecepiesPopup : Window
+    public partial class RecipesPopup : Window
     {
-        RecepiesPopupViewModel vm;
-        public RecepiesPopup()
+        RecipesPopupViewModel vm;
+        public RecipesPopup(RecipesMode mode)
         {
             InitializeComponent();
-            DataContext = vm = new RecepiesPopupViewModel();
+            DataContext = vm = new RecipesPopupViewModel(this.Close, mode);
         }
 
         public object Open()
         {
             this.ShowDialog();
             return vm.ReturnValue;
+        }
+
+        public void OpenSave(Product product)
+        {
+
         }
     }
 }

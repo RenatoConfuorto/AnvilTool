@@ -29,5 +29,10 @@ namespace AnvilTool.Entities.StoredData
             set => SetProperty(ref _target, value);
         }
         #endregion
+
+        public override string ToString()
+        {
+            return $"{Name} - {Target}";
+        }
     }
 }

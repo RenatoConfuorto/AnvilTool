@@ -21,5 +21,12 @@ namespace AnvilTool.Entities.StoredData
             set => SetProperty(ref _products, value);
         }
         #endregion
+
+        public override string ToString()
+        {
+            return $"{Name}";
+        }
+
+        public Product GetProduct(int id) => Products?.FirstOrDefault(p => p.Id == id);
     }
 }

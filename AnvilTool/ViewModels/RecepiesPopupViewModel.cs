@@ -11,14 +11,28 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Markup;
+using System.Windows.Media.TextFormatting;
+
+using static AnvilTool.Constants.Consts;
 
 namespace AnvilTool.ViewModels
 {
-    public class RecepiesPopupViewModel : NotifyPropertyChangedBase
+    public class RecipesPopupViewModel : NotifyPropertyChangedBase
     {
         #region ReturnValue
         public object ReturnValue { get; private set; }
         #endregion
+
+        protected RecipesMode Mode { get; private set; }
+        protected Action CloseDel { get; private set; }
+
+        public bool IsOpenSelect { get => Mode == RecipesMode.SelectRecipe; }
+        public bool IsOpenSave { get => Mode == RecipesMode.SaveRecipe; }
+        public Visibility SelectButtonVisibility { get => IsOpenSelect ? Visibility.Visible : Visibility.Collapsed; }
+        public Visibility SaveButtonVisibility { get => IsOpenSave ? Visibility.Visible : Visibility.Collapsed; }
 
         #region Servers
         private ObservableCollection<Server> _servers;
@@ -57,12 +71,25 @@ namespace AnvilTool.ViewModels
             set; 
         }
 
-        public RelayCommand SelectedItemCommand { get; private set; }
+        #endregion
+
+        #region Commands
+        public ICommand SelectedItemCommand { get; private set; }
+        public ICommand SelectCmd { get; private set; }
+        public ICommand SaveCmd { get; private set; }
         #endregion
 
         #region Constructor
-        public RecepiesPopupViewModel()
+        public RecipesPopupViewModel(Action closeDel, RecipesMode mode)
         {
+            this.Mode = mode;
+            this.CloseDel = closeDel;
+
+            //RaisePropertyChanged(nameof(IsOpenSave));
+            //RaisePropertyChanged(nameof(IsOpenSelect));
+            //RaisePropertyChanged(nameof(SelectButtonVisibility));
+            //RaisePropertyChanged(nameof(SaveButtonVisibility));
+
             #region TEST - To remove
             ObservableCollection<Server> servers = new ObservableCollection<Server>();
             for (int i = 0; i < 2; i++)
@@ -97,6 +124,8 @@ namespace AnvilTool.ViewModels
             #endregion
 
             SelectedItemCommand = new RelayCommand(OnSelectedItem);
+            SelectCmd = new RelayCommand(Select, CanSelect);
+            SaveCmd = new RelayCommand(Save, CanSave);
         }
 
         #region Commands
@@ -106,6 +135,7 @@ namespace AnvilTool.ViewModels
         }
         #endregion
 
+        #region SelectedItemCommand
         private void OnSelectedItem(object obj)
         {
             if (obj is Server s)
@@ -114,14 +144,41 @@ namespace AnvilTool.ViewModels
                 SelectedMaterial = m;
             else if (obj is Product p)
                 SelectedProduct = p;
-            else if(obj == null)
+            else if (obj == null)
             {
                 SelectedServer = null;
-                SelectedMaterial = null; 
+                SelectedMaterial = null;
                 SelectedProduct = null;
             }
-                RaiseCanExecuteChanged();
+            RaiseCanExecuteChanged();
         }
         #endregion
+
+        #region Select
+        private void Select(object param)
+        {
+            if (AskConfirmation($"Caricare la seguente ricetta? {SelectedProduct}"))
+            {
+                ReturnValue = SelectedProduct;
+                this.CloseDel();
+            }
+        }
+        private bool CanSelect(object param) => SelectedProduct != null;
+        #endregion
+
+        #region Save
+        private void Save(object param)
+        {
+
+        }
+        private bool CanSave(object param) => SelectedMaterial != null;
+        #endregion
+
+        #endregion
+
+        private bool AskConfirmation(string message)
+        {
+            return MessageBox.Show(message, "Conferma", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes;
+        }
     }
 }

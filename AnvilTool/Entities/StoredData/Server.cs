@@ -17,7 +17,14 @@ namespace AnvilTool.Entities.StoredData
         {
             get => _materials;
             set => SetProperty(ref _materials, value);
-        } 
+        }
         #endregion
+
+        public override string ToString()
+        {
+            return $"{Name}";
+        }
+
+        public Material GetMaterial(int id) => Materials?.FirstOrDefault(m => m.Id == id);
     }
 }
