@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -41,6 +42,16 @@ namespace AnvilTool.Commands
             {
                 CanExecuteChanged?.Invoke(this, EventArgs.Empty);
             });
+        }
+
+        public static void RaiseCanExecuteAll(object container)
+        {
+            container.GetType()
+            .GetProperties()?
+            .ToList()
+            .Where(p => p.PropertyType == typeof(ICommand))?
+            .ToList()
+            .ForEach(_c => (_c.GetValue(container) as RelayCommand).RaiseCanExecuteChanged());
         }
     }
 }
