@@ -1,4 +1,5 @@
-﻿using AnvilTool.Constants;
+﻿using AnvilTool.Commands;
+using AnvilTool.Constants;
 using AnvilTool.Entities;
 using AnvilTool.Entities.StoredData;
 using AnvilTool.NotifyPropertyChanged;
@@ -26,6 +27,37 @@ namespace AnvilTool.ViewModels
             get => _servers;
             set => SetProperty(ref _servers, value);
         }
+        #endregion
+
+        #region SelectedItems
+        private Server _selectedServer;
+        public Server SelectedServer
+        {
+            get => _selectedServer;
+            set => SetProperty(ref _selectedServer, value);
+        }
+
+        private Material _selectedMaterial;
+        public Material SelectedMaterial
+        {
+            get => _selectedMaterial;
+            set => SetProperty(ref _selectedMaterial, value);
+        }
+
+        private Product _selectedProduct;
+        public Product SelectedProduct
+        {
+            get => _selectedProduct;
+            set => SetProperty(ref _selectedProduct, value);
+        }
+
+        public object SelectedItem 
+        { 
+            get; 
+            set; 
+        }
+
+        public RelayCommand SelectedItemCommand { get; private set; }
         #endregion
 
         #region Constructor
@@ -61,8 +93,34 @@ namespace AnvilTool.ViewModels
                 servers.Add(s);
             }
 
-            Servers = servers; 
+            Servers = servers;
             #endregion
+
+            SelectedItemCommand = new RelayCommand(OnSelectedItem);
+        }
+
+        #region Commands
+        private void RaiseCanExecuteChanged()
+        {
+            RelayCommand.RaiseCanExecuteAll(this);
+        }
+        #endregion
+
+        private void OnSelectedItem(object obj)
+        {
+            if (obj is Server s)
+                SelectedServer = s;
+            else if (obj is Material m)
+                SelectedMaterial = m;
+            else if (obj is Product p)
+                SelectedProduct = p;
+            else if(obj == null)
+            {
+                SelectedServer = null;
+                SelectedMaterial = null; 
+                SelectedProduct = null;
+            }
+                RaiseCanExecuteChanged();
         }
         #endregion
     }

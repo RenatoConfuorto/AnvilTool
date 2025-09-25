@@ -5,11 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AnvilTool.Views"
         mc:Ignorable="d"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:Helpers="clr-namespace:AnvilTool.Helpers"
         xmlns:Entities="clr-namespace:AnvilTool.Entities"
         xmlns:StoredData="clr-namespace:AnvilTool.Entities.StoredData" xmlns:usercontrols="clr-namespace:AnvilTool.UserControls"
         Title="RecepiesPopup" Height="450" Width="800">
     <Grid>
-        <TreeView ItemsSource="{Binding Servers}">
+        <TreeView ItemsSource="{Binding Servers}" x:Name="treeView">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectedItemChanged">
+                    <i:InvokeCommandAction Command="{Binding SelectedItemCommand}"
+                                       CommandParameter="{Binding SelectedItem, ElementName=treeView}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <TreeView.Resources>
                 <HierarchicalDataTemplate DataType="{x:Type StoredData:Server}" ItemsSource="{Binding Materials}">
                     <StackPanel Orientation="Horizontal">

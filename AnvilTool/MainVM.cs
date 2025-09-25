@@ -118,11 +118,12 @@ public class MainVM : NotifyPropertyChangedBase
 
     private void RaiseCommandExecutionChanged()
     {
-        this.GetType()
-            .GetProperties()
-            .Where(p => p.PropertyType == typeof(ICommand))
-            .ToList()
-            .ForEach(_c => (_c.GetValue(this) as RelayCommand).RaiseCanExecuteChanged());
+        //this.GetType()
+        //    .GetProperties()
+        //    .Where(p => p.PropertyType == typeof(ICommand))
+        //    .ToList()
+        //    .ForEach(_c => (_c.GetValue(this) as RelayCommand).RaiseCanExecuteChanged());
+        RelayCommand.RaiseCanExecuteAll(this);
     }
 
     #region Press Move
