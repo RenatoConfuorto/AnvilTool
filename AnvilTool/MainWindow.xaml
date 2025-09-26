@@ -43,7 +43,7 @@
             <Button MinWidth="75" Content="Mark Direction Change" Command="{Binding MarkDirectionChangeCmd}" Margin="0,0,6,0"/>
             <Button MinWidth="75" Content="Found Exact" Command="{Binding FoundExactCmd}" Margin="0,0,6,0"/>
             <Button MinWidth="75" Content="Reset" Command="{Binding ResetCmd}" Margin="0,0,6,0"/>
-            <Button MinWidth="75" Content="Save Recipe" Command="{Binding SaveCmd}" Margin="0,0,6,0"/>
+            <Button MinWidth="75" Content="Save Recipe" Command="{Binding SaveRecipeCmd}" Margin="0,0,6,0"/>
             <Button MinWidth="75" Content="Load Recipe" Command="{Binding LoadRecipeCmd}" Margin="0,0,6,0"/>
         </StackPanel>
 

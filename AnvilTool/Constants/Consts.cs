@@ -41,5 +41,40 @@ namespace AnvilTool.Constants
             SelectRecipe,
             SaveRecipe
         }
+
+        /// <summary>
+        /// Name of the folder where the application data is stored
+        /// </summary>
+        public static readonly string ApplicationFolderDataName = "Anvil Tool";
+        /// <summary>
+        /// Name of the data file
+        /// </summary>
+        public static string ApplicationDataFileName
+        {
+            get
+            {
+#if DEBUG
+                return "Test_Data.db";
+#else
+                return "Data.db";
+#endif
+
+            }
+        }
+        /// <summary>
+        /// Name of the downloaded images files folder
+        /// </summary>
+        public static string ApplicationFolderImagesPath
+        {
+            get => "Images";
+        }
+        /// <summary>
+        /// Full Path of the application data folder
+        /// </summary>
+        public static readonly string ApplicationFolderDataPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + $"\\{ApplicationFolderDataName}";
+        /// <summary>
+        ///  Full path of the application data file
+        /// </summary>
+        public static readonly string ApplicationDataFilePath = $"{ApplicationFolderDataPath}\\{ApplicationDataFileName}";
     }
 }

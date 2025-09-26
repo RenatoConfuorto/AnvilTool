@@ -72,8 +72,8 @@ public class MainVM : NotifyPropertyChangedBase
     public ICommand FoundExactCmd { get; }
     public ICommand ComputeShortestCmd { get; } 
     public ICommand ResetCmd { get; } 
-    public ICommand SaveCmd { get; } 
-    public ICommand OpenRecipesCmd { get; } 
+    //public ICommand SaveCmd { get; } 
+    public ICommand SaveRecipeCmd { get; } 
     public ICommand LoadRecipeCmd { get; } 
     #endregion
 
@@ -90,8 +90,8 @@ public class MainVM : NotifyPropertyChangedBase
         FoundExactCmd = new RelayCommand(FoundExact, CanFoundExact);
         ComputeShortestCmd = new RelayCommand(ComputeShortest, CanComputeShortest);
         ResetCmd = new RelayCommand(Reset, CanReset);
-        SaveCmd = new RelayCommand(Save, CanSave);
-        OpenRecipesCmd = new RelayCommand(OpenRecipes, CanOpenRecipes);
+        //SaveCmd = new RelayCommand(Save, CanSave);
+        SaveRecipeCmd = new RelayCommand(SaveRecipe, CanSaveRecipe);
         LoadRecipeCmd = new RelayCommand(LoadRecipe, CanLoadRecipe);
 
         SetInitialConditions();
@@ -286,12 +286,17 @@ public class MainVM : NotifyPropertyChangedBase
     #endregion
 
     #region Save
-    private void OpenRecipes(object param)
+    private void SaveRecipe(object param)
     {
         RecipesPopup p = new RecipesPopup(Consts.RecipesMode.SaveRecipe);
-        p.Open();
+        Product prod = new Product()
+        {
+            Target = ActualTarget,
+            FinalSeq = FinalSequence,
+        };
+        p.OpenSave(prod);
     }
-    private bool CanOpenRecipes(object param) => true;
+    private bool CanSaveRecipe(object param) => true;
     #endregion
 
     #region Load Recipe

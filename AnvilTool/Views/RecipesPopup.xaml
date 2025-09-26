@@ -11,23 +11,58 @@
         xmlns:StoredData="clr-namespace:AnvilTool.Entities.StoredData" xmlns:usercontrols="clr-namespace:AnvilTool.UserControls"
         Title="RecipesPopup" Height="450" Width="600">
     <Grid>
+        <Grid.Resources>
+            <Style TargetType="{x:Type Button}">
+                <Setter Property="MinWidth" Value="75"/>
+                <Setter Property="Margin" Value="6 2"/>
+                <Setter Property="Padding" Value="2 0"/>
+            </Style>
+
+            <Style TargetType="TextBlock">
+                <Setter Property="Width" Value="100"/>
+            </Style>
+
+            <Style TargetType="TextBox">
+                <Setter Property="MinWidth" Value="150"/>
+            </Style>
+        </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0"
-                    Orientation="Horizontal">
-            <Button Content="Select"
-                    MinWidth="75"
-                    Margin="6 2"
-                    Command="{Binding SelectCmd}"
-                    Visibility="{Binding SelectButtonVisibility}"/>
-            <Button Content="Save"
-                    MinWidth="75"
-                    Margin="6 2"
-                    Command="{Binding SaveCmd}"
-                    Visibility="{Binding SaveButtonVisibility}"/>
+        <StackPanel Grid.Row="0">
+            <StackPanel Orientation="Horizontal"
+                        Visibility="{Binding SelectButtonVisibility}">
+                <Button Content="Select"
+                        Command="{Binding SelectCmd}"/>
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal"
+                        Visibility="{Binding SaveButtonVisibility}">
+                <Button Content="Add Server"
+                        Command="{Binding AddServerCmd}"/>
+                <Button Content="Add Material"
+                        Command="{Binding AddMaterialCmd}"/>
+                <Button Content="Add Product"
+                        Command="{Binding AddProductCmd}"/>
+            </StackPanel>
+
+            <StackPanel Visibility="{Binding SaveButtonVisibility}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Server"/>
+                    <TextBox Text="{Binding NewServerName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Material"/>
+                    <TextBox Text="{Binding NewMaterialName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Product"/>
+                    <TextBox Text="{Binding NewProductName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+            </StackPanel>
+            
         </StackPanel>
         
         <TreeView ItemsSource="{Binding Servers}" 

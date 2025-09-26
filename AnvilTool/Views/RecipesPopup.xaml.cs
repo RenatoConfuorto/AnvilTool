@@ -39,7 +39,8 @@ namespace AnvilTool.Views
 
         public void OpenSave(Product product)
         {
-
+            vm.ProductToSave = product;
+            this.ShowDialog();
         }
     }
 }
