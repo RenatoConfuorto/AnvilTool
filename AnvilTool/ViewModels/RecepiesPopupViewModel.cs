@@ -116,9 +116,14 @@ namespace AnvilTool.ViewModels
         #region Commands
         public ICommand SelectedItemCommand { get; private set; }
         public ICommand SelectCmd { get; private set; }
+
         public ICommand AddProductCmd { get; private set; }
         public ICommand AddServerCmd { get; private set; }
         public ICommand AddMaterialCmd { get; private set; }
+
+        public ICommand DeleteProductCmd { get; private set; }
+        public ICommand DeleteServerCmd { get; private set; }
+        public ICommand DeleteMaterialCmd { get; private set; }
         #endregion
 
         #region Constructor
@@ -132,22 +137,29 @@ namespace AnvilTool.ViewModels
             //RaisePropertyChanged(nameof(SelectButtonVisibility));
             //RaisePropertyChanged(nameof(SaveButtonVisibility));
 
+            Servers = new ObservableCollection<Server>(proxy.GetData());
             //#region TEST - To remove
+
+            //foreach (var s in Servers)
+            //    proxy.DeleteServer(s);
+
             //ObservableCollection<Server> servers = new ObservableCollection<Server>();
+            //int serverId, matId, prodId;
+            //serverId = matId = prodId = 0;
             //for (int i = 0; i < 2; i++)
             //{
-            //    Server s = new Server() { Id = i + 1, Name = $"Mondo_{i + 1}" };
+            //    Server s = new Server() { Id = ++serverId, Name = $"Mondo_{i + 1}" };
             //    s.Materials = new ObservableCollection<Material>();
             //    for (int j = 0; j < 3; j++)
             //    {
-            //        Material m = new Material() { Id = j + 1, Name = $"Material_{j + 1}", ServerId = s.Id };
+            //        Material m = new Material() { Id = ++matId, Name = $"Material_{j + 1}", ServerId = s.Id };
             //        m.Products = new ObservableCollection<Product>();
 
             //        for (int k = 0; k < 5; k++)
             //        {
             //            Product p = new Product()
             //            {
-            //                Id = k + 1,
+            //                Id = ++prodId,
             //                Name = $"Product_{k + 1}",
             //                MaterialId = m.Id,
             //                Target = 50 + k + j + i,
@@ -163,17 +175,32 @@ namespace AnvilTool.ViewModels
             //}
 
             //Servers = servers;
+
+            //foreach (Server s in servers)
+            //{
+            //    proxy.InsertServer(s);
+            //    foreach(Material m in s.Materials)
+            //    {
+            //        proxy.InsertMaterial(m);
+            //        foreach(Product p in m.Products)
+            //        {
+            //            proxy.InsertProduct(p);
+            //        }
+            //    }
+            //}
             //#endregion
 
-
-            Servers = new ObservableCollection<Server>(proxy.GetData());
 
             SelectedItemCommand = new RelayCommand(OnSelectedItem);
             SelectCmd = new RelayCommand(Select, CanSelect);
             AddProductCmd = new RelayCommand(AddProduct, CanAddProduct);
             AddServerCmd = new RelayCommand(AddServer, CanAddServer);
             AddMaterialCmd = new RelayCommand(AddMaterial, CanAddMaterial);
+            DeleteProductCmd = new RelayCommand(DeleteProduct, CanDeleteProduct);
+            DeleteServerCmd = new RelayCommand(DeleteServer, CanDeleteServer);
+            DeleteMaterialCmd = new RelayCommand(DeleteMaterial, CanDeleteMaterial);
         }
+        #endregion
 
         #region Commands
         private void RaiseCanExecuteChanged()
@@ -218,7 +245,7 @@ namespace AnvilTool.ViewModels
         {
             Server s = new Server()
             {
-                Id = Servers.Count == 0 ? 1 : Servers.Max(_s => _s.Id) + 1,
+                //Id = Servers.Count == 0 ? 1 : Servers.Max(_s => _s.Id) + 1,
                 Name = NewServerName,
                 Materials = new ObservableCollection<Material>()
             };
@@ -236,7 +263,7 @@ namespace AnvilTool.ViewModels
         {
             Material m = new Material()
             {
-                Id = SelectedServer.Materials.Count == 0 ? 1 : SelectedServer.Materials.Max(_m => _m.Id) + 1,
+                //Id = SelectedServer.Materials.Count == 0 ? 1 : SelectedServer.Materials.Max(_m => _m.Id) + 1,
                 Name = NewMaterialName,
                 ServerId = SelectedServer.Id,
                 Products = new ObservableCollection<Product>()
@@ -253,7 +280,7 @@ namespace AnvilTool.ViewModels
         {
             Product p = new Product()
             {
-                Id = SelectedMaterial.Products.Count == 0 ? 1 : SelectedMaterial.Products.Max(_m => _m.Id) + 1,
+                //Id = SelectedMaterial.Products.Count == 0 ? 1 : SelectedMaterial.Products.Max(_m => _m.Id) + 1,
                 Name = NewProductName,
                 Target = ProductToSave.Target,
                 MaterialId = SelectedMaterial.Id,
@@ -267,7 +294,60 @@ namespace AnvilTool.ViewModels
         private bool CanAddProduct(object param) => SelectedMaterial != null && !String.IsNullOrEmpty(NewProductName);
         #endregion
 
+        #region Delete Server
+        private void DeleteServer(object param)
+        {
+            if (!AskConfirmation("Eliminare il server selezionato?"))
+                return;
+
+            if (proxy.DeleteServer(SelectedServer))
+            {
+                Servers.Remove(SelectedServer);
+                SelectedServer = null;
+                ShowInfo("Server rimosso");
+            }
+            else ShowInfo("Insert fallito");
+            RaiseCanExecuteChanged();
+        }
+        private bool CanDeleteServer(object param) => SelectedServer != null;
         #endregion
+
+        #region Delete Material
+        private void DeleteMaterial(object param)
+        {
+            if (!AskConfirmation("Eliminare il materiale selezionato?"))
+                return;
+
+            if (proxy.DeleteMaterial(SelectedMaterial))
+            {
+                Servers.FirstOrDefault(s => s.Id == SelectedMaterial.ServerId).Materials.Remove(SelectedMaterial);
+                SelectedMaterial = null;
+                ShowInfo("Materiale rimosso");
+            }
+            else ShowInfo("Insert fallito");
+            RaiseCanExecuteChanged();
+        }
+        private bool CanDeleteMaterial(object pram) => SelectedMaterial != null && SelectedServer != null;
+        #endregion
+
+        #region DeleteProduct
+        private void DeleteProduct(object param)
+        {
+            if (!AskConfirmation("Eliminare il prodotto selezionato?"))
+                return;
+
+            if (proxy.DeleteProduct(SelectedProduct))
+            {
+                SelectedMaterial.Products.Remove(SelectedProduct);
+                SelectedProduct = null;
+                ShowInfo("Prodotto rimosso");
+            }
+            else ShowInfo("Insert fallito");
+            RaiseCanExecuteChanged();
+        }
+        private bool CanDeleteProduct(object param) => SelectedProduct != null && SelectedMaterial != null;
+        #endregion
+
 
         private bool AskConfirmation(string message)
         {

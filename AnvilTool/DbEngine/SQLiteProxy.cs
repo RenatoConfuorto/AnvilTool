@@ -143,6 +143,7 @@ namespace AnvilTool.DbEngine
         public bool InsertServer(Server s)
         {
             string Statement = "INSERT INTO Server (Id, Name) VALUES (@Id, @Name);";
+            s.Id = GetNextIntValue("Server", "Id");
             SQLiteParameters param = new SQLiteParameters();
             param.Add("Id", s.Id);
             param.Add("Name", s.Name);
@@ -153,6 +154,7 @@ namespace AnvilTool.DbEngine
         public bool InsertMaterial(Material m)
         {
             string Statement = "INSERT INTO Material (Id, Name, ServerId) VALUES (@Id, @Name, @ServerId);";
+            m.Id = GetNextIntValue("Material", "Id");
             SQLiteParameters param = new SQLiteParameters();
             param.Add("Id", m.Id);
             param.Add("Name", m.Name);
@@ -165,6 +167,7 @@ namespace AnvilTool.DbEngine
         {
             bool res = true;
             string Statement = "INSERT INTO Product (Id, Name, Target, MaterialId) VALUES (@Id, @Name, @Target, @MaterialId);";
+            p.Id = GetNextIntValue("Product", "Id");
             SQLiteParameters param = new SQLiteParameters();
             param.Add("Id", p.Id);
             param.Add("Name", p.Name);
@@ -199,6 +202,56 @@ namespace AnvilTool.DbEngine
             param.Add("Delta", move.Delta);
             param.Add("ProductId", pId);
             param.Add("Seq", Seq);
+
+            return Execute(Statement, param, trans, false);
+        }
+        #endregion
+
+        #region Delete
+        public bool DeleteServer(Server s)
+        {
+            string Statement = "Delete FROM Server Where Id = @Id";
+            IDbTransaction trans = GetTransaction();
+            
+            bool res = Execute(Statement, "Id", s.Id, trans, false);
+
+            foreach (var mat in s.Materials)
+                res &= DeleteMaterial(mat, trans, false);
+
+            if (res)
+                trans.Commit();
+            else trans.Rollback();
+
+            return res;
+        }
+
+        public bool DeleteMaterial(Material m, IDbTransaction trans = null, bool commit = true)
+        {
+            string Statement = "Delete from Material where Id = @Id";
+            bool res = Execute(Statement, "Id", m.Id, trans, commit);
+
+            foreach (var prod in m.Products)
+                res &= DeleteProduct(prod, trans, commit);
+
+            return res;
+        }
+        public bool DeleteProduct(Product p, IDbTransaction trans = null, bool commit = true)
+        {
+            string Statement = "Delete from product Where Id = @Id";
+            bool res = Execute(Statement, "Id", p.Id, trans, commit);
+
+            for(int i = 0; i < p.FinalSeq.Count; i++)
+                res &= DeleteMove(p.FinalSeq[i], i+1, p.Id, trans);
+
+            return res;
+        }
+
+        private bool DeleteMove(Move move, int Seq, int pId, IDbTransaction trans)
+        {
+            string Statement = "Delete from move where Seq = @Seq and ProductId = @ProductId";
+            SQLiteParameters param = new SQLiteParameters();
+            param.Add("Seq", Seq);
+            param.Add("ProductId", pId);
 
             return Execute(Statement, param, trans, false);
         }

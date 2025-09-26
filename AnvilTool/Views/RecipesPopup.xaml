@@ -13,7 +13,7 @@
     <Grid>
         <Grid.Resources>
             <Style TargetType="{x:Type Button}">
-                <Setter Property="MinWidth" Value="75"/>
+                <Setter Property="MinWidth" Value="100"/>
                 <Setter Property="Margin" Value="6 2"/>
                 <Setter Property="Padding" Value="2 0"/>
             </Style>
@@ -36,6 +36,15 @@
                         Visibility="{Binding SelectButtonVisibility}">
                 <Button Content="Select"
                         Command="{Binding SelectCmd}"/>
+            </StackPanel>
+            
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Delete Server"
+                        Command="{Binding DeleteServerCmd}"/>
+                <Button Content="Delete Material"
+                        Command="{Binding DeleteMaterialCmd}"/>
+                <Button Content="Delete Product"
+                        Command="{Binding DeleteProductCmd}"/>
             </StackPanel>
             
             <StackPanel Orientation="Horizontal"
