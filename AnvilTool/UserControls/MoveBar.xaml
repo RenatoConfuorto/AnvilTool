@@ -48,27 +48,31 @@
                 BorderBrush="Black"
                 BorderThickness="1"
                 CornerRadius="2"
-                   Height="{StaticResource barHeight}"
-                   Width="{StaticResource barWidth}"
-                   Background="{StaticResource SliderBackBrush}"/>
+                Height="{StaticResource barHeight}"
+                Width="{StaticResource barWidth}"
+                d:Width="400" d:Height="20"
+                Background="{StaticResource SliderBackBrush}"/>
 
         <Grid x:Name="sliderMin"
+              d:Canvas.Left="15" d:Canvas.Top="-9"
               Height="{StaticResource sliderHeight}" Width="{StaticResource sliderHeight}"
               ToolTip="{Binding MinPossible}"
               Style="{StaticResource SliderTop}">
-            <Image Source="{Binding Source={x:Static properties:Resources.slider}, Converter={StaticResource ImageConverter}}"/>
+            <Image Source="{Binding Source={x:Static properties:Resources.sliderRed}, Converter={StaticResource ImageConverter}}"/>
         </Grid>
         <Grid x:Name="sliderMax"
+              d:Canvas.Left="385" d:Canvas.Top="-9"
               Height="{StaticResource sliderHeight}" Width="{StaticResource sliderHeight}"
               ToolTip="{Binding MaxPossible}"
               Style="{StaticResource SliderTop}">
-            <Image Source="{Binding Source={x:Static properties:Resources.slider}, Converter={StaticResource ImageConverter}}"/>
+            <Image Source="{Binding Source={x:Static properties:Resources.sliderRed}, Converter={StaticResource ImageConverter}}"/>
         </Grid>
         <Grid x:Name="sliderCurr"
+              d:Canvas.Left="15" d:Canvas.Top="9"
               Height="{StaticResource sliderHeight}" Width="{StaticResource sliderHeight}"
               ToolTip="{Binding CurrentPos}"
               Style="{StaticResource SliderBot}">
-            <Image Source="{Binding Source={x:Static properties:Resources.slider}, Converter={StaticResource ImageConverter}}"/>
+            <Image Source="{Binding Source={x:Static properties:Resources.sliderGreen}, Converter={StaticResource ImageConverter}}"/>
         </Grid>
     </Canvas>
 </UserControl>
