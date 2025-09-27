@@ -36,7 +36,10 @@ namespace AnvilTool.UserControls
         }
 
         public static readonly DependencyProperty MoveProperty =
-            DependencyProperty.Register("Move", typeof(Move), typeof(MoveButton), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(Move)
+                , typeof(Move)
+                , typeof(MoveButton)
+                , new PropertyMetadata(null));
         #endregion
 
         #region MoveClickCommand
@@ -47,7 +50,9 @@ namespace AnvilTool.UserControls
         }
 
         public static readonly DependencyProperty MoveClickCommandProperty =
-            DependencyProperty.Register("MoveClickCommand", typeof(RelayCommand ), typeof(MoveButton));
+            DependencyProperty.Register(nameof(MoveClickCommand)
+                , typeof(RelayCommand)
+                , typeof(MoveButton));
 
         #endregion
     }

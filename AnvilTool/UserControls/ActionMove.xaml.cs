@@ -37,7 +37,10 @@ namespace AnvilTool.UserControls
         }
 
         public static readonly DependencyProperty MoveProperty =
-            DependencyProperty.Register("Move", typeof(Move), typeof(ActionMove), new PropertyMetadata(null, new PropertyChangedCallback(OnMoveChange))); 
+            DependencyProperty.Register(nameof(Move)
+                , typeof(Move)
+                , typeof(ActionMove)
+                , new PropertyMetadata(null, new PropertyChangedCallback(OnMoveChange))); 
 
         private static void OnMoveChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {

@@ -42,7 +42,10 @@ namespace AnvilTool.UserControls
         }
 
         public static readonly DependencyProperty FinalSeqProperty =
-            DependencyProperty.Register("FinalSeq", typeof(ObservableCollection<Move>), typeof(FinalSequence), new PropertyMetadata(null, new PropertyChangedCallback(OnFinalSequenceChange))); 
+            DependencyProperty.Register(nameof(FinalSeq)
+                , typeof(ObservableCollection<Move>)
+                , typeof(FinalSequence)
+                , new PropertyMetadata(null, new PropertyChangedCallback(OnFinalSequenceChange))); 
 
         private static void OnFinalSequenceChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {

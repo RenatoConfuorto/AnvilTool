@@ -36,7 +36,10 @@ namespace AnvilTool.UserControls
         }
 
         public static readonly DependencyProperty MinPossibleProperty =
-            DependencyProperty.Register("MinPossible", typeof(int), typeof(MoveBar), new PropertyMetadata(Consts.MIN_POS, new PropertyChangedCallback(OnPositionsChanged)));
+            DependencyProperty.Register(nameof(MinPossible)
+                , typeof(int)
+                , typeof(MoveBar)
+                , new PropertyMetadata(Consts.MIN_POS, new PropertyChangedCallback(OnPositionsChanged)));
         #endregion
 
         #region MaxPossible
@@ -47,7 +50,10 @@ namespace AnvilTool.UserControls
         }
 
         public static readonly DependencyProperty MaxPossibleProperty =
-            DependencyProperty.Register("MaxPossible", typeof(int), typeof(MoveBar), new PropertyMetadata(Consts.MAX_POS, new PropertyChangedCallback(OnPositionsChanged)));
+            DependencyProperty.Register(nameof(MaxPossible)
+                , typeof(int)
+                , typeof(MoveBar)
+                , new PropertyMetadata(Consts.MAX_POS, new PropertyChangedCallback(OnPositionsChanged)));
         #endregion
 
 
@@ -60,7 +66,10 @@ namespace AnvilTool.UserControls
         }
 
         public static readonly DependencyProperty CurrentPosProperty =
-            DependencyProperty.Register("CurrentPos", typeof(int), typeof(MoveBar), new PropertyMetadata(Consts.MIN_POS, new PropertyChangedCallback(OnPositionsChanged)));
+            DependencyProperty.Register(nameof(CurrentPos)
+                , typeof(int)
+                , typeof(MoveBar)
+                , new PropertyMetadata(Consts.MIN_POS, new PropertyChangedCallback(OnPositionsChanged)));
         #endregion
 
         private static void OnPositionsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
