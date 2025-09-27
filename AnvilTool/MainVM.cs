@@ -150,7 +150,7 @@ public class MainVM : NotifyPropertyChangedBase
         else
         {
             // apply move normally
-            lastMoveDelta = _m.Delta;
+            lastMoveDelta += _m.Delta;
             CurrentPos += _m.Delta;
         }
         UpdateApplicationData();
