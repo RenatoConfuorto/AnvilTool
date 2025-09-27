@@ -83,7 +83,7 @@ namespace AnvilTool.UserControls
 
             for (int i = 0; i < Consts.MAX_FINAL_SEQ_NUM; i++)
             {
-                if (FinalSeq.Count > i + 1)
+                if (FinalSeq.Count >= i + 1)
                     AddMove(controls[i], FinalSeq[i]);
                 else
                     AddMove(controls[i]);

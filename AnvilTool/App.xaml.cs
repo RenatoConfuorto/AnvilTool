@@ -10,13 +10,13 @@ namespace AnvilTool
         public App()
         {
             SQLiteHelper.CheckDataFile();
-#if DEBUG
+//#if DEBUG
             MainWindowNew mv = new MainWindowNew();
             mv.Show();
-#else
-            MainWindow mw = new MainWindow();
-            mw.Show();
-#endif
+//#else
+//            MainWindow mw = new MainWindow();
+//            mw.Show();
+//#endif
         }
     }
 }

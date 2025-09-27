@@ -17,7 +17,7 @@ namespace AnvilTool.Entities
     { 
         public string Label { get; set; } 
         public int Delta { get; set; }
-        public MovesEnum MoveEn { get; set; }
+        public MovesEnum MoveEn { get; set; } = MovesEnum.None;
         public Bitmap MoveImage { get => GetMoveImage(); }
         public Bitmap MoveBackground { get => GetMoveBackground(); }
 

@@ -37,6 +37,7 @@ namespace AnvilTool.Constants
 
         public enum MovesEnum
         {
+            None = -1,
             LightHit,
             MediumHit,
             HardHit,
