@@ -79,6 +79,9 @@
     <Compile Include="Helpers\SQLiteHelper.cs" />
     <Compile Include="Helpers\TreeViewHelper.cs" />
     <Compile Include="Interfaces\IComputeShortest.cs" />
+    <Compile Include="MainWindowNew.xaml.cs">
+      <DependentUpon>MainWindowNew.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\MoveButton.xaml.cs">
       <DependentUpon>MoveButton.xaml</DependentUpon>
     </Compile>
@@ -108,6 +111,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MainWindowNew.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResourceDictionary\CommonStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\MoveButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -139,6 +150,9 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Resource Include="Font\Minecraft.otf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

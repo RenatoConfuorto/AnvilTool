@@ -12,8 +12,10 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <valueConverters:BitmapToBitmapImageConverter x:Key="ImageConverter"/>
-            <!--<properties:Resources x:Key="lightHit"/>-->
             <sys:Double x:Key="btnDim">50</sys:Double>
+            <!--<ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/ResourceDictionary/CommonStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>-->
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>

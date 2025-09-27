@@ -1,0 +1,24 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:valueConverters="clr-namespace:AnvilTool.ValueConverters"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <valueConverters:BitmapToBitmapImageConverter x:Key="ImageConverter"/>
+
+    <FontFamily x:Key="MainFontStyle">/pack://application:,,,/AnvilTool;component/Fonts/#Minecraft</FontFamily>
+
+    <Color x:Key="bgColor">White</Color>
+    <Color x:Key="textColor">Black</Color>
+
+    <SolidColorBrush x:Key="BgColorBrush" Color="{StaticResource bgColor}"/>
+    <SolidColorBrush x:Key="TextColorBrush" Color="{StaticResource textColor}"/>
+
+    <Style TargetType="{x:Type Window}">
+        <Setter Property="FontFamily" Value="{StaticResource MainFontStyle}"/>
+        <Setter Property="Background" Value="{StaticResource BgColorBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource TextColorBrush}"/>
+    </Style>
+
+    <Style TargetType="ToolTip">
+        <Setter Property="FontFamily" Value="{StaticResource MainFontStyle}"/>
+    </Style>
+</ResourceDictionary>

@@ -163,6 +163,16 @@ namespace AnvilTool.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap topBar {
+            get {
+                object obj = ResourceManager.GetObject("topBar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap upset {
             get {
                 object obj = ResourceManager.GetObject("upset", resourceCulture);
