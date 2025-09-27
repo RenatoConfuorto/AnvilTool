@@ -22,7 +22,7 @@ public class MainVM : NotifyPropertyChangedBase
     public ObservableCollection<Move> FinalSequence 
     {
         get => _finalSequence; 
-        private set => SetProperty(ref _finalSequence, value);
+        set => SetProperty(ref _finalSequence, value);
     } 
     public ObservableCollection<Move> ComputedSequence { get; private set; } = new ObservableCollection<Move>();
 
@@ -145,6 +145,7 @@ public class MainVM : NotifyPropertyChangedBase
                 FinalSequence.RemoveAt(0);
 
             FinalSequence.Add(_m);
+            RaisePropertyChanged(nameof(FinalSequence));
             return;
         }
         else
@@ -268,7 +269,7 @@ public class MainVM : NotifyPropertyChangedBase
         Product prod = new Product()
         {
             Target = ActualTarget,
-            FinalSeq = FinalSequence,
+            FinalSeq = FinalSequence
         };
         p.OpenSave(prod);
     }

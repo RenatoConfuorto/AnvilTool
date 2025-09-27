@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="AnvilTool.UserControls.FinalSequence"
+             x:Name="uCtrl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AnvilTool.UserControls"
+             xmlns:valueConverters="clr-namespace:AnvilTool.ValueConverters"
+             xmlns:properties="clr-namespace:AnvilTool.Properties"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib" 
+             Padding="0"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/AnvilTool;component/ResourceDictionary/CommonStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid Width="200">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.Background>
+            <ImageBrush Stretch="Uniform"
+                        ImageSource="{Binding Source={x:Static properties:Resources.topBar}, Converter={StaticResource ImageConverter}}"/>
+        </Grid.Background>
+        <!--<Image Source="{Binding Source={x:Static properties:Resources.topBar}, Converter={StaticResource ImageConverter}}"
+               VerticalAlignment="Center" 
+               HorizontalAlignment="Center"
+               Margin="6 2"
+               Grid.Column="0"
+               Grid.ColumnSpan="3"/>-->
+
+        <local:ActionMove Margin="4, 0" Visibility="Visible" HorizontalAlignment="Right" x:Name="first" Grid.Column="0"/>
+        <local:ActionMove Margin="4, 0" Visibility="Visible" HorizontalAlignment="Center" x:Name="second" Grid.Column="1"/>
+        <local:ActionMove Margin="4, 0" Visibility="Visible" HorizontalAlignment="Left" x:Name="third" Grid.Column="2"/>
+    </Grid>
+</UserControl>
