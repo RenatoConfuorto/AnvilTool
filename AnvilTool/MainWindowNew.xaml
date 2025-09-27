@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         Title="MainWindowNew" Height="520" Width="720">
     <Window.Resources>
-        <ResourceDictionary Source="/ResourceDictionary/CommonStyles.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/AnvilTool;component/ResourceDictionary/CommonStyles.xaml"/>
     </Window.Resources>
     <Grid>
 
@@ -61,7 +61,6 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-
         <!--Status Bar-->
         <usercontrols:MoveBar Grid.Row="2"
                               Margin="0, 4"
