@@ -37,7 +37,6 @@ public class MainVM : NotifyPropertyChangedBase
         {
             // Clamp value between min and max
             SetProperty(ref _currentPos, Math.Max(Consts.MIN_POS, Math.Min(Consts.MAX_POS, value)));
-            RaisePropertyChanged(nameof(StatusLine));
         }
     }
     #endregion
@@ -51,28 +50,38 @@ public class MainVM : NotifyPropertyChangedBase
     }
     #endregion
 
-    private int _minPossible = Consts.MIN_POS, _maxPossible = Consts.MAX_POS;
-    public string IntervalDisplay => $"[{_minPossible}, {_maxPossible}]";
-    public string StatusLine => $"Pos: {CurrentPos}";
+    #region Min/Max Possible
+    private int _minPossible = Consts.MIN_POS;
+    public int MinPossible
+    {
+        get => _minPossible;
+        set => SetProperty(ref _minPossible, value);
+    }
+
+    private int _maxPossible = Consts.MAX_POS;
+    public int MaxPossible
+    {
+        get => _maxPossible;
+        set => SetProperty(ref _maxPossible, value);
+    }
+
+    #endregion
 
     // markers: list of (position, lastMoveSign)
-    //private List<(int pos, int sign)> markers = new List<(int pos, int sign)>();
     private Dictionary<int, int> markers;
     private int lastMoveDelta = 0;
 
     public bool IsRecordingFinal { get; private set; } = false;
-    public bool IsTargetKnown => _minPossible == _maxPossible;
+    public bool IsTargetKnown => MinPossible == MaxPossible;
     private bool explorationActive = false;
 
     #region Commands Definitions
     public ICommand PressMoveCmd { get; }
-    //public ICommand StartRecordFinalCmd { get; }
     public ICommand ToggleExploreCmd { get; }
     public ICommand MarkDirectionChangeCmd { get; }
     public ICommand FoundExactCmd { get; }
     public ICommand ComputeShortestCmd { get; } 
     public ICommand ResetCmd { get; } 
-    //public ICommand SaveCmd { get; } 
     public ICommand SaveRecipeCmd { get; } 
     public ICommand LoadRecipeCmd { get; } 
     #endregion
@@ -84,13 +93,11 @@ public class MainVM : NotifyPropertyChangedBase
         FinalSequence = new ObservableCollection<Move>(); // stored in input order, left is last
 
         PressMoveCmd = new RelayCommand(PressMove, CanPressMove);
-        //StartRecordFinalCmd = new RelayCommand(_ => StartRecordFinal());
         ToggleExploreCmd = new RelayCommand(ToggleExplore, CanToggleExplore);
         MarkDirectionChangeCmd = new RelayCommand(MarkDirectionChange, CanMarkDirectionChanged);
         FoundExactCmd = new RelayCommand(FoundExact, CanFoundExact);
         ComputeShortestCmd = new RelayCommand(ComputeShortest, CanComputeShortest);
         ResetCmd = new RelayCommand(Reset, CanReset);
-        //SaveCmd = new RelayCommand(Save, CanSave);
         SaveRecipeCmd = new RelayCommand(SaveRecipe, CanSaveRecipe);
         LoadRecipeCmd = new RelayCommand(LoadRecipe, CanLoadRecipe);
 
@@ -101,10 +108,10 @@ public class MainVM : NotifyPropertyChangedBase
     {
         IsRecordingFinal = true;
         explorationActive = false;
-        _minPossible = Consts.MIN_POS;
-        _maxPossible = Consts.MAX_POS;
-        CurrentPos = _minPossible;
-        ActualTarget = _minPossible;
+        MinPossible = Consts.MIN_POS;
+        MaxPossible = Consts.MAX_POS;
+        CurrentPos = MinPossible;
+        ActualTarget = MinPossible;
         lastMoveDelta = 0;
 
         markers = new Dictionary<int, int>() { { -1, Consts.MIN_POS }, { 1, Consts.MAX_POS } };
@@ -118,19 +125,12 @@ public class MainVM : NotifyPropertyChangedBase
 
     private void UpdateApplicationData()
     {
-        RaisePropertyChanged(nameof(IntervalDisplay));
-        RaisePropertyChanged(nameof(IsTargetKnown));
         RaisePropertyChanged(nameof(CurrentPos));
     }
     #region Commands methods
 
     private void RaiseCommandExecutionChanged()
     {
-        //this.GetType()
-        //    .GetProperties()
-        //    .Where(p => p.PropertyType == typeof(ICommand))
-        //    .ToList()
-        //    .ForEach(_c => (_c.GetValue(this) as RelayCommand).RaiseCanExecuteChanged());
         RelayCommand.RaiseCanExecuteAll(this);
     }
 
@@ -164,13 +164,10 @@ public class MainVM : NotifyPropertyChangedBase
     private void ToggleExplore(object param)
     {
         explorationActive = true;
-        // reset for exploration session
         CurrentPos = Consts.MIN_POS;
-        //markers.Clear();
-        _minPossible = Consts.MIN_POS; 
-        _maxPossible = Consts.MAX_POS;
+        MinPossible = Consts.MIN_POS; 
+        MaxPossible = Consts.MAX_POS;
         IsRecordingFinal = false;
-        //FinalSequence.Clear();
         UpdateApplicationData();
         RaiseCommandExecutionChanged();
     }
@@ -194,11 +191,11 @@ public class MainVM : NotifyPropertyChangedBase
         else
             markers[sign] = Math.Max(markers[sign], CurrentPos);
 
-        _minPossible = markers[-1];
-        _maxPossible = markers[1];
+        MinPossible = markers[-1];
+        MaxPossible = markers[1];
 
-        if(ActualTarget < _minPossible) ActualTarget = _minPossible;
-        if(ActualTarget > _maxPossible) ActualTarget = _maxPossible;
+        if(ActualTarget < MinPossible) ActualTarget = MinPossible;
+        if(ActualTarget > MaxPossible) ActualTarget = MaxPossible;
 
         UpdateApplicationData();
         lastMoveDelta = 0;
@@ -212,8 +209,8 @@ public class MainVM : NotifyPropertyChangedBase
     public void FoundExact(object param)
     {
         // user signals the exact value is CurrentPos
-        _minPossible = CurrentPos;
-        _maxPossible = CurrentPos;
+        MinPossible = CurrentPos;
+        MaxPossible = CurrentPos;
         UpdateApplicationData();
         RaiseCommandExecutionChanged();
     }
@@ -223,28 +220,7 @@ public class MainVM : NotifyPropertyChangedBase
     #region ComputeShortest
     private void ComputeShortest(object param)
     {
-        //if(_minPossible != _maxPossible)
-        //{
-        //    MessageBox.Show("Il target non è stato identificato con precisione. Il minimo verrà utilizzato per il calcolo"
-        //        , "ATTENZIONE"
-        //        , MessageBoxButton.OK
-        //        , MessageBoxImage.Warning);
-
-        //    _minPossible++;
-        //    markers[-1]++;
-        //    RaisePropertyChanged(nameof(IntervalDisplay));
-        //    RaisePropertyChanged(nameof(IsTargetKnown));
-        //    ComputedSequence = new ObservableCollection<Move>
-        //    (
-        //        computeShortest.Compute(CurrentPos, _minPossible - 1, FinalSequence.ToList())
-        //    );
-        //}
-        //else
-        //    ComputedSequence = new ObservableCollection<Move>
-        //        (
-        //            computeShortest.Compute(CurrentPos, _minPossible, FinalSequence.ToList())
-        //        );
-
+        
         var seq = computeShortest.Compute(CurrentPos, ActualTarget, FinalSequence.ToList());
 
         if(seq == null)
