@@ -52,6 +52,16 @@ namespace AnvilTool.Entities
             }
         }
 
+        public Move Copy()
+        {
+            return new Move()
+            {
+                Label = this.Label,
+                Delta = this.Delta,
+                MoveEn = this.MoveEn,
+            };
+        }
+
         public override string ToString() => $"{Label} {Delta}";
     }
 

@@ -1,0 +1,74 @@
+﻿<UserControl x:Class="AnvilTool.UserControls.MoveBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AnvilTool.UserControls"
+             xmlns:properties="clr-namespace:AnvilTool.Properties"
+             mc:Ignorable="d" >
+    <UserControl.Resources>
+        <ResourceDictionary Source="/ResourceDictionary/CommonStyles.xaml"/>
+    </UserControl.Resources>
+    <Canvas Height="{StaticResource barHeight}" Width="{StaticResource barWidth}">
+        <Canvas.Resources>
+            <Style TargetType="Grid" x:Key="SliderTop">
+                <!--<Setter Property="Margin" Value="0 0 0 25"/>-->
+                <!--<Setter Property="Background" Value="{StaticResource SliderRedBrush}"/>-->
+                <Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+                <Setter Property="RenderTransform">
+                    <Setter.Value>
+                        <RotateTransform Angle="180"/>
+                    </Setter.Value>
+                </Setter>
+                <!--<Style.Resources>
+                    <Style TargetType="Image">
+                        <Setter Property="RenderTransform">
+                            <Setter.Value>
+                                <RotateTransform Angle="180"/>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Style.Resources>-->
+            </Style>
+            <Style TargetType="Grid" x:Key="SliderBot">
+                <!--<Setter Property="Margin" Value="0 0 0 -70"/>-->
+                <!--<Setter Property="Background" Value="{StaticResource SliderGreenBrush}"/>-->
+                <!--<Setter Property="RenderTransform">
+                    <Setter.Value>
+                        <RotateTransform Angle="0"/>
+                    </Setter.Value>
+                </Setter>-->
+            </Style>
+        </Canvas.Resources>
+        
+        <!--<Image x:Name="baCtrl"
+               Height="{StaticResource barHeight}"
+               Source="{Binding Source={x:Static properties:Resources.bar}, Converter={StaticResource ImageConverter}}"/>-->
+        <Border x:Name="baCtrl"
+                BorderBrush="Black"
+                BorderThickness="1"
+                CornerRadius="2"
+                   Height="{StaticResource barHeight}"
+                   Width="{StaticResource barWidth}"
+                   Background="{StaticResource SliderBackBrush}"/>
+
+        <Grid x:Name="sliderMin"
+              Height="{StaticResource sliderHeight}" Width="{StaticResource sliderHeight}"
+              ToolTip="{Binding MinPossible}"
+              Style="{StaticResource SliderTop}">
+            <Image Source="{Binding Source={x:Static properties:Resources.slider}, Converter={StaticResource ImageConverter}}"/>
+        </Grid>
+        <Grid x:Name="sliderMax"
+              Height="{StaticResource sliderHeight}" Width="{StaticResource sliderHeight}"
+              ToolTip="{Binding MaxPossible}"
+              Style="{StaticResource SliderTop}">
+            <Image Source="{Binding Source={x:Static properties:Resources.slider}, Converter={StaticResource ImageConverter}}"/>
+        </Grid>
+        <Grid x:Name="sliderCurr"
+              Height="{StaticResource sliderHeight}" Width="{StaticResource sliderHeight}"
+              ToolTip="{Binding CurrentPos}"
+              Style="{StaticResource SliderBot}">
+            <Image Source="{Binding Source={x:Static properties:Resources.slider}, Converter={StaticResource ImageConverter}}"/>
+        </Grid>
+    </Canvas>
+</UserControl>

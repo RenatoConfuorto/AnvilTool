@@ -17,6 +17,7 @@
             <RowDefinition Height="100"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -37,6 +38,7 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
+                    <!--Usare un bottone diverso per la final seq e la computed seq-->
                     <usercontrols:MoveButtonNew Move="{Binding .}"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
@@ -59,5 +61,24 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
+
+        <!--Status Bar-->
+        <usercontrols:MoveBar Grid.Row="2"
+                              Margin="0, 4"
+                              Height="{StaticResource barHeight}"
+                              MinPossible="{Binding MinPossible}"
+                              MaxPossible="{Binding MaxPossible}"
+                              CurrentPos="{Binding CurrentPos}"/>
+        
+        <!--Commands - Temporary-->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="8">
+            <!--<Button Content="Record Final Sequence" Command="{Binding StartRecordFinalCmd}" Margin="0,0,6,0"/>-->
+            <Button MinWidth="75" Content="Start Exploration" Command="{Binding ToggleExploreCmd}" Margin="0,0,6,0"/>
+            <Button MinWidth="75" Content="Mark Direction Change" Command="{Binding MarkDirectionChangeCmd}" Margin="0,0,6,0"/>
+            <Button MinWidth="75" Content="Found Exact" Command="{Binding FoundExactCmd}" Margin="0,0,6,0"/>
+            <Button MinWidth="75" Content="Reset" Command="{Binding ResetCmd}" Margin="0,0,6,0"/>
+            <Button MinWidth="75" Content="Save Recipe" Command="{Binding SaveRecipeCmd}" Margin="0,0,6,0"/>
+            <Button MinWidth="75" Content="Load Recipe" Command="{Binding LoadRecipeCmd}" Margin="0,0,6,0"/>
+        </StackPanel>
     </Grid>
 </Window>

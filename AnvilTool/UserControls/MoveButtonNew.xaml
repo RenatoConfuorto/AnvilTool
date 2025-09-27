@@ -11,11 +11,9 @@
              mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
-            <valueConverters:BitmapToBitmapImageConverter x:Key="ImageConverter"/>
-            <sys:Double x:Key="btnDim">50</sys:Double>
-            <!--<ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/ResourceDictionary/CommonStyles.xaml"/>
-            </ResourceDictionary.MergedDictionaries>-->
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>

@@ -82,6 +82,9 @@
     <Compile Include="MainWindowNew.xaml.cs">
       <DependentUpon>MainWindowNew.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\MoveBar.xaml.cs">
+      <DependentUpon>MoveBar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\MoveButton.xaml.cs">
       <DependentUpon>MoveButton.xaml</DependentUpon>
     </Compile>
@@ -116,6 +119,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ResourceDictionary\CommonStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\MoveBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

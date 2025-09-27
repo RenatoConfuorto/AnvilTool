@@ -1,16 +1,34 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:valueConverters="clr-namespace:AnvilTool.ValueConverters"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    <!--#region Converters -->
     <valueConverters:BitmapToBitmapImageConverter x:Key="ImageConverter"/>
-
+    <!--#endregion-->
     <FontFamily x:Key="MainFontStyle">/pack://application:,,,/AnvilTool;component/Fonts/#Minecraft</FontFamily>
 
+
+    <!--#region Colors -->
     <Color x:Key="bgColor">White</Color>
     <Color x:Key="textColor">Black</Color>
+    <Color x:Key="sliderRed">Red</Color>
+    <Color x:Key="sliderGreen">Green</Color>
+    <Color x:Key="sliderBack">DarkGray</Color>
 
     <SolidColorBrush x:Key="BgColorBrush" Color="{StaticResource bgColor}"/>
     <SolidColorBrush x:Key="TextColorBrush" Color="{StaticResource textColor}"/>
+    <SolidColorBrush x:Key="SliderRedBrush" Color="{StaticResource sliderRed}"/>
+    <SolidColorBrush x:Key="SliderGreenBrush" Color="{StaticResource sliderGreen}"/>
+    <SolidColorBrush x:Key="SliderBackBrush" Color="{StaticResource sliderBack}"/>
+    <!--#endregion-->
+
+    <!--#region Values Definitions -->
+    <sys:Double x:Key="btnDim">50</sys:Double>
+    <sys:Double x:Key="barHeight">20</sys:Double>
+    <sys:Double x:Key="barWidth">400</sys:Double>
+    <sys:Double x:Key="sliderHeight">16</sys:Double>
+    <!--#endregion-->
 
     <Style TargetType="{x:Type Window}">
         <Setter Property="FontFamily" Value="{StaticResource MainFontStyle}"/>
