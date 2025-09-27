@@ -104,11 +104,15 @@
                     </StackPanel>
                 </HierarchicalDataTemplate>
                 <DataTemplate DataType="{x:Type Entities:Move}">
-                    <usercontrols:MoveButton Move="{Binding .}" IsEnabled="True">
-                        <usercontrols:MoveButton.ToolTip>
-                            <TextBlock Text="{Binding .}"/>
-                        </usercontrols:MoveButton.ToolTip>
-                    </usercontrols:MoveButton>
+                    <StackPanel HorizontalAlignment="Left">
+                        <usercontrols:MoveButton Move="{Binding .}" 
+                                                 IsEnabled="True" 
+                                                 HorizontalAlignment="Left">
+                            <usercontrols:MoveButton.ToolTip>
+                                <TextBlock Text="{Binding .}"/>
+                            </usercontrols:MoveButton.ToolTip>
+                        </usercontrols:MoveButton>
+                    </StackPanel>
                 </DataTemplate>
             </TreeView.Resources>
         </TreeView>

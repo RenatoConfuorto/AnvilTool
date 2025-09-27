@@ -25,16 +25,27 @@ namespace AnvilTool.Constants
 
         public static readonly ObservableCollection<Move> Moves = new ObservableCollection<Move>()
         {
-            { new Move { Label = "Light Hit", Delta = -3 } },
-            { new Move { Label = "Medium Hit", Delta = -6 } },
-            { new Move { Label = "Punch", Delta = +2 } },
-            { new Move { Label = "Bend", Delta = +7 } },
-            { new Move { Label = "Hard hit", Delta = -9 } },
-            { new Move { Label = "Draw", Delta = -15 } },
-            { new Move { Label = "Upset", Delta = +13 } },
-            { new Move { Label = "Shrink", Delta = +16 } },
+            { new Move {MoveEn = MovesEnum.LightHit, Label = "Light Hit", Delta = -3 } },
+            { new Move {MoveEn = MovesEnum.MediumHit, Label = "Medium Hit", Delta = -6 } },
+            { new Move {MoveEn = MovesEnum.Punch, Label = "Punch", Delta = +2 } },
+            { new Move {MoveEn = MovesEnum.Bend, Label = "Bend", Delta = +7 } },
+            { new Move {MoveEn = MovesEnum.HardHit, Label = "Hard hit", Delta = -9 } },
+            { new Move {MoveEn = MovesEnum.Draw, Label = "Draw", Delta = -15 } },
+            { new Move {MoveEn = MovesEnum.Upset, Label = "Upset", Delta = +13 } },
+            { new Move {MoveEn = MovesEnum.Shrink, Label = "Shrink", Delta = +16 } },
         };
 
+        public enum MovesEnum
+        {
+            LightHit,
+            MediumHit,
+            HardHit,
+            Draw,
+            Punch,
+            Bend,
+            Upset,
+            Shrink,
+        }
 
         public enum RecipesMode
         {
