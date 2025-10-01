@@ -3,6 +3,10 @@
                     xmlns:sys="clr-namespace:System;assembly=mscorlib"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/AnvilTool;component/ResourceDictionary/Geometries.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+    
     <!--#region Converters -->
     <valueConverters:BitmapToBitmapImageConverter x:Key="ImageConverter"/>
     <!--#endregion-->

@@ -8,13 +8,17 @@
         xmlns:properties="clr-namespace:AnvilTool.Properties" 
         ResizeMode="NoResize"
         mc:Ignorable="d"
-        Background="LightGray"
+        WindowStyle="SingleBorderWindow"
         Title="Anvil Tool" Height="520" Width="720">
     <Window.Resources>
         <ResourceDictionary Source="pack://application:,,,/AnvilTool;component/ResourceDictionary/CommonStyles.xaml"/>
     </Window.Resources>
-    <Grid>
-
+    
+    <Window.Background>
+        <ImageBrush ImageSource="{StaticResource inventoryDrawingImage}" Stretch="Fill"/>
+    </Window.Background>
+    
+    <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -88,7 +92,10 @@
             <Button Content="Compute Shortest" Command="{Binding ComputeShortestCmd}"/>
         </StackPanel>
 
-        <ItemsControl Grid.Row="4" ItemsSource="{Binding ComputedSequence}">
+        <ItemsControl Grid.Row="4" 
+                      Grid.Column="0"
+                      Grid.ColumnSpan="3"
+                      ItemsSource="{Binding ComputedSequence}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel FlowDirection="LeftToRight"/>
