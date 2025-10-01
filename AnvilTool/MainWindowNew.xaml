@@ -11,126 +11,131 @@
         WindowStyle="SingleBorderWindow"
         Title="Anvil Tool" Height="520" Width="720">
     <Window.Resources>
-        <ResourceDictionary Source="pack://application:,,,/AnvilTool;component/ResourceDictionary/CommonStyles.xaml"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/AnvilTool;component/ResourceDictionary/CommonStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Window.Resources>
-    
-    <Window.Background>
-        <ImageBrush ImageSource="{StaticResource inventoryDrawingImage}" Stretch="Fill"/>
-    </Window.Background>
-    
-    <Grid Margin="20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+    <Border Padding="0" Margin="0">
+        <Border.Background>
+            <ImageBrush ImageSource="{StaticResource inventoryDrawingImage}" Stretch="Fill"/>
+        </Border.Background>
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-        <usercontrols:FinalSequence FinalSeq="{Binding FinalSequence, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                    Margin="0 8"
-                                    Grid.Row="0"
-                                    Grid.Column="1"
-                                    HorizontalAlignment="Center"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <usercontrols:FinalSequence FinalSeq="{Binding FinalSequence, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        Margin="0 8"
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        HorizontalAlignment="Center"/>
 
         
-        <!--AVAILABLE MOVES-->
-        <ItemsControl ItemsSource="{x:Static Const:Consts.Moves}"
-                      Grid.Row="1"
-                      Grid.Column="1"
-                      ToolTip="Available Moves">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel FlowDirection="LeftToRight"
-                       MaxWidth="250"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <usercontrols:MoveButtonNew Move="{Binding .}"
-                                     MoveClickCommand="{Binding DataContext.PressMoveCmd, RelativeSource={RelativeSource AncestorType=Window}}"/>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-        <!--Status Bar-->
-        <usercontrols:MoveBar Grid.Row="2"
-                              Grid.Column="0"
-                              Grid.ColumnSpan="3"
-                              Margin="0, 4"
-                              Height="{StaticResource barHeight}"
-                              MinPossible="{Binding MinPossible}"
-                              MaxPossible="{Binding MaxPossible}"
-                              CurrentPos="{Binding CurrentPos}"/>
+            <!--AVAILABLE MOVES-->
+            <ItemsControl ItemsSource="{x:Static Const:Consts.Moves}"
+                          Grid.Row="1"
+                          Grid.Column="1"
+                          ToolTip="Available Moves">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel FlowDirection="LeftToRight"
+                           MaxWidth="250"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <usercontrols:MoveButtonNew Move="{Binding .}"
+                                         MoveClickCommand="{Binding DataContext.PressMoveCmd, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <!--Status Bar-->
+            <usercontrols:MoveBar Grid.Row="2"
+                                  Grid.Column="0"
+                                  Grid.ColumnSpan="3"
+                                  Margin="0, 4"
+                                  Height="{StaticResource barHeight}"
+                                  MinPossible="{Binding MinPossible}"
+                                  MaxPossible="{Binding MaxPossible}"
+                                  CurrentPos="{Binding CurrentPos}"/>
         
-        <!--Commands - Temporary-->
-        <StackPanel Grid.Row="0" 
-                    Grid.RowSpan="2"
-                    Grid.Column="0"
-                    Orientation="Vertical" 
-                    Margin="8">
-            <StackPanel.Resources>
-                <Style TargetType="Button">
-                    <Setter Property="MinWidth" Value="150"/>
-                    <Setter Property="Margin" Value="0,4,0,0"/>
-                    <Setter Property="HorizontalAlignment" Value="Left"/>
-                </Style>
-            </StackPanel.Resources>
+            <!--Commands - Temporary-->
+            <StackPanel Grid.Row="0" 
+                        Grid.RowSpan="2"
+                        Grid.Column="0"
+                        Orientation="Vertical" 
+                        Margin="8">
+                <StackPanel.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="MinWidth" Value="150"/>
+                        <Setter Property="Margin" Value="0,4,0,0"/>
+                        <Setter Property="HorizontalAlignment" Value="Left"/>
+                    </Style>
+                </StackPanel.Resources>
            
-            <!--<Button Content="Record Final Sequence" Command="{Binding StartRecordFinalCmd}" Margin="0,0,6,0"/>-->
-            <Button Content="Start Exploration" Command="{Binding ToggleExploreCmd}"/>
-            <Button Content="Mark Direction Change" Command="{Binding MarkDirectionChangeCmd}"/>
-            <Button Content="Found Exact" Command="{Binding FoundExactCmd}"/>
-            <Button Content="Reset" Command="{Binding ResetCmd}"/>
-            <Button Content="Save Recipe" Command="{Binding SaveRecipeCmd}"/>
-            <Button Content="Load Recipe" Command="{Binding LoadRecipeCmd}"/>
-            <Button Content="Compute Shortest" Command="{Binding ComputeShortestCmd}"/>
-        </StackPanel>
-
-        <ItemsControl Grid.Row="4" 
-                      Grid.Column="0"
-                      Grid.ColumnSpan="3"
-                      ItemsSource="{Binding ComputedSequence}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel FlowDirection="LeftToRight"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <!--<usercontrols:MoveButtonNew Move="{Binding .}"/>-->
-                    <usercontrols:ActionMove Move="{Binding .}"/>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-
-        <!--CURRENT - Temporary-->
-        <StackPanel Grid.Row="1"
-                    Grid.Column="2"
-                    Orientation="Horizontal">
-            <StackPanel Margin="2 2">
-                <TextBlock Margin="0,6,0,0">
-            <Run Text="Pos: "/>
-            <Run Text="{Binding CurrentPos}" d:Text="60" />
-                </TextBlock>
-                <TextBlock Text="Intervallo possibile:" FontWeight="Bold"/>
-                <TextBlock >
-            <Run Text="["/>
-            <Run Text="{Binding MinPossible}" d:Text="20"/>
-            <Run Text=", "/>
-            <Run Text="{Binding MaxPossible}" d:Text="110"/>
-            <Run Text="]"/>
-                </TextBlock>
+                <!--<Button Content="Record Final Sequence" Command="{Binding StartRecordFinalCmd}" Margin="0,0,6,0"/>-->
+                <Button Content="Start Exploration" Command="{Binding ToggleExploreCmd}"/>
+                <Button Content="Mark Direction Change" Command="{Binding MarkDirectionChangeCmd}"/>
+                <Button Content="Found Exact" Command="{Binding FoundExactCmd}"/>
+                <Button Content="Reset" Command="{Binding ResetCmd}"/>
+                <Button Content="Save Recipe" Command="{Binding SaveRecipeCmd}"/>
+                <Button Content="Load Recipe" Command="{Binding LoadRecipeCmd}"/>
+                <Button Content="Compute Shortest" Command="{Binding ComputeShortestCmd}"/>
             </StackPanel>
-            <StackPanel Margin="10 2">
-                <TextBlock Text="Target Attuale"/>
-                <TextBox   Text="{Binding ActualTarget, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <ItemsControl Grid.Row="4" 
+                          Grid.Column="0"
+                          Grid.ColumnSpan="3"
+                          ItemsSource="{Binding ComputedSequence}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel FlowDirection="LeftToRight"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <!--<usercontrols:MoveButtonNew Move="{Binding .}"/>-->
+                        <usercontrols:ActionMove Move="{Binding .}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <!--CURRENT - Temporary-->
+            <StackPanel Grid.Row="1"
+                        Grid.Column="2"
+                        Orientation="Horizontal">
+                <StackPanel Margin="2 2">
+                    <TextBlock Margin="0,6,0,0">
+                <Run Text="Pos: "/>
+                <Run Text="{Binding CurrentPos}" d:Text="60" />
+                    </TextBlock>
+                    <TextBlock Text="Intervallo possibile:" FontWeight="Bold"/>
+                    <TextBlock >
+                <Run Text="["/>
+                <Run Text="{Binding MinPossible}" d:Text="20"/>
+                <Run Text=", "/>
+                <Run Text="{Binding MaxPossible}" d:Text="110"/>
+                <Run Text="]"/>
+                    </TextBlock>
+                </StackPanel>
+                <StackPanel Margin="10 2">
+                    <TextBlock Text="Target Attuale"/>
+                    <TextBox   Text="{Binding ActualTarget, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
             </StackPanel>
-        </StackPanel>
-    </Grid>
+        </Grid>
+    </Border>
 </Window>

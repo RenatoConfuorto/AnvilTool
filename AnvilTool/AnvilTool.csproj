@@ -88,6 +88,9 @@
     <Compile Include="UserControls\FinalSequence.xaml.cs">
       <DependentUpon>FinalSequence.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\MaterialTreeCtrl.xaml.cs">
+      <DependentUpon>MaterialTreeCtrl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\MoveBar.xaml.cs">
       <DependentUpon>MoveBar.xaml</DependentUpon>
     </Compile>
@@ -96,6 +99,12 @@
     </Compile>
     <Compile Include="UserControls\MoveButtonNew.xaml.cs">
       <DependentUpon>MoveButtonNew.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ProductTreeCtrl.xaml.cs">
+      <DependentUpon>ProductTreeCtrl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ServerTreeCtrl.xaml.cs">
+      <DependentUpon>ServerTreeCtrl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ValueConverters\BitmapToBitmapImageConverter.cs" />
     <Compile Include="ViewModels\RecepiesPopupViewModel.cs" />
@@ -140,6 +149,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserControls\MaterialTreeCtrl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\MoveBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -149,6 +162,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\MoveButtonNew.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ProductTreeCtrl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ServerTreeCtrl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

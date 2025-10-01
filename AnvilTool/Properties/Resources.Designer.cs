@@ -113,6 +113,26 @@ namespace AnvilTool.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap fluxBg {
+            get {
+                object obj = ResourceManager.GetObject("fluxBg", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap hammerBg {
+            get {
+                object obj = ResourceManager.GetObject("hammerBg", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap hardHit {
             get {
                 object obj = ResourceManager.GetObject("hardHit", resourceCulture);
@@ -146,6 +166,16 @@ namespace AnvilTool.Properties {
         public static System.Drawing.Bitmap performedStepOutline {
             get {
                 object obj = ResourceManager.GetObject("performedStepOutline", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap pieceBg {
+            get {
+                object obj = ResourceManager.GetObject("pieceBg", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -19,7 +19,7 @@
             </Style>
 
             <Style TargetType="TextBlock">
-                <Setter Property="Width" Value="100"/>
+                <!--<Setter Property="Width" Value="100"/>-->
             </Style>
 
             <Style TargetType="TextBox">
@@ -85,25 +85,28 @@
             </i:Interaction.Triggers>
             <TreeView.Resources>
                 <HierarchicalDataTemplate DataType="{x:Type StoredData:Server}" ItemsSource="{Binding Materials}">
-                    <StackPanel Orientation="Horizontal">
+                    <!--<StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
-                    </StackPanel>
+                    </StackPanel>-->
+                    <usercontrols:ServerTreeCtrl Server="{Binding .}"/>
                 </HierarchicalDataTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type StoredData:Material}" ItemsSource="{Binding Products}">
-                    <StackPanel Orientation="Horizontal">
+                    <!--<StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding Name}"/>
-                    </StackPanel>
+                    </StackPanel>-->
+                    <usercontrols:MaterialTreeCtrl Material="{Binding .}"/>
                 </HierarchicalDataTemplate>
-                <HierarchicalDataTemplate DataType="{x:Type StoredData:Product}" ItemsSource="{Binding FinalSeq}">
-                    <StackPanel Orientation="Horizontal">
+                <HierarchicalDataTemplate DataType="{x:Type StoredData:Product}" >
+                    <!--<StackPanel Orientation="Horizontal">
                         <TextBlock>
                             <Run Text="{Binding Name}"/>
                             <Run Text="  -  Target: "/>
                             <Run Text="{Binding Target}"/>
                         </TextBlock>
-                    </StackPanel>
+                    </StackPanel>-->
+                    <usercontrols:ProductTreeCtrl Product="{Binding .}" Width="300"/>
                 </HierarchicalDataTemplate>
-                <DataTemplate DataType="{x:Type Entities:Move}">
+                <!--<DataTemplate DataType="{x:Type Entities:Move}">
                     <StackPanel HorizontalAlignment="Left">
                         <usercontrols:MoveButton Move="{Binding .}" 
                                                  IsEnabled="True" 
@@ -113,7 +116,7 @@
                             </usercontrols:MoveButton.ToolTip>
                         </usercontrols:MoveButton>
                     </StackPanel>
-                </DataTemplate>
+                </DataTemplate>-->
             </TreeView.Resources>
         </TreeView>
     </Grid>
