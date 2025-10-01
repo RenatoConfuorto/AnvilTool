@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36221.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnvilTool", "AnvilTool\AnvilTool.csproj", "{1D7BB831-80FD-49F4-ABD1-13B107D9F9B1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "__AnvilTool", "AnvilTool\__AnvilTool.csproj", "{1D7BB831-80FD-49F4-ABD1-13B107D9F9B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LIB_Library", "LIB_Library\LIB_Library.csproj", "{801B867B-AD2D-48F0-AB09-F292567878B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnvilTool", "ApplicationProject\AnvilTool.csproj", "{19CC989B-8998-4742-916A-99A85E6D7D4D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{1D7BB831-80FD-49F4-ABD1-13B107D9F9B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D7BB831-80FD-49F4-ABD1-13B107D9F9B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D7BB831-80FD-49F4-ABD1-13B107D9F9B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{801B867B-AD2D-48F0-AB09-F292567878B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{801B867B-AD2D-48F0-AB09-F292567878B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{801B867B-AD2D-48F0-AB09-F292567878B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{801B867B-AD2D-48F0-AB09-F292567878B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19CC989B-8998-4742-916A-99A85E6D7D4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19CC989B-8998-4742-916A-99A85E6D7D4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19CC989B-8998-4742-916A-99A85E6D7D4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19CC989B-8998-4742-916A-99A85E6D7D4D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

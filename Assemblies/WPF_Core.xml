@@ -1,0 +1,1495 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WPF_Core</name>
+    </assembly>
+    <members>
+        <member name="T:WPF_Core.Attributes.ViewRef">
+            <summary>
+            Links the ViewModel with the View
+            </summary>
+        </member>
+        <member name="P:WPF_Core.Attributes.ViewRef.ViewName">
+            <summary>
+            Name of the view, used for dependency resolution and to be shown in header
+            </summary>
+        </member>
+        <member name="P:WPF_Core.Attributes.ViewRef.ViewType">
+            <summary>
+            Sets the view Type to be used after viewModel resolution to create the new instance of the view
+            </summary>
+        </member>
+        <member name="M:WPF_Core.Attributes.ViewRef.#ctor(System.Type)">
+            <summary>
+            Creates the new ViewRef Attribute
+            </summary>
+            <param name="viewType">ViewType linked to the ViewModel</param>
+        </member>
+        <member name="M:WPF_Core.Attributes.ViewRef.#ctor(System.Type,System.String)">
+            <summary>
+            Creates the new ViewRef Attivute
+            </summary>
+            <param name="viewType">ViewType linked to the ViewModel</param>
+            <param name="viewName">ViewName linked to the ViewModel</param>
+        </member>
+        <member name="T:WPF_Core.Commands.RelayCommand">
+            <summary>
+            Create a new instance of a ICommand class to be used in a view
+            </summary>
+        </member>
+        <member name="E:WPF_Core.Commands.RelayCommand.CanExecuteChanged">
+            <summary>
+            Event triggerd to check if the CanExecute status is changed
+            </summary>
+        </member>
+        <member name="M:WPF_Core.Commands.RelayCommand.#ctor(System.Action{System.Object},System.Predicate{System.Object})">
+            <summary>
+            Creates a new instance of the RelayCommand class
+            </summary>
+            <param name="Execute">The Execute action to perform</param>
+            <param name="CanExecute">The CanExecute predicate triggered by <event cref="E:WPF_Core.Commands.RelayCommand.CanExecuteChanged"/> event</param>
+        </member>
+        <member name="M:WPF_Core.Commands.RelayCommand.#ctor(System.Action{System.Object})">
+            <summary>
+            Creates a new instance of the RelayCommand class
+            </summary>
+            <param name="Execute">The Execute action to perform</param>
+            <notes>The given command doesn't need the <event cref="E:WPF_Core.Commands.RelayCommand.CanExecuteChanged"/> event to be triggered. It will always be active</notes>
+        </member>
+        <member name="M:WPF_Core.Commands.RelayCommand.CanExecute(System.Object)">
+            <summary>
+            Performs the actions to check if the command can be enabled. Triggered by <event cref="E:WPF_Core.Commands.RelayCommand.CanExecuteChanged"/>
+            </summary>
+            <param name="parameter">The CanExecute parameter</param>
+            <returns>true if the command can be enabled, otherwise false</returns>
+        </member>
+        <member name="M:WPF_Core.Commands.RelayCommand.Execute(System.Object)">
+            <summary>
+            Perform the give action when the command is invoked
+            </summary>
+            <param name="parameter"></param>
+            <note>The action is performed through the application dispatcher in order to prevent exception with multi-thread applications</note>
+        </member>
+        <member name="M:WPF_Core.Commands.RelayCommand.RaiseCanExecuteChanged">
+            <summary>
+            Calls the <event cref="E:WPF_Core.Commands.RelayCommand.CanExecuteChanged"/> to check if the command can be enabled
+            </summary>
+            <note>The action is performed through the application dispatcher in order to prevent exception with multi-thread applications</note>
+        </member>
+        <member name="T:WPF_Core.Constants.LoggingCnst">
+            <summary>
+            Set of constants used for logging
+            </summary>
+        </member>
+        <member name="T:WPF_Core.Constants.LoggingCnst.LogLevel">
+            <summary>
+            Log levels accepted by the <interface cref="T:WPF_Core.Interfaces.Logging.ILogger"/> instances
+            </summary>
+        </member>
+        <member name="T:WPF_Core.CoreDependencies">
+            <summary>
+            Defines all the dependencies used in the current module
+            </summary>
+        </member>
+        <member name="T:WPF_Core.Dependency.DependencyInjectionBase">
+            <summary>
+            Base class to manage dependency injections 
+            </summary>
+        </member>
+        <member name="P:WPF_Core.Dependency.DependencyInjectionBase.Container">
+            <summary>
+            Container used to define dependencies
+            </summary>
+        </member>
+        <member name="M:WPF_Core.Dependency.DependencyInjectionBase.#ctor">
+            <summary>
+            Creates a new instance of the DependencyInjectionBase class
+            </summary>
+        </member>
+        <member name="M:WPF_Core.Dependency.DependencyInjectionBase.InjectDependencies">
+            <summary>
+            Init the module dependencies
+            </summary>
+        </member>
+        <member name="M:WPF_Core.Dependency.DependencyInjectionBase.AddDependency(System.Type,System.Type)">
+            <summary>
+            Add an anonymous dependency between an interface and a type
+            </summary>
+            <param name="interfaceType">Type of the interface</param>
+            <param name="classType">Type of the class dependent on the interface</param>
+        </member>
+        <member name="M:WPF_Core.Dependency.DependencyInjectionBase.AddDependency``2">
+            <summary>
+            Add an anonymous dependency between an interface and a type
+            </summary>
+            <typeparam name="I">The interface</typeparam>
+            <typeparam name="C">The Class dependent on the interface</typeparam>
+        </member>
+        <member name="M:WPF_Core.Dependency.DependencyInjectionBase.AddDependency(System.Type,System.Type,System.String)">
+            <summary>
+            Add a named dependency between an interface and a type 
+            </summary>
+            <param name="interfaceType">The type of the interface</param>
+            <param name="classType">The type of the class dependent n the interface</param>
+            <param name="name">The name of the dependency</param>
+        </member>
+        <member name="M:WPF_Core.Dependency.DependencyInjectionBase.AddDependency``2(System.String)">
+            <summary>
+            Add a named dependency between an interface and a type 
+            </summary>
+            <typeparam name="I">The interface</typeparam>
+            <typeparam name="C">The Class dependent on the interface</typeparam>
+            <param name="name">The name of the dependency</param>
+        </member>
+        <member name="M:WPF_Core.Dependency.DependencyInjectionBase.InitDependencies">
+            <summary>
+            Init all the dependencies defined in all derivied class of <class cref="T:WPF_Core.Dependency.DependencyInjectionBase"/>
+            </summary>
+        </member>
+        <member name="M:WPF_Core.Dependency.DependencyInjectionBase.InitViewTemplates">
+            <summary>
+            Create The templates for the views from the registerd viewModels
+            </summary>
+        </member>
+        <member name="M:WPF_Core.Dependency.DependencyInjectionBase.GetTypesRegistrations(System.Type)">
+            <summary>
+            Gets all the type mapped to the given interface type
+            </summary>
+            <param name="registeredType">Interface type</param>
+            <returns>The list of all types mapped to the given interface</returns>
+        </member>
+        <member name="M:WPF_Core.Dependency.DependencyInjectionBase.GetTypesRegistrations``1">
+            <summary>
+            Gets all the type mapped to the given interface type
+            </summary>
+            <typeparam name="T">Interface param</typeparam>
+            <returns>The list of all types mapped to the given interface</returns>
+        </member>
+        <member name="M:WPF_Core.Dependency.DependencyInjectionBase.GetViewsAndPopupsRegisterd">
+            <summary>
+            Gets all the Types mapped with the <interface cref="T:WPF_Core.Interfaces.ViewModels.IViewModelBase"/> and <interface cref="T:WPF_Core.Interfaces.ViewModels.IPopupViewModelBase"/> interfaces
+            </summary>
+            <returns>List of all types mapped to the <interface cref="T:WPF_Core.Interfaces.ViewModels.IViewModelBase"/> and <interface cref="T:WPF_Core.Interfaces.ViewModels.IPopupViewModelBase"/> interfaces</returns>
+        </member>
+        <member name="T:WPF_Core.Dependency.UnityHelper">
+            <summary>
+            Provides a series of methods to interact with the Unity library
+            </summary>
+        </member>
+        <member name="P:WPF_Core.Dependency.UnityHelper.Current">
+            <summary>
+            Get the current application element of the UnityContainer
+            </summary>
+        </member>
+        <member name="M:WPF_Core.Dependency.UnityHelper.SetLocalContainer(Unity.IUnityContainer)">
+            <summary>
+            Set a new <interface cref="T:Unity.IUnityContainer"/> for the current application
+            </summary>
+            <param name="cont">The container to use to override the existing one</param>
+            <note>Override the existing container can lead to inexpected errors</note>
+        </member>
+        <member name="M:WPF_Core.Dependency.UnityHelper.GetLocalContainer">
+            <summary>
+            Gets the current appplication container
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:WPF_Core.Entities.NotifyerPropertyChangedBase">
+            <summary>
+            Base implementation of the <interface cref="T:System.ComponentModel.INotifyPropertyChanged"/> interface
+            </summary>
+        </member>
+        <member name="E:WPF_Core.Entities.NotifyerPropertyChangedBase.PropertyChanged">
+            <summary>
+            Event triggered by notify the view of the property change
+            </summary>
+        </member>
+        <member name="M:WPF_Core.Entities.NotifyerPropertyChangedBase.NotifyPropertyChanged(System.String)">
+            <summary>
+            Triggers the <event cref="E:WPF_Core.Entities.NotifyerPropertyChangedBase.PropertyChanged"/> for the given property name
+            </summary>
+            <param name="propertyChanged">Name of the property to be notifyed</param>
+            <remarks>If the method is called insed the set or inti of a property there is no need to specify the propertyChanged parameter</remarks>
+        </member>
+        <member name="M:WPF_Core.Entities.NotifyerPropertyChangedBase.SetProperty``1(``0@,``0,System.String)">
+            <summary>
+            Sets the new value to the property field and automatically triggers the event <event cref="E:WPF_Core.Entities.NotifyerPropertyChangedBase.PropertyChanged"/>
+            </summary>
+            <typeparam name="T">Type of the property</typeparam>
+            <param name="field">Property field passad as referece</param>
+            <param name="value">The new value to assign to the field</param>
+            <param name="propertyName">The name of the property</param>
+            <remarks>If the method is called insed the set or inti of a property there is no need to specify the propertyChanged parameter</remarks>
+        </member>
+        <member name="T:WPF_Core.Entities.SerializableBase">
+            <summary>
+            Basic class that implements the <interface cref="T:WPF_Core.Interfaces.Entities.ISerializableBase"/> to provide an element that can be serialized into and from a byte array
+            </summary>
+        </member>
+        <member name="M:WPF_Core.Entities.SerializableBase.GetSize">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.Entities.SerializableBase.Serialize">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.Entities.SerializableBase.Deserialize(System.Byte[])">
+            <inheritdoc/>
+        </member>
+        <member name="T:WPF_Core.Events.ClosePopupEventArgs">
+            <summary>
+            Arguments of the event triggered by <class cref="T:WPF_Core.Views.PopUp"/> after closing
+            </summary>
+        </member>
+        <member name="P:WPF_Core.Events.ClosePopupEventArgs.popResult">
+            <summary>
+            The data returned by the PupUp, it can be nulll
+            </summary>
+        </member>
+        <member name="M:WPF_Core.Events.ClosePopupEventArgs.#ctor(System.Object)">
+            <summary>
+            Creates a new instance of the class
+            </summary>
+            <param name="popResult">The data returned by the popup</param>
+        </member>
+        <member name="T:WPF_Core.EventArgs.ViewChangedEventArgs">
+            <summary>
+            Data used for the navigation services to change application current view
+            </summary>
+        </member>
+        <member name="P:WPF_Core.EventArgs.ViewChangedEventArgs.viewToCall">
+            <summary>
+            New view to call, used to resolve dependency woth the relative interface
+            </summary>
+        </member>
+        <member name="P:WPF_Core.EventArgs.ViewChangedEventArgs.viewParam">
+            <summary>
+            Parameters to pass to the new view, it can be null
+            </summary>
+        </member>
+        <member name="M:WPF_Core.EventArgs.ViewChangedEventArgs.#ctor(System.String,System.Object)">
+            <summary>
+            Creates a new instance of the current class
+            </summary>
+            <param name="viewToCall">The new view name to call</param>
+            <param name="viewParam">Parametrs to pass to the new view</param>
+        </member>
+        <member name="T:WPF_Core.Helpers.AssemblyHelper">
+            <summary>
+            Provides a series of methods to work with assemblies
+            </summary>
+        </member>
+        <member name="M:WPF_Core.Helpers.AssemblyHelper.LoadAssemblyFromPath(System.String)">
+            <summary>
+            Gets all the assemblies present in a folder
+            </summary>
+            <param name="path">Path of the folder</param>
+            <returns>Array of all the assemblies present in the folder</returns>
+        </member>
+        <member name="M:WPF_Core.Helpers.AssemblyHelper.LoadApplicationAssemblies">
+            <summary>
+            Gets all the assembly of the application
+            </summary>
+            <returns>Array of all application assemblies</returns>
+            <remarks>All the application assemblies must be in the same directory as the executable file</remarks>
+        </member>
+        <member name="T:WPF_Core.Helpers.LoggerHelper">
+            <summary>
+            Provides a series of methods to interact with the application logging service
+            </summary>
+        </member>
+        <member name="M:WPF_Core.Helpers.LoggerHelper.InitLoggers(System.String)">
+            <summary>
+            Initialize all the log instances
+            </summary>
+            <param name="logConfig">Log configuration</param>
+            <remarks>the Log Configuration must be a <class cref="T:WPF_Core.Logging.LoggerInstanceCollection"/> xml</remarks>
+        </member>
+        <member name="M:WPF_Core.Helpers.LoggerHelper.GetLogger(System.String)">
+            <summary>
+            Gets a specific logger given its name
+            </summary>
+            <param name="loggerName">Name of the logger instance</param>
+            <returns>The logger if the given instance exists, otherwise null</returns>
+        </member>
+        <member name="M:WPF_Core.Helpers.LoggerHelper.GetSystemLogger">
+            <summary>
+            Gets the main application logger
+            </summary>
+            <returns>The system logger</returns>
+        </member>
+        <member name="T:WPF_Core.Helpers.PathHelper">
+            <summary>
+            Provides a series of methods to manipulate Paths
+            </summary>
+        </member>
+        <member name="M:WPF_Core.Helpers.PathHelper.GetFullPathFromModulesAssembliesDir(System.String[])">
+            <summary>
+            Get the absolute path of the ModulesAssemblies folder or its childer
+            </summary>
+            <param name="folderNames">all the children folders to navigate</param>
+            <returns></returns>
+        </member>
+        <member name="T:WPF_Core.Helpers.XmlSerializerBase">
+            <summary>
+            Provides a series of methods for XML serialization
+            </summary>
+        </member>
+        <member name="M:WPF_Core.Helpers.XmlSerializerBase.SerializeObject(System.String,System.Object)">
+            <summary>
+            Serialie an object into a file
+            </summary>
+            <param name="fileName">Path of the file result</param>
+            <param name="obj">The object to serialize</param>
+            <remarks>If the file doesn't exists is created automatically</remarks>
+            <remarks>The content of the file gets overwritten</remarks>
+        </member>
+        <member name="M:WPF_Core.Helpers.XmlSerializerBase.SerializeObject(System.String,System.Object,System.Boolean)">
+            <summary>
+            Serialie an object into a file
+            </summary>
+            <param name="fileName">Path of the file result</param>
+            <param name="obj">The object to serialize</param>
+            <param name="append">True if the content of the file must be overwritten, otherwise the result is added to the current content</param>
+            <remarks>If the file doesn't exists is created automatically</remarks>
+        </member>
+        <member name="M:WPF_Core.Helpers.XmlSerializerBase.DeserializeObject(System.String,System.Type)">
+            <summary>
+            Deserialize a given XML file into an object
+            </summary>
+            <param name="fileName">Path of the file XML to deserialize</param>
+            <param name="objType">Type of the object to deserialize</param>
+            <returns>The object deserialized</returns>
+        </member>
+        <member name="M:WPF_Core.Helpers.XmlSerializerBase.SerializeObjectToString(System.Object)">
+            <summary>
+            Serialize an object into an XML string
+            </summary>
+            <param name="obj">The object to serialize</param>
+            <returns>The object serialized as XML</returns>
+        </member>
+        <member name="M:WPF_Core.Helpers.XmlSerializerBase.DeserializeObjectFromString(System.String,System.Type)">
+            <summary>
+            Deserialize an object from an XML string
+            </summary>
+            <param name="serializedItem">The object serialized as string</param>
+            <param name="objType">type of the object to deserialize</param>
+            <returns></returns>
+        </member>
+        <member name="T:WPF_Core.Interfaces.DbBrowser.IParametersBase">
+            <summary>
+            Base interface of the parameters class used by <interface cref="T:WPF_Core.Interfaces.DbBrowser.IProxyBase"/>
+            </summary>
+        </member>
+        <member name="P:WPF_Core.Interfaces.DbBrowser.IParametersBase.Item(System.String)">
+            <summary>
+            Indexer to access a parameter given its key
+            </summary>
+            <param name="key">Key of the parameter</param>
+            <returns>Value of the parameter</returns>
+        </member>
+        <member name="M:WPF_Core.Interfaces.DbBrowser.IParametersBase.Add(System.String,System.Object)">
+            <summary>
+            Add a parameter to the buffer
+            </summary>
+            <param name="key">Parameter key</param>
+            <param name="value">Parameter value</param>
+        </member>
+        <member name="M:WPF_Core.Interfaces.DbBrowser.IParametersBase.GetParametersKeys">
+            <summary>
+            Get the keys of all parameters in buffer
+            </summary>
+            <returns>List of keys</returns>
+        </member>
+        <member name="M:WPF_Core.Interfaces.DbBrowser.IParametersBase.Count">
+            <summary>
+            Gives the number of elements in buffer
+            </summary>
+            <returns>Number of elements in buffer</returns>
+        </member>
+        <member name="M:WPF_Core.Interfaces.DbBrowser.IParametersBase.RemoveAt(System.Int32)">
+            <summary>
+            Remove an element from current buffer at a specific position
+            </summary>
+            <param name="index">Posizion of the element to remove</param>
+        </member>
+        <member name="M:WPF_Core.Interfaces.DbBrowser.IParametersBase.Remove(System.String)">
+            <summary>
+            Remove an element from current buffer given its key
+            </summary>
+            <param name="key">Key of the element to remove</param>
+        </member>
+        <member name="M:WPF_Core.Interfaces.DbBrowser.IParametersBase.Clear">
+            <summary>
+            Remove all elements from the buffer
+            </summary>
+        </member>
+        <member name="T:WPF_Core.Interfaces.DbBrowser.IProxyBase">
+            <summary>
+            Base interface for Db proxy elements
+            </summary>
+        </member>
+        <member name="M:WPF_Core.Interfaces.DbBrowser.IProxyBase.OpenConnection">
+            <summary>
+            Opens the connection with Db
+            </summary>
+        </member>
+        <member name="M:WPF_Core.Interfaces.DbBrowser.IProxyBase.CloseConnection">
+            <summary>
+            Closes the connection with Db
+            </summary>
+        </member>
+        <member name="M:WPF_Core.Interfaces.DbBrowser.IProxyBase.GetNextIntValue(System.String,System.String,System.String)">
+            <summary>
+            Get the next integer value from a given table and column
+            </summary>
+            <param name="TableName">Table name</param>
+            <param name="FieldName">Column name</param>
+            <param name="whereCondition">Search condition</param>
+            <returns>next int value, 1 if no elements are present in table</returns>
+        </member>
+        <member name="M:WPF_Core.Interfaces.DbBrowser.IProxyBase.Execute(System.String,WPF_Core.Interfaces.DbBrowser.IParametersBase)">
+            <summary>
+            Executes a statement with parameters
+            </summary>
+            <param name="Statement">Statement to execute</param>
+            <param name="parameters">Statement parameters</param>
+            <returns></returns>
+        </member>
+        <member name="M:WPF_Core.Interfaces.DbBrowser.IProxyBase.Execute(System.String,WPF_Core.Interfaces.DbBrowser.IParametersBase,System.Data.IDbTransaction,System.Boolean)">
+            <summary>
+            Executes a statement with parameters within a given transaction
+            </summary>
+            <param name="Statement">Statement to execute</param>
+            <param name="parameters">Statement parameters</param>
+            <param name="transaction">Statement transaction</param>
+            <param name="commit">If changes should be commited</param>
+            <returns></returns>
+        </member>
+        <member name="M:WPF_Core.Interfaces.DbBrowser.IProxyBase.Execute(System.String,System.String,System.Object)">
+            <summary>
+            Executes a statement with one parameter
+            </summary>
+            <param name="Statement">Statement to exeucte</param>
+            <param name="parameterName">Parameter name</param>
+            <param name="parameterValue">Parameter value</param>
+            <returns></returns>
+        </member>
+        <member name="M:WPF_Core.Interfaces.DbBrowser.IProxyBase.Execute(System.String,System.String,System.Object,System.Data.IDbTransaction,System.Boolean)">
+            <summary>
+            Executes a statement with one parameter within a given transaction
+            </summary>
+            <param name="Statement">Statement to execute</param>
+            <param name="parameterName">Parameter name</param>
+            <param name="parameterValue">Parameter value</param>
+            <param name="transaction">Statement transaction</param>
+            <param name="commit">If changes should be commited</param>
+            <returns></returns>
+        </member>
+        <member name="M:WPF_Core.Interfaces.DbBrowser.IProxyBase.Execute(System.String)">
+            <summary>
+            Executes a single statement
+            </summary>
+            <param name="Statement">Statement to execute</param>
+            <returns></returns>
+        </member>
+        <member name="M:WPF_Core.Interfaces.DbBrowser.IProxyBase.Execute(System.String,System.Data.IDbTransaction,System.Boolean)">
+            <summary>
+            Executes a single statement within a given transaction
+            </summary>
+            <param name="Statement">Statement to execute</param>
+            <param name="transaction">Statement transaction</param>
+            <param name="commit">If changes should be commited</param>
+            <returns></returns>
+        </member>
+        <member name="M:WPF_Core.Interfaces.DbBrowser.IProxyBase.GetDataReader(System.String,WPF_Core.Interfaces.DbBrowser.IParametersBase)">
+            <summary>
+            Reads data from Db
+            </summary>
+            <param name="Statement">Select statement</param>
+            <param name="parameters">Statement parameters</param>
+            <returns></returns>
+        </member>
+        <member name="M:WPF_Core.Interfaces.DbBrowser.IProxyBase.GetDataReader(System.String,System.String,System.Object)">
+            <summary>
+            Reads data from Db
+            </summary>
+            <param name="statement">Select statement</param>
+            <param name="parameterName">Parameter name</param>
+            <param name="parameterValue">Parameter value</param>
+            <returns></returns>
+        </member>
+        <member name="M:WPF_Core.Interfaces.DbBrowser.IProxyBase.GetDataReader(System.String)">
+            <summary>
+            Reads data from Db
+            </summary>
+            <param name="Statement">Select statement</param>
+            <returns></returns>
+        </member>
+        <member name="M:WPF_Core.Interfaces.DbBrowser.IProxyBase.ConvertToInt(System.Object,System.Int32)">
+            <summary>
+            Converts an object into a System.Int32 type
+            </summary>
+            <param name="value">Object to convert</param>
+            <param name="defaultValue">Default value</param>
+            <returns>Conversion result, default value if value is null</returns>
+        </member>
+        <member name="M:WPF_Core.Interfaces.DbBrowser.IProxyBase.ConvertToNullableInt(System.Object)">
+            <summary>
+            Converts an object into a nullable System.Int32 type
+            </summary>
+            <param name="value">Object to convert</param>
+            <returns>Conversion result</returns>
+        </member>
+        <member name="M:WPF_Core.Interfaces.DbBrowser.IProxyBase.ConvertToLong(System.Object,System.Int64)">
+            <summary>
+            Converts an object into a System.Int64 type
+            </summary>
+            <param name="value">Object to convert</param>
+            <param name="defaultValue">Default value</param>
+            <returns>Conversion result, default value if value is null</returns>
+        </member>
+        <member name="M:WPF_Core.Interfaces.DbBrowser.IProxyBase.ConvertToNullableLong(System.Object)">
+            <summary>
+            Converts an object into a nullable System.Int64 type
+            </summary>
+            <param name="value">Object to convert</param>
+            <returns>Conversion result</returns>
+        </member>
+        <member name="M:WPF_Core.Interfaces.DbBrowser.IProxyBase.ConvertToFloat(System.Object,System.Single)">
+            <summary>
+            Converts an object into a System.Single type
+            </summary>
+            <param name="value">Object to convert</param>
+            <param name="defaultValue">Default value</param>
+            <returns>Conversion result, default value if value is null</returns>
+        </member>
+        <member name="M:WPF_Core.Interfaces.DbBrowser.IProxyBase.ConvertToNullableFloat(System.Object)">
+            <summary>
+            Converts an object into a nullable System.Singletype
+            </summary>
+            <param name="value">Object to convert</param>
+            <returns>Conversion result</returns>
+        </member>
+        <member name="M:WPF_Core.Interfaces.DbBrowser.IProxyBase.ConvertToDouble(System.Object,System.Double)">
+            <summary>
+            Converts an object into a System.Double type
+            </summary>
+            <param name="value">Object to convert</param>
+            <param name="defaultValue">Default value</param>
+            <returns>Conversion result, default value if value is null</returns>
+        </member>
+        <member name="M:WPF_Core.Interfaces.DbBrowser.IProxyBase.ConvertToNullableDouble(System.Object)">
+            <summary>
+            Converts an object into a nullable System.Decimaltype
+            </summary>
+            <param name="value">Object to convert</param>
+            <returns>Conversion result</returns>
+        </member>
+        <member name="M:WPF_Core.Interfaces.DbBrowser.IProxyBase.ConvertToString(System.Object)">
+            <summary>
+            Converts an object into a System.String type
+            </summary>
+            <param name="value">Object to convert</param>
+            <returns>Conversion result</returns>
+        </member>
+        <member name="M:WPF_Core.Interfaces.DbBrowser.IProxyBase.ConvertToBoolean(System.Object)">
+            <summary>
+            Converts an object into a System.Boolean type
+            </summary>
+            <param name="value">Object to convert</param>
+            <returns>Conversion result</returns>
+        </member>
+        <member name="M:WPF_Core.Interfaces.DbBrowser.IProxyBase.ConvertToDateTime(System.Object)">
+            <summary>
+            Converts an object into a System.DateTime type
+            </summary>
+            <param name="value">Object to convert</param>
+            <returns>Conversion result</returns>
+        </member>
+        <member name="M:WPF_Core.Interfaces.DbBrowser.IProxyBase.ConvertToNullableDateTime(System.Object)">
+            <summary>
+            Converts an object into a nullable System.DateTimetype
+            </summary>
+            <param name="value">Object to convert</param>
+            <returns>Conversion result</returns>
+        </member>
+        <member name="M:WPF_Core.Interfaces.DbBrowser.IProxyBase.ConvertToBytes(System.Object)">
+            <summary>
+            Converts an object into a System.Byte[] type
+            </summary>
+            <param name="value">Object to convert</param>
+            <returns>Conversion result</returns>
+        </member>
+        <member name="T:WPF_Core.Interfaces.Entities.ISerializableBase">
+            <summary>
+            Base interface for a serializable object
+            </summary>
+        </member>
+        <member name="M:WPF_Core.Interfaces.Entities.ISerializableBase.GetSize">
+            <summary>
+            Gets the size of the element after it has been serialized
+            </summary>
+            <returns>Object size</returns>
+        </member>
+        <member name="M:WPF_Core.Interfaces.Entities.ISerializableBase.Serialize">
+            <summary>
+            Serialize the element into a byte array
+            </summary>
+            <returns>The result byte array</returns>
+        </member>
+        <member name="M:WPF_Core.Interfaces.Entities.ISerializableBase.Deserialize(System.Byte[])">
+            <summary>
+            Set all the values of the current object deserializing a byte array
+            </summary>
+            <param name="data">The object serialized as byte array</param>
+        </member>
+        <member name="T:WPF_Core.Interfaces.Logging.ILogger">
+            <summary>
+            Base interface for a logger object
+            </summary>
+        </member>
+        <member name="P:WPF_Core.Interfaces.Logging.ILogger.LogLevel">
+            <summary>
+            Log level of the current instance
+            </summary>
+        </member>
+        <member name="P:WPF_Core.Interfaces.Logging.ILogger.LogName">
+            <summary>
+            Name of the log file where the instance is writing
+            </summary>
+        </member>
+        <member name="P:WPF_Core.Interfaces.Logging.ILogger.LogLocation">
+            <summary>
+            Location of the log file used by the current instance
+            </summary>
+        </member>
+        <member name="P:WPF_Core.Interfaces.Logging.ILogger.IsSystemLog">
+            <summary>
+            Defines if the instance is the main application log
+            </summary>
+        </member>
+        <member name="M:WPF_Core.Interfaces.Logging.ILogger.LogAnonym(System.String)">
+            <summary>
+            Writes a log without log level
+            </summary>
+            <param name="message">Log to write</param>
+            <returns>true if the log was written, otherwise false</returns>
+        </member>
+        <member name="M:WPF_Core.Interfaces.Logging.ILogger.WriteLog(WPF_Core.Constants.LoggingCnst.LogLevel,System.String,System.String)">
+            <summary>
+            Writes a log with a log level defined by the user
+            </summary>
+            <param name="level">Log level for the log</param>
+            <param name="message">Log to write</param>
+            <param name="methodName">Name of the method calling the log (not necessary)</param>
+            <returns>true if the log was written, otherwise false</returns>
+        </member>
+        <member name="M:WPF_Core.Interfaces.Logging.ILogger.LogDebug(System.String,System.String)">
+            <summary>
+            Writes a log with the DEBUG log level (1)
+            </summary>
+            <param name="message">Log to write</param>
+            <param name="methodName">Name of the method calling the log (not necessary)</param>
+            <returns>true if the log was written, otherwise false</returns>
+        </member>
+        <member name="M:WPF_Core.Interfaces.Logging.ILogger.LogInfo(System.String,System.String)">
+            <summary>
+            Writes a log with the INFO log level (2)
+            </summary>
+            <param name="message">Log to write</param>
+            <param name="methodName">Name of the method calling the log (not necessary)</param>
+            <returns>true if the log was written, otherwise false</returns>
+        </member>
+        <member name="M:WPF_Core.Interfaces.Logging.ILogger.LogWarn(System.String,System.String)">
+            <summary>
+            Writes a log with the WARN log level (3)
+            </summary>
+            <param name="message">Log to write</param>
+            <param name="methodName">Name of the method calling the log (not necessary)</param>
+            <returns>true if the log was written, otherwise false</returns>
+        </member>
+        <member name="M:WPF_Core.Interfaces.Logging.ILogger.LogError(System.String,System.String)">
+            <summary>
+            Writes a log with the ERROR log level (4)
+            </summary>
+            <param name="message">Log to write</param>
+            <param name="methodName">Name of the method calling the log (not necessary)</param>
+            <returns>true if the log was written, otherwise false</returns>
+        </member>
+        <member name="M:WPF_Core.Interfaces.Logging.ILogger.LogFatal(System.String,System.String)">
+            <summary>
+            Writes a log with the FATAL log level (5)
+            </summary>
+            <param name="message">Log to write</param>
+            <param name="methodName">Name of the method calling the log (not necessary)</param>
+            <returns>true if the log was written, otherwise false</returns>
+        </member>
+        <member name="M:WPF_Core.Interfaces.Logging.ILogger.LogException(System.Exception,WPF_Core.Constants.LoggingCnst.LogLevel,System.String)">
+            <summary>
+            Writes a log with all the details of the exception
+            </summary>
+            <param name="ex">Exception to log</param>
+            <param name="logLevel">Log level</param>
+            <param name="methodName">Name of the method calling the log (not necessary)</param>
+            <returns>true if the log was written, otherwise false</returns>
+            <remarks>The methods writes the exception details, as well as all the inner exceptions</remarks>
+        </member>
+        <member name="T:WPF_Core.Interfaces.Navigation.INavigationService">
+            <summary>
+            Base interface used by navigation services to navigate view application
+            </summary>
+        </member>
+        <member name="P:WPF_Core.Interfaces.Navigation.INavigationService.Container">
+            <summary>
+            Current Unity container where are defined view dependencies
+            </summary>
+        </member>
+        <member name="P:WPF_Core.Interfaces.Navigation.INavigationService.CurrentView">
+            <summary>
+            Current view model of the view loaded in the application
+            </summary>
+        </member>
+        <member name="P:WPF_Core.Interfaces.Navigation.INavigationService.CurrentControl">
+            <summary>
+            Current view control
+            </summary>
+        </member>
+        <member name="P:WPF_Core.Interfaces.Navigation.INavigationService.ParentViewName">
+            <summary>
+            Parent view name of current view
+            </summary>
+        </member>
+        <member name="M:WPF_Core.Interfaces.Navigation.INavigationService.NavigateTo(System.String,System.Object)">
+            <summary>
+            Changes the current view to the given one, resolving the dependency with the view model
+            </summary>
+            <param name="ViewName">View name to resolve</param>
+            <param name="param">Parameters to pass to the view</param>
+        </member>
+        <member name="T:WPF_Core.Interfaces.ViewModels.IPopupViewModelBase">
+            <summary>
+            Base interface for PopUps viewModels
+            </summary>
+            <remarks>The class that implements this interface must have a <attribute cref="T:WPF_Core.Attributes.ViewRef"/> attribute 
+            that contains the view linked to this view model"</remarks>
+        </member>
+        <member name="P:WPF_Core.Interfaces.ViewModels.IPopupViewModelBase.IsOperationConfirmed">
+            <summary>
+            Returns true if the operation inside the popup is confirmed and data are returned, otherwise returns false
+            </summary>
+        </member>
+        <member name="E:WPF_Core.Interfaces.ViewModels.IPopupViewModelBase.closePopup">
+            <summary>
+            Event that triggers the popup close and returns the popup result if present
+            </summary>
+        </member>
+        <member name="P:WPF_Core.Interfaces.ViewModels.IPopupViewModelBase.OkCommand">
+            <summary>
+            Command that triggers the <event cref="E:WPF_Core.Interfaces.ViewModels.IPopupViewModelBase.closePopup"/> collecting the data to return, and sets <property cref="P:WPF_Core.Interfaces.ViewModels.IPopupViewModelBase.IsOperationConfirmed"/> to true
+            </summary>
+        </member>
+        <member name="P:WPF_Core.Interfaces.ViewModels.IPopupViewModelBase.CancelCommand">
+            <summary>
+            Commmand that triggers the <event cref="E:WPF_Core.Interfaces.ViewModels.IPopupViewModelBase.closePopup"/> without collecting data, and sets <property cref="P:WPF_Core.Interfaces.ViewModels.IPopupViewModelBase.IsOperationConfirmed"/> to false
+            </summary>
+        </member>
+        <member name="T:WPF_Core.Interfaces.ViewModels.IViewModelBase">
+            <summary>
+            Base viewModel interface for application viewModels
+            </summary>
+            <remarks>The class that implements this interface must have a <attribute cref="T:WPF_Core.Attributes.ViewRef"/> attribute 
+            that contains the view linked to this view model"</remarks>
+        </member>
+        <member name="P:WPF_Core.Interfaces.ViewModels.IViewModelBase.ViewName">
+            <summary>
+            Name of the current view, used for risolve the dependecy and as application header
+            </summary>
+        </member>
+        <member name="P:WPF_Core.Interfaces.ViewModels.IViewModelBase.ParentView">
+            <summary>
+            Name of the parent view
+            </summary>
+        </member>
+        <member name="P:WPF_Core.Interfaces.ViewModels.IViewModelBase.ViewParam">
+            <summary>
+            Parameters given to viewModel constructor 
+            </summary>
+        </member>
+        <member name="P:WPF_Core.Interfaces.ViewModels.IViewModelBase.IsDisposed">
+            <summary>
+            If the view has been disposed
+            </summary>
+        </member>
+        <member name="P:WPF_Core.Interfaces.ViewModels.IViewModelBase._dispatcher">
+            <summary>
+            Current application Dispatcher
+            </summary>
+        </member>
+        <member name="E:WPF_Core.Interfaces.ViewModels.IViewModelBase.viewChangedEvent">
+            <summary>
+            Triggers the view change in the application
+            </summary>
+        </member>
+        <member name="M:WPF_Core.Interfaces.ViewModels.IViewModelBase.InitViewModel">
+            <summary>
+            Executes the initial methods of the viewModel
+            </summary>
+        </member>
+        <member name="T:WPF_Core.Logging.Logger">
+            <summary>
+            Internal implementation of ILogger instance
+            </summary>
+        </member>
+        <member name="F:WPF_Core.Logging.Logger._isWriting">
+            <summary>
+            Determine if the logger is writing to a file to preventing the dispose to close it
+            </summary>
+        </member>
+        <member name="P:WPF_Core.Logging.Logger.LogLevel">
+            <inheritdoc/>
+        </member>
+        <member name="P:WPF_Core.Logging.Logger.LogName">
+            <inheritdoc/>
+        </member>
+        <member name="P:WPF_Core.Logging.Logger.LogFolderPath">
+            <inheritdoc/>
+        </member>
+        <member name="P:WPF_Core.Logging.Logger.LogLocation">
+            <inheritdoc/>
+        </member>
+        <member name="P:WPF_Core.Logging.Logger._logLocationFullPath">
+            <summary>
+            Full path of the LogLocation
+            </summary>
+        </member>
+        <member name="P:WPF_Core.Logging.Logger.IsSystemLog">
+            <inheritdoc/>
+        </member>
+        <member name="P:WPF_Core.Logging.Logger.GroupByDay">
+            <summary>
+            If true, logs are divided in folders by day, if false logs are all in the same folder and the date is setted as suffix
+            </summary>
+        </member>
+        <member name="P:WPF_Core.Logging.Logger.initDateTime">
+            <summary>
+            Logger initialization DateTo,e
+            </summary>
+        </member>
+        <member name="F:WPF_Core.Logging.Logger.sw">
+            <summary>
+            StreamWriter used by the logger
+            </summary>
+        </member>
+        <member name="M:WPF_Core.Logging.Logger.#ctor(WPF_Core.Logging.LoggerCtorParam)">
+            <summary>
+            Creates a new instance of the class
+            </summary>
+            <param name="param">Logger constructor params</param>
+        </member>
+        <member name="M:WPF_Core.Logging.Logger.#ctor(WPF_Core.Constants.LoggingCnst.LogLevel,System.String,System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Creates a new instance of the class
+            </summary>
+            <param name="logLevel">Log level</param>
+            <param name="logName">Name of the log</param>
+            <param name="logLocation">Location of the log</param>
+            <param name="groupByDay">true if logs are divided by day</param>
+            <param name="isSystemLog">true if log is main application log</param>
+        </member>
+        <member name="M:WPF_Core.Logging.Logger.Finalize">
+            <summary>
+            Current instance finalizer
+            </summary>
+        </member>
+        <member name="M:WPF_Core.Logging.Logger.InitLogger">
+            <summary>
+            Initialize logger location and StreamWrites
+            </summary>
+        </member>
+        <member name="M:WPF_Core.Logging.Logger.RestartLogger">
+            <summary>
+            Restart the logger
+            </summary>
+        </member>
+        <member name="M:WPF_Core.Logging.Logger.WriteLog(System.Int32,System.String,System.String)">
+            <summary>
+            Base Log method, check the log level, checks if the day is changed from initialization, then writes the log
+            </summary>
+            <param name="level">Log level</param>
+            <param name="message">Log message</param>
+            <param name="methodName">Method name calling the log</param>
+            <returns></returns>
+        </member>
+        <member name="M:WPF_Core.Logging.Logger.LogAnonym(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.Logging.Logger.WriteLog(WPF_Core.Constants.LoggingCnst.LogLevel,System.String,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.Logging.Logger.LogDebug(System.String,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.Logging.Logger.LogInfo(System.String,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.Logging.Logger.LogWarn(System.String,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.Logging.Logger.LogError(System.String,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.Logging.Logger.LogFatal(System.String,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.Logging.Logger.LogException(System.Exception,WPF_Core.Constants.LoggingCnst.LogLevel,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.Logging.Logger.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.Logging.Logger.Dispose(System.Boolean)">
+            <summary>
+            Dispose local resources
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="M:WPF_Core.Logging.Logger.GetLogAcronym(System.Int32)">
+            <summary>
+            Gets the acronym to be printed in the log according to the logLevel
+            </summary>
+            <param name="level"></param>
+            <returns></returns>
+        </member>
+        <member name="T:WPF_Core.Logging.LoggerCtorParam">
+            <summary>
+            Class containing all parameters for the <class cref="T:WPF_Core.Logging.Logger"/> constructor
+            </summary>
+        </member>
+        <member name="P:WPF_Core.Logging.LoggerCtorParam.LogLevel">
+            <summary>
+            Log level
+            </summary>
+        </member>
+        <member name="P:WPF_Core.Logging.LoggerCtorParam.LogName">
+            <summary>
+            Name of the log file
+            </summary>
+        </member>
+        <member name="P:WPF_Core.Logging.LoggerCtorParam.LogLocation">
+            <summary>
+            Location of the log file
+            </summary>
+        </member>
+        <member name="P:WPF_Core.Logging.LoggerCtorParam.GroupByDay">
+            <summary>
+            If true, logs are divided in folders by day, if false logs are all in the same folder and the date is setted as suffix
+            </summary>
+        </member>
+        <member name="P:WPF_Core.Logging.LoggerCtorParam.IsSystemLog">
+            <summary>
+            Defines if the logger instance is main application log
+            </summary>
+        </member>
+        <member name="T:WPF_Core.Logging.LoggerInstance">
+            <summary>
+            Defines the settings in the app.config for the loggers
+            </summary>
+        </member>
+        <member name="P:WPF_Core.Logging.LoggerInstance.InstanceName">
+            <summary>
+            Name of the log instance
+            </summary>
+        </member>
+        <member name="P:WPF_Core.Logging.LoggerInstance.LogName">
+            <summary>
+            name of the log file
+            </summary>
+        </member>
+        <member name="P:WPF_Core.Logging.LoggerInstance.LogLevel">
+            <summary>
+            Log level for the instance
+            </summary>
+        </member>
+        <member name="T:WPF_Core.Logging.LoggerInstanceCollection">
+            <summary>
+            Class used for the log configuration in the app.config
+            </summary>
+        </member>
+        <member name="P:WPF_Core.Logging.LoggerInstanceCollection.LogLocation">
+            <summary>
+            Relative path for log location
+            </summary>
+        </member>
+        <member name="P:WPF_Core.Logging.LoggerInstanceCollection.GroupByDay">
+            <summary>
+            If true, logs are divided in folders by day, if false logs are all in the same folder and the date is setted as suffix
+            </summary>
+        </member>
+        <member name="P:WPF_Core.Logging.LoggerInstanceCollection.PurgingDay">
+            <summary>
+            Sets how many day of logs should be purged, 0: no purging
+            </summary>
+        </member>
+        <member name="P:WPF_Core.Logging.LoggerInstanceCollection.SystemLog_InstaceName">
+            <summary>
+            The instance name of the system log
+            </summary>
+            <remarks>If is empty or there is no instance with this name, another log instance is automatically created as system log</remarks>
+        </member>
+        <member name="P:WPF_Core.Logging.LoggerInstanceCollection.LoggerInstances">
+            <summary>
+            List of all instances defined in the app.config
+            </summary>
+        </member>
+        <member name="F:WPF_Core.Logging.LoggerInstanceCollection._container">
+            <summary>
+            Unity container used for dependency definitions
+            </summary>
+        </member>
+        <member name="M:WPF_Core.Logging.LoggerInstanceCollection.#ctor">
+            <summary>
+            Creates a new instance of the class
+            </summary>
+        </member>
+        <member name="M:WPF_Core.Logging.LoggerInstanceCollection.InitLoggers(System.String)">
+            <summary>
+            Initializes all the logger instances present in the configuration, and checks if the system log is present
+            </summary>
+            <param name="config">Log configuration</param>
+            <exception cref="T:System.Exception">Exception if an error occurs during initialization</exception>
+        </member>
+        <member name="M:WPF_Core.Logging.LoggerInstanceCollection.GetLoggerInstanceCollection(System.String)">
+            <summary>
+            Gets a xml string to be converted into a <class cref="T:WPF_Core.Logging.LoggerInstanceCollection"/> from the given configuration
+            </summary>
+            <param name="config"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WPF_Core.Logging.LoggerInstanceCollection.InitLogger(System.String,System.Boolean,System.Boolean,WPF_Core.Logging.LoggerInstance)">
+            <summary>
+            Initialize a new logger instance
+            </summary>
+            <param name="logLocation">Log file location</param>
+            <param name="groupByDay">group by day</param>
+            <param name="isSystemLog">true if is system Log</param>
+            <param name="instance">instance parameters from config file</param>
+        </member>
+        <member name="M:WPF_Core.Logging.LoggerInstanceCollection.CheckSystemLogger(System.String,System.Boolean)">
+            <summary>
+            Check if is present a system logger, if is not present another instance is created automatically
+            </summary>
+            <param name="logLocation"></param>
+            <param name="groupByDay"></param>
+        </member>
+        <member name="M:WPF_Core.Logging.LoggerInstanceCollection.CreateLogName(System.String,System.Boolean)">
+            <summary>
+            Gives the final log file name
+            </summary>
+            <param name="nominalName">Name defined in the app.config</param>
+            <param name="useDate">If the log name must have date inside</param>
+            <returns>The final log name</returns>
+        </member>
+        <member name="M:WPF_Core.Logging.LoggerInstanceCollection.PurgeLogs(System.String,System.Int32,System.Boolean)">
+            <summary>
+            Checks all the logs present inside the log location folder and delete the ones older than the given days
+            </summary>
+            <param name="logLocation">Log location relative path</param>
+            <param name="purgeDays">Days to be purged</param>
+            <param name="groupByDay">If the logs are grouped by days</param>
+        </member>
+        <member name="T:WPF_Core.Proxy.ProxyCore">
+            <summary>
+            Base implementation of a Db proxy class
+            </summary>
+        </member>
+        <member name="P:WPF_Core.Proxy.ProxyCore.ConnectionString">
+            <summary>
+            Connection string with Db
+            </summary>
+        </member>
+        <member name="P:WPF_Core.Proxy.ProxyCore.Connection">
+            <summary>
+            Connection instance with Db
+            </summary>
+        </member>
+        <member name="M:WPF_Core.Proxy.ProxyCore.#ctor(System.String)">
+            <summary>
+            Creates a new instance of the class
+            </summary>
+            <param name="connectionString">Connection string</param>
+        </member>
+        <member name="M:WPF_Core.Proxy.ProxyCore.OpenConnection">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.Proxy.ProxyCore.CloseConnection">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.Proxy.ProxyCore.GetNextIntValue(System.String,System.String,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.Proxy.ProxyCore.GetCreateTableIfExistsStatement">
+            <summary>
+            Returns the create statements to initialize the tables if Db is empty 
+            </summary>
+            <returns>Create tables statement</returns>
+            <remarks>This method is mostly used for SQLite Db type</remarks>
+        </member>
+        <member name="M:WPF_Core.Proxy.ProxyCore.Execute(System.String,WPF_Core.Interfaces.DbBrowser.IParametersBase)">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.Proxy.ProxyCore.Execute(System.String,WPF_Core.Interfaces.DbBrowser.IParametersBase,System.Data.IDbTransaction,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.Proxy.ProxyCore.Execute(System.String,System.String,System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.Proxy.ProxyCore.Execute(System.String,System.String,System.Object,System.Data.IDbTransaction,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.Proxy.ProxyCore.Execute(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.Proxy.ProxyCore.Execute(System.String,System.Data.IDbTransaction,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.Proxy.ProxyCore.GetDataReader(System.String,WPF_Core.Interfaces.DbBrowser.IParametersBase)">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.Proxy.ProxyCore.GetDataReader(System.String,System.String,System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.Proxy.ProxyCore.GetDataReader(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.Proxy.ProxyCore.ConvertToInt(System.Object,System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.Proxy.ProxyCore.ConvertToNullableInt(System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.Proxy.ProxyCore.ConvertToLong(System.Object,System.Int64)">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.Proxy.ProxyCore.ConvertToNullableLong(System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.Proxy.ProxyCore.ConvertToFloat(System.Object,System.Single)">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.Proxy.ProxyCore.ConvertToNullableFloat(System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.Proxy.ProxyCore.ConvertToDouble(System.Object,System.Double)">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.Proxy.ProxyCore.ConvertToNullableDouble(System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.Proxy.ProxyCore.ConvertToString(System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.Proxy.ProxyCore.ConvertToBoolean(System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.Proxy.ProxyCore.ConvertToDateTime(System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.Proxy.ProxyCore.ConvertToNullableDateTime(System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.Proxy.ProxyCore.ConvertToBytes(System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="T:WPF_Core.ValueConverters.BoolToVisibilityConverter">
+            <summary>
+            Converts a boolean to a System.Windows.Visibility type
+            If given value is true returns System.Windows.Visibility.Visible
+            If given value is false returns System.Windows.Visibility.Collapsed
+            </summary>
+        </member>
+        <member name="T:WPF_Core.ValueConverters.NotBoolToVisibilityConverter">
+            <summary>
+            Converts a boolean to a System.Windows.Visibility type
+            If given value is true returns System.Windows.Visibility.Collapsed
+            If given value is false returns System.Windows.Visibility.Visible
+            </summary>
+        </member>
+        <member name="T:WPF_Core.ViewModels.PopupViewModelBase">
+            <summary>
+            Base implementation of a PopUp view Model
+            </summary>
+            <remarks>Each viewModel implementation should be marked with the <attrubute cref="T:WPF_Core.Attributes.ViewRef"/> attribute to link it to the view</remarks>
+        </member>
+        <member name="F:WPF_Core.ViewModels.PopupViewModelBase._returnValue">
+            <summary>
+            Object returned by the PopUp when it's closed
+            </summary>
+        </member>
+        <member name="E:WPF_Core.ViewModels.PopupViewModelBase.closePopup">
+            <inheritdoc/>
+        </member>
+        <member name="P:WPF_Core.ViewModels.PopupViewModelBase.OkCommand">
+            <inheritdoc/>
+        </member>
+        <member name="P:WPF_Core.ViewModels.PopupViewModelBase.CancelCommand">
+            <inheritdoc/>
+        </member>
+        <member name="P:WPF_Core.ViewModels.PopupViewModelBase.IsOperationConfirmed">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.ViewModels.PopupViewModelBase.#ctor(System.String,System.Object)">
+            <summary>
+            Creates a new instance of the class
+            </summary>
+            <param name="viewName">PopUp name</param>
+            <param name="param">PopUp parameters</param>
+        </member>
+        <member name="M:WPF_Core.ViewModels.PopupViewModelBase.OnInitialized">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.ViewModels.PopupViewModelBase.InitCommands">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.ViewModels.PopupViewModelBase.OkCommandExecute(System.Object)">
+            <summary>
+            Triggers the <event cref="E:WPF_Core.ViewModels.PopupViewModelBase.closePopup"/> event and collects data to return
+            </summary>
+            <param name="param"></param>
+        </member>
+        <member name="M:WPF_Core.ViewModels.PopupViewModelBase.OkCommandCanExecute(System.Object)">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.ViewModels.PopupViewModelBase.CancelCommandExecute(System.Object)">
+            <summary>
+            Triggers the <event cref="E:WPF_Core.ViewModels.PopupViewModelBase.closePopup"/> event without collecting data to return
+            </summary>
+            <param name="param"></param>
+        </member>
+        <member name="M:WPF_Core.ViewModels.PopupViewModelBase.GetPopReturnData">
+            <summary>
+            Defines the data that the popup has to return
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:WPF_Core.ViewModels.ViewModelBase">
+            <summary>
+            Base implementation of the view ViewModel
+            </summary>
+            <remarks>Each viewModel implementation should be marked with the <attrubute cref="T:WPF_Core.Attributes.ViewRef"/> attribute to link it to the view</remarks>
+        </member>
+        <member name="P:WPF_Core.ViewModels.ViewModelBase.Navigation">
+            <summary>
+            Navigation service used to change view in the application
+            </summary>
+        </member>
+        <member name="P:WPF_Core.ViewModels.ViewModelBase.ParentView">
+            <inheritdoc/>
+        </member>
+        <member name="P:WPF_Core.ViewModels.ViewModelBase.IsDisposed">
+            <inheritdoc/>
+        </member>
+        <member name="P:WPF_Core.ViewModels.ViewModelBase.ViewParam">
+            <inheritdoc/>
+        </member>
+        <member name="P:WPF_Core.ViewModels.ViewModelBase._dispatcher">
+            <inheritdoc/>
+        </member>
+        <member name="P:WPF_Core.ViewModels.ViewModelBase.logger">
+            <summary>
+            Main application logger
+            </summary>
+        </member>
+        <member name="E:WPF_Core.ViewModels.ViewModelBase.viewChangedEvent">
+            <inheritdoc/>
+        </member>
+        <member name="P:WPF_Core.ViewModels.ViewModelBase.ViewName">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.ViewModels.ViewModelBase.#ctor(System.String,System.String,System.Object)">
+            <summary>
+            Creates a new instance of the class
+            </summary>
+            <param name="viewName">Name of the view</param>
+            <param name="parentView">Parent view</param>
+            <param name="param">View parameters</param>
+        </member>
+        <member name="M:WPF_Core.ViewModels.ViewModelBase.Finalize">
+            <summary>
+            View Finalizer
+            </summary>
+        </member>
+        <member name="M:WPF_Core.ViewModels.ViewModelBase.OnInitialized">
+            <summary>
+            Method called by constructor to initialize all view data
+            </summary>
+        </member>
+        <member name="M:WPF_Core.ViewModels.ViewModelBase.InitCommands">
+            <summary>
+            Method called by OnInitialized to initialize all commands
+            </summary>
+        </member>
+        <member name="M:WPF_Core.ViewModels.ViewModelBase.SetCommandExecutionStatus">
+            <summary>
+            Method that sets all commands execution status
+            </summary>
+        </member>
+        <member name="M:WPF_Core.ViewModels.ViewModelBase.ChangeView(System.String,System.Object)">
+            <summary>
+            Method that triggers the <event cref="E:WPF_Core.ViewModels.ViewModelBase.viewChangedEvent"/> in order to change view in the application
+            </summary>
+            <param name="viewToCall">View to call</param>
+            <param name="viewParam">Parameters to pass the current view</param>
+        </member>
+        <member name="M:WPF_Core.ViewModels.ViewModelBase.GetViewParameter">
+            <summary>
+            Reads the view parameters
+            </summary>
+        </member>
+        <member name="M:WPF_Core.ViewModels.ViewModelBase.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.ViewModels.ViewModelBase.Dispose(System.Boolean)">
+            <summary>
+            Dispose resources
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="M:WPF_Core.ViewModels.ViewModelBase.ReleaseResources">
+            <summary>
+            Dispose all user defined resources
+            </summary>
+        </member>
+        <member name="M:WPF_Core.ViewModels.ViewModelBase.InitViewModel">
+            <inheritdoc/>
+        </member>
+        <member name="T:WPF_Core.Views.PopUp">
+            <summary>
+            PopUp shell wrapper
+            </summary>
+            <summary>
+            PopUp
+            </summary>
+        </member>
+        <member name="M:WPF_Core.Views.PopUp.#ctor(System.String,System.Object)">
+            <summary>
+            Creates a new instance of the class
+            </summary>
+            <param name="ViewName">Name of the view to visualize in the popup</param>
+            <param name="param">Popup parameters</param>
+        </member>
+        <member name="M:WPF_Core.Views.PopUp.Show">
+            <summary>
+            Shows the popup as Dialog
+            </summary>
+            <returns>Returns data returned by the popup</returns>
+        </member>
+        <member name="M:WPF_Core.Views.PopUp.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:WPF_Core.WpfApp">
+            <summary>
+            Implementation of custom Application
+            </summary>
+        </member>
+        <member name="P:WPF_Core.WpfApp.Container">
+            <summary>
+            Unity container where application dependencies are defined
+            </summary>
+        </member>
+        <member name="P:WPF_Core.WpfApp.LoggersConfig">
+            <summary>
+            Logger configuration text
+            </summary>
+        </member>
+        <member name="P:WPF_Core.WpfApp.SplashScreen">
+            <summary>
+            Application splash screen
+            </summary>
+        </member>
+        <member name="P:WPF_Core.WpfApp.CommonStyles">
+            <summary>
+            Application main common styles resource dictionary path (RelativeOrAbsolute)
+            </summary>
+        </member>
+        <member name="P:WPF_Core.WpfApp.MainViewName">
+            <summary>
+            Name of the main view used as display
+            </summary>
+        </member>
+        <member name="P:WPF_Core.WpfApp.windowState">
+            <summary>
+            Defines the state of the application windows
+            </summary>
+        </member>
+        <member name="P:WPF_Core.WpfApp.windowStyle">
+            <summary>
+            Defines the style of the application windows
+            </summary>
+        </member>
+        <member name="P:WPF_Core.WpfApp.MustBeUniqueProcess">
+            <summary>
+            If true is not possible to open more than one application at the same time
+            </summary>
+        </member>
+        <member name="M:WPF_Core.WpfApp.#ctor">
+            <summary>
+            Initialize a new instance of the class
+            </summary>
+        </member>
+        <member name="M:WPF_Core.WpfApp.#ctor(System.String)">
+            <summary>
+            Initialize a new instance of the class
+            </summary>
+            <param name="mainViewName">Main view name</param>
+        </member>
+        <member name="M:WPF_Core.WpfApp.OnStartup(System.Windows.StartupEventArgs)">
+            <summary>
+            Performs basinc initialization operations
+            Init all application dependencies
+            Init loggers from configuration
+            Check if there is already another application running <property cref="P:WPF_Core.WpfApp.MustBeUniqueProcess"/> is true
+            Sets the application common styles
+            Initializes and navigates to the MainView
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:WPF_Core.WpfApp.OnExit(System.Windows.ExitEventArgs)">
+            <summary>
+            Performs basic operations before exit the application
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
+            <summary>
+            GeneratedInternalTypeHelper
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
+            <summary>
+            CreateInstance
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            GetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            SetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
+            <summary>
+            CreateDelegate
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
+            <summary>
+            AddEventHandler
+            </summary>
+        </member>
+    </members>
+</doc>

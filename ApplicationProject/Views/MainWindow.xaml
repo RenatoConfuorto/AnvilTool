@@ -1,0 +1,36 @@
+﻿<Window x:Class="AnvilTool.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:UserControls="clr-namespace:LIB.UserControls;assembly=LIB_Library"
+        xmlns:MarkupExtensions="clr-namespace:WPF_Core.MarkupExtensions;assembly=WPF_Core"
+        xmlns:local="clr-namespace:AnvilTool"
+        mc:Ignorable="d"
+        Title="Anvil tool" Width="{x:Static SystemParameters.PrimaryScreenWidth}"  
+            Height="{x:Static SystemParameters.PrimaryScreenHeight}">
+    <Border BorderBrush="Transparent"
+            BorderThickness="30 15 30 0"
+            Margin="0">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--HEADER-->
+            <GroupBox Grid.Row="0" 
+                      BorderThickness="1" 
+                      BorderBrush="{StaticResource BorderColor}"
+                      MaxHeight="100">
+                
+            </GroupBox>
+            
+            <!--PAGE CONTENT-->
+            <ContentPresenter Grid.Row="1" Content="{Binding Navigation.CurrentView}"/>
+        </Grid>
+    </Border>
+</Window>
