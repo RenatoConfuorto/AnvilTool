@@ -24,10 +24,12 @@
         <Image Grid.Column="0"
                Margin="4 0"
                Stretch="Uniform"
+               VerticalAlignment="Center"
                Width="{StaticResource treeIconDim}"
                Source="{Binding Source={x:Static properties:Resources.pieceBg}, Converter={StaticResource ImageConverter}}"/>
 
         <TextBlock Grid.Column="1"
+                   VerticalAlignment="Center"
                    FontSize="{StaticResource treeLblFontSize}"
                    Text="{Binding Material.Name, ElementName=uCtrl}"
                    d:Text="Material 1"/>

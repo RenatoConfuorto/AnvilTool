@@ -6,6 +6,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AnvilTool.UserControls"
              xmlns:properties="clr-namespace:AnvilTool.Properties" 
+             Padding="4 1"
              mc:Ignorable="d"
              d:Background="White">
     <UserControl.Resources>
@@ -24,39 +25,32 @@
 
         <Image Grid.Column="0"
                Stretch="Uniform"
+               VerticalAlignment="Center"
                Width="{StaticResource treeIconDim}"
                Source="{Binding Source={x:Static properties:Resources.hammerBg}, Converter={StaticResource ImageConverter}}"/>
 
         <Grid Grid.Column="1">
-            
-        <TextBlock Grid.Column="1"
+
+            <TextBlock Grid.Column="1"
                    Margin="20 0"
                    FontSize="{StaticResource treeLblFontSize}"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Stretch"
                    d:Text="Prodotto">
-            <TextBlock.Text>
-                <MultiBinding StringFormat="{}{0} - {1}">
-                    <Binding Path="Product.Name" ElementName="uCtrl"/>
-                    <Binding Path="Product.Target" ElementName="uCtrl"/>
-                </MultiBinding>
-            </TextBlock.Text>
-        </TextBlock>
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="{}{0} - {1}">
+                        <Binding Path="Product.Name" ElementName="uCtrl"/>
+                        <Binding Path="Product.Target" ElementName="uCtrl"/>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
         </Grid>
 
-        <ItemsControl ItemsSource="{Binding Product.FinalSeq, ElementName=uCtrl}"
-                      Grid.Column="2">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <!--<StackPanel Orientation="Horizontal"/>-->
-                    <WrapPanel FlowDirection="LeftToRight"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <local:ActionMove Move="{Binding .}"/>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        <local:FinalSequence FinalSeq="{Binding Product.FinalSeq, ElementName=uCtrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Margin="0 8"
+                            Grid.Row="0"
+                            Grid.Column="2"
+                             VerticalAlignment="Center"
+                            HorizontalAlignment="Center"/>
     </Grid>
 </UserControl>

@@ -33,7 +33,7 @@
     <sys:Double x:Key="barHeight">20</sys:Double>
     <sys:Double x:Key="barWidth">400</sys:Double>
     <sys:Double x:Key="sliderHeight">16</sys:Double>
-    <sys:Double x:Key="treeIconDim">12</sys:Double>
+    <sys:Double x:Key="treeIconDim">20</sys:Double>
     <sys:Double x:Key="treeLblFontSize">16</sys:Double>
     <!--#endregion-->
 

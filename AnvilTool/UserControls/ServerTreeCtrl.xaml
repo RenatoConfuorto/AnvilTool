@@ -24,11 +24,13 @@
         <Image Grid.Column="0"
                Stretch="Uniform"
                Margin="4 0"
+               VerticalAlignment="Center"
                Width="{StaticResource treeIconDim}"
                Source="{Binding Source={x:Static properties:Resources.fluxBg}, Converter={StaticResource ImageConverter}}"/>
         
         <TextBlock Grid.Column="1"
                    FontWeight="Bold"
+                   VerticalAlignment="Center"
                    FontSize="{StaticResource treeLblFontSize}"
                    Text="{Binding Server.Name, ElementName=uCtrl}"
                    d:Text="Server 1"/>
