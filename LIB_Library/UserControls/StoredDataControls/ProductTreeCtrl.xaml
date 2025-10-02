@@ -12,7 +12,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/LIB;component/ResourceDictionary/CommonStyles.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/LIB_Library;component/ResourceDictionary/CommonStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
