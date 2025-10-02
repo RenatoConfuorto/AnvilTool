@@ -8,11 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace LIB.Properties
-{
+namespace LIB.Properties {
     using System;
-
-
+    
+    
     /// <summary>
     ///   Classe di risorse fortemente tipizzata per la ricerca di stringhe localizzate e così via.
     /// </summary>
@@ -23,287 +22,239 @@ namespace LIB.Properties
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Resources
-    {
-
+    public class Resources {
+        
         private static global::System.Resources.ResourceManager resourceMan;
-
+        
         private static global::System.Globalization.CultureInfo resourceCulture;
-
+        
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources()
-        {
+        internal Resources() {
         }
-
+        
         /// <summary>
         ///   Restituisce l'istanza di ResourceManager nella cache utilizzata da questa classe.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager
-        {
-            get
-            {
-                if (object.ReferenceEquals(resourceMan, null))
-                {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AnvilTool.Properties.Resources", typeof(Resources).Assembly);
+        public static global::System.Resources.ResourceManager ResourceManager {
+            get {
+                if (object.ReferenceEquals(resourceMan, null)) {
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("LIB.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
             }
         }
-
+        
         /// <summary>
         ///   Esegue l'override della proprietà CurrentUICulture del thread corrente per tutte le
         ///   ricerche di risorse eseguite utilizzando questa classe di risorse fortemente tipizzata.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture
-        {
-            get
-            {
+        public static global::System.Globalization.CultureInfo Culture {
+            get {
                 return resourceCulture;
             }
-            set
-            {
+            set {
                 resourceCulture = value;
             }
         }
-
+        
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap actionButtonGreen
-        {
-            get
-            {
+        public static System.Drawing.Bitmap actionButtonGreen {
+            get {
                 object obj = ResourceManager.GetObject("actionButtonGreen", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap actionButtonRed
-        {
-            get
-            {
+        public static System.Drawing.Bitmap actionButtonRed {
+            get {
                 object obj = ResourceManager.GetObject("actionButtonRed", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap bar
-        {
-            get
-            {
+        public static System.Drawing.Bitmap bar {
+            get {
                 object obj = ResourceManager.GetObject("bar", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap bend
-        {
-            get
-            {
+        public static System.Drawing.Bitmap bend {
+            get {
                 object obj = ResourceManager.GetObject("bend", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap draw
-        {
-            get
-            {
+        public static System.Drawing.Bitmap draw {
+            get {
                 object obj = ResourceManager.GetObject("draw", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap fluxBg
-        {
-            get
-            {
+        public static System.Drawing.Bitmap fluxBg {
+            get {
                 object obj = ResourceManager.GetObject("fluxBg", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap hammerBg
-        {
-            get
-            {
+        public static System.Drawing.Bitmap hammerBg {
+            get {
                 object obj = ResourceManager.GetObject("hammerBg", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap hardHit
-        {
-            get
-            {
+        public static System.Drawing.Bitmap hardHit {
+            get {
                 object obj = ResourceManager.GetObject("hardHit", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap lightHit
-        {
-            get
-            {
+        public static System.Drawing.Bitmap lightHit {
+            get {
                 object obj = ResourceManager.GetObject("lightHit", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap mediumHit
-        {
-            get
-            {
+        public static System.Drawing.Bitmap mediumHit {
+            get {
                 object obj = ResourceManager.GetObject("mediumHit", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap performedStepOutline
-        {
-            get
-            {
+        public static System.Drawing.Bitmap performedStepOutline {
+            get {
                 object obj = ResourceManager.GetObject("performedStepOutline", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap pieceBg
-        {
-            get
-            {
+        public static System.Drawing.Bitmap pieceBg {
+            get {
                 object obj = ResourceManager.GetObject("pieceBg", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap planButton
-        {
-            get
-            {
+        public static System.Drawing.Bitmap planButton {
+            get {
                 object obj = ResourceManager.GetObject("planButton", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap punch
-        {
-            get
-            {
+        public static System.Drawing.Bitmap punch {
+            get {
                 object obj = ResourceManager.GetObject("punch", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap shrink
-        {
-            get
-            {
+        public static System.Drawing.Bitmap shrink {
+            get {
                 object obj = ResourceManager.GetObject("shrink", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap slider
-        {
-            get
-            {
+        public static System.Drawing.Bitmap slider {
+            get {
                 object obj = ResourceManager.GetObject("slider", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap sliderGreen
-        {
-            get
-            {
+        public static System.Drawing.Bitmap sliderGreen {
+            get {
                 object obj = ResourceManager.GetObject("sliderGreen", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap sliderRed
-        {
-            get
-            {
+        public static System.Drawing.Bitmap sliderRed {
+            get {
                 object obj = ResourceManager.GetObject("sliderRed", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap topBar
-        {
-            get
-            {
+        public static System.Drawing.Bitmap topBar {
+            get {
                 object obj = ResourceManager.GetObject("topBar", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-
+        
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap upset
-        {
-            get
-            {
+        public static System.Drawing.Bitmap upset {
+            get {
                 object obj = ResourceManager.GetObject("upset", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }

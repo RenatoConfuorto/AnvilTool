@@ -38,6 +38,7 @@ namespace AnvilTool
 
                 app.ResizeMode = ResizeMode.NoResize;
                 app.WindowStyle = WindowStyle.None;
+                app.WindowState = WindowState.Normal;
 
                 app.LoggersConfig = Properties.Settings.Default.Loggers;
 

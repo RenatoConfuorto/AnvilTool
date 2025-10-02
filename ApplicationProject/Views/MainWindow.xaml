@@ -7,6 +7,8 @@
         xmlns:MarkupExtensions="clr-namespace:WPF_Core.MarkupExtensions;assembly=WPF_Core"
         xmlns:local="clr-namespace:AnvilTool"
         mc:Ignorable="d"
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterScreen"
         Title="Anvil tool">
     <Window.Resources>
         <ResourceDictionary>
@@ -17,7 +19,7 @@
     </Window.Resources>
     
     <Border BorderBrush="Transparent"
-            BorderThickness="30 15 30 0"
+            BorderThickness="0"
             Margin="0">
         <Grid>
             <Grid.RowDefinitions>
@@ -31,6 +33,7 @@
             <!--HEADER-->
             <GroupBox Grid.Row="0" 
                       BorderThickness="1" 
+                      Visibility="Collapsed"
                       BorderBrush="{StaticResource BorderColor}"
                       MaxHeight="100">
                 
