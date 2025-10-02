@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="LIB.UserControls.ActionMove"
+             x:Name="uCtrl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LIB.UserControls"
+             xmlns:valueConverters="clr-namespace:LIB.ValueConverters"
+             xmlns:properties="clr-namespace:LIB.Properties"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/LIB;component/ResourceDictionary/CommonStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Image Width="{ StaticResource btnDim }" 
+               Height="{ StaticResource btnDim }" 
+               Source="{Binding Source={x:Static properties:Resources.performedStepOutline }, Converter={StaticResource ImageConverter}}"/>
+        <!--d:Source="{Binding Source={x:Static properties:Resources.actionButtonRed}, Converter={StaticResource ImageConverter}}"/>-->
+        <Image Width="{ StaticResource stepDim }" 
+               Height="{ StaticResource stepDim }" 
+               x:Name="iconImg"
+               Source="{Binding MoveImage, Converter={StaticResource ImageConverter}, ElementName=uCtrl}"
+               d:Source="{Binding Source={x:Static properties:Resources.punch}, Converter={StaticResource ImageConverter}}"/>
+    </Grid>
+</UserControl>

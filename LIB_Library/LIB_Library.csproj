@@ -86,14 +86,36 @@
     <Compile Include="Entities\StoredData\Product.cs" />
     <Compile Include="Entities\StoredData\Server.cs" />
     <Compile Include="Helpers\MessageDialogHelper.cs" />
+    <Compile Include="Interfaces\IComputeShortest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\ActionMove.xaml.cs">
+      <DependentUpon>ActionMove.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\FinalSequence.xaml.cs">
+      <DependentUpon>FinalSequence.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\IconButton.xaml.cs">
       <DependentUpon>IconButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\StoredDataControls\MaterialTreeCtrl.xaml.cs">
+      <DependentUpon>MaterialTreeCtrl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\MoveBar.xaml.cs">
+      <DependentUpon>MoveBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\MoveButtonNew.xaml.cs">
+      <DependentUpon>MoveButtonNew.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\StoredDataControls\ProductTreeCtrl.xaml.cs">
+      <DependentUpon>ProductTreeCtrl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\StoredDataControls\ServerTreeCtrl.xaml.cs">
+      <DependentUpon>ServerTreeCtrl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\MessageBoxViewModel.cs" />
     <Compile Include="Views\MessageBox.xaml.cs">
@@ -117,7 +139,35 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UserControls\ActionMove.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\FinalSequence.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UserControls\IconButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\StoredDataControls\MaterialTreeCtrl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\MoveBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\MoveButtonNew.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\StoredDataControls\ProductTreeCtrl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\StoredDataControls\ServerTreeCtrl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -133,7 +183,6 @@
     <Folder Include="Events\" />
     <Folder Include="Fonts\" />
     <Folder Include="Images\" />
-    <Folder Include="Interfaces\" />
     <Folder Include="MarkupExtensions\" />
     <Folder Include="Navigation\" />
   </ItemGroup>
