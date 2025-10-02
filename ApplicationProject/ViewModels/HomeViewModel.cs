@@ -1,4 +1,5 @@
-﻿using AnvilTool.Views;
+﻿using AnvilTool.Compute;
+using AnvilTool.Views;
 
 using LIB.Constants;
 using LIB.Entities;
@@ -104,7 +105,7 @@ namespace AnvilTool.ViewModels
             : base(ViewNames.Home) 
         {
             //computeShortest = new BfsComputeShortes();
-            //computeShortest = new DirectStepCalcComputeShortest();
+            computeShortest = new DirectStepCalcComputeShortest();
             FinalSequence = new ObservableCollection<Move>(); // stored in input order, left is last
 
             PressMoveCmd = new RelayCommand(PressMove, CanPressMove);

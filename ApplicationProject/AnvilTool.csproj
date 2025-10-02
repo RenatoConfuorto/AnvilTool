@@ -95,6 +95,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compute\Base\ComputeShortesBase.cs" />
+    <Compile Include="Compute\BfsComputeShortes.cs" />
+    <Compile Include="Compute\DirectStepCalcComputeShortest.cs" />
     <Compile Include="ViewModels\RecepiesPopupViewModel.cs" />
     <Compile Include="Views\RecipesPopup.xaml.cs">
       <DependentUpon>RecipesPopup.xaml</DependentUpon>
