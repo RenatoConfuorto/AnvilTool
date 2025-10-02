@@ -86,7 +86,6 @@
     <Compile Include="Entities\StoredData\Product.cs" />
     <Compile Include="Entities\StoredData\Server.cs" />
     <Compile Include="Helpers\MessageDialogHelper.cs" />
-    <Compile Include="Navigation\NavigationServiceBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resource.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -136,12 +135,18 @@
     <Folder Include="Images\" />
     <Folder Include="Interfaces\" />
     <Folder Include="MarkupExtensions\" />
+    <Folder Include="Navigation\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="DbEngine\TablesScript.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

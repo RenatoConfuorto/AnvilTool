@@ -13,7 +13,6 @@ namespace LIB
     {
         public override void InjectDependencies()
         {
-            AddDependency<INavigationService, NavigationServiceBase>();
         }
     }
 }
