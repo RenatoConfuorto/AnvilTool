@@ -79,6 +79,10 @@ namespace LIB.Constants
         {
             get => "Images";
         }
+        public static string ApplicationCreateTableScript
+        {
+            get => "pack://application:,,,/LIB_Library;component/DbEngine/TablesScript.sql";
+        }
         /// <summary>
         /// Full Path of the application data folder
         /// </summary>

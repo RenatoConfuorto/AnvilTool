@@ -1,5 +1,8 @@
 ﻿using LIB.Constants;
 using LIB.Helpers;
+
+using SQLiteEngine.Helpers;
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -40,11 +43,18 @@ namespace AnvilTool
 
                 app.MainViewName = ViewNames.MainWindow;
 
+                SQLiteHelper.InitializeProxy(Cnst.ApplicationFolderDataPath, Cnst.ApplicationDataFilePath, Cnst.ApplicationCreateTableScript);
+                app.Exit += OnExit;
                 app.Run();
             }catch (Exception ex)
             {
                 MessageDialogHelper.ShowInfoMessage(ex.Message);
             }
+        }
+
+        private static void OnExit(object sender, ExitEventArgs e)
+        {
+            SQLiteHelper.CloseConnection();
         }
     }
 }
