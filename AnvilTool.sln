@@ -9,6 +9,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LIB_Library", "LIB_Library\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnvilTool", "ApplicationProject\AnvilTool.csproj", "{19CC989B-8998-4742-916A-99A85E6D7D4D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assemblies", "Assemblies", "{6C83A596-D32D-B35F-00DD-F0C99B673980}"
+	ProjectSection(SolutionItems) = preProject
+		Assemblies\SQLiteEngine.dll = Assemblies\SQLiteEngine.dll
+		Assemblies\WPF_Core.dll = Assemblies\WPF_Core.dll
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
