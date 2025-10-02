@@ -33,7 +33,8 @@ namespace AnvilTool
 
                 //app.MustBeUniqueProcess = false;
 
-                app.windowStyle = WindowStyle.None;
+                app.ResizeMode = ResizeMode.NoResize;
+                app.WindowStyle = WindowStyle.None;
 
                 app.LoggersConfig = Properties.Settings.Default.Loggers;
 

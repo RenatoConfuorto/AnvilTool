@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace LIB.Interfaces
 {
-    internal interface IComputeShortest
+    public interface IComputeShortest
     {
         List<Move> Compute(int startingPos, int targetPos, List<Move> lastMoves);
     }

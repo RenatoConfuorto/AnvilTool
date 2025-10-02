@@ -25,4 +25,5 @@
     <SolidColorBrush x:Key="SliderRedBrush" Color="{StaticResource sliderRed}"/>
     <SolidColorBrush x:Key="SliderGreenBrush" Color="{StaticResource sliderGreen}"/>
     <SolidColorBrush x:Key="SliderBackBrush" Color="{StaticResource sliderBack}"/>
+    <SolidColorBrush x:Key="BorderColor" Color="Transparent"/>
 </ResourceDictionary>

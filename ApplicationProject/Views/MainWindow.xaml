@@ -7,8 +7,15 @@
         xmlns:MarkupExtensions="clr-namespace:WPF_Core.MarkupExtensions;assembly=WPF_Core"
         xmlns:local="clr-namespace:AnvilTool"
         mc:Ignorable="d"
-        Title="Anvil tool" Width="{x:Static SystemParameters.PrimaryScreenWidth}"  
-            Height="{x:Static SystemParameters.PrimaryScreenHeight}">
+        Title="Anvil tool">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/LIB_Library;component/ResourceDictionary/CommonStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    
     <Border BorderBrush="Transparent"
             BorderThickness="30 15 30 0"
             Margin="0">
