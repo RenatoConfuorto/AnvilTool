@@ -57,7 +57,7 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <usercontrols:MoveButtonNew Move="{Binding .}"
-                                     MoveClickCommand="{Binding DataContext.PressMoveCmd, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                                     MoveClickCommand="{Binding DataContext.PressMoveCmd, RelativeSource={RelativeSource AncestorType=ItemsControl}}"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
