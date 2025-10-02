@@ -1,31 +1,27 @@
-﻿<Window x:Class="AnvilTool.Views.RecipesPopup"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:AnvilTool.Views"
-        xmlns:properties="clr-namespace:AnvilTool.Properties"
-        mc:Ignorable="d"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        xmlns:Helpers="clr-namespace:AnvilTool.Helpers"
-        xmlns:Entities="clr-namespace:AnvilTool.Entities"
-        xmlns:StoredData="clr-namespace:AnvilTool.Entities.StoredData" 
-        xmlns:usercontrols="clr-namespace:AnvilTool.UserControls"
-        Title="RecipesPopup" Height="450" Width="600">
-    <Window.Resources>
+﻿<UserControl x:Class="AnvilTool.Views.RecipesPopup"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AnvilTool.Views"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:StoredData="clr-namespace:LIB.Entities.StoredData;assembly=LIB_Library" xmlns:storeddatacontrols="clr-namespace:LIB.UserControls.StoredDataControls;assembly=LIB_Library"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/AnvilTool;component/ResourceDictionary/CommonStyles.xaml"/>
+                <ResourceDictionary Source="/AnvilTool;component/ResourceDictionary/CommonStyles.xaml"/>
+                <!--<ResourceDictionary Source="/ResourceDictionary/CommonStyles.xaml"/>-->
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-    </Window.Resources>
-
+    </UserControl.Resources>
 
     <Border>
         <Border.Background>
             <ImageBrush ImageSource="{StaticResource inventoryDrawingImage}" Stretch="Fill"/>
-        </Border.Background>    
-    
+        </Border.Background>
+
         <Grid Margin="20">
             <Grid.Resources>
                 <Style TargetType="{x:Type Button}">
@@ -49,28 +45,28 @@
 
             <StackPanel Grid.Row="0">
                 <StackPanel Orientation="Horizontal"
-                            Visibility="{Binding SelectButtonVisibility}">
+                        Visibility="{Binding SelectButtonVisibility}">
                     <Button Content="Select"
-                            Command="{Binding SelectCmd}"/>
+                        Command="{Binding SelectCmd}"/>
                 </StackPanel>
-            
+
                 <StackPanel Orientation="Horizontal">
                     <Button Content="Delete Server"
-                            Command="{Binding DeleteServerCmd}"/>
+                        Command="{Binding DeleteServerCmd}"/>
                     <Button Content="Delete Material"
-                            Command="{Binding DeleteMaterialCmd}"/>
+                        Command="{Binding DeleteMaterialCmd}"/>
                     <Button Content="Delete Product"
-                            Command="{Binding DeleteProductCmd}"/>
+                        Command="{Binding DeleteProductCmd}"/>
                 </StackPanel>
-            
+
                 <StackPanel Orientation="Horizontal"
-                            Visibility="{Binding SaveButtonVisibility}">
+                        Visibility="{Binding SaveButtonVisibility}">
                     <Button Content="Add Server"
-                            Command="{Binding AddServerCmd}"/>
+                        Command="{Binding AddServerCmd}"/>
                     <Button Content="Add Material"
-                            Command="{Binding AddMaterialCmd}"/>
+                        Command="{Binding AddMaterialCmd}"/>
                     <Button Content="Add Product"
-                            Command="{Binding AddProductCmd}"/>
+                        Command="{Binding AddProductCmd}"/>
                 </StackPanel>
 
                 <StackPanel Visibility="{Binding SaveButtonVisibility}">
@@ -87,55 +83,56 @@
                         <TextBox Text="{Binding NewProductName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
                 </StackPanel>
-            
+
             </StackPanel>
-        
+
             <TreeView ItemsSource="{Binding Servers}" 
-                      Background="Transparent"
-                      x:Name="treeView"
-                      Grid.Row="1">
+                  Background="Transparent"
+                  x:Name="treeView"
+                  Grid.Row="1">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectedItemChanged">
                         <i:InvokeCommandAction Command="{Binding SelectedItemCommand}"
-                                           CommandParameter="{Binding SelectedItem, ElementName=treeView}"/>
+                                       CommandParameter="{Binding SelectedItem, ElementName=treeView}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
                 <TreeView.Resources>
                     <HierarchicalDataTemplate DataType="{x:Type StoredData:Server}" ItemsSource="{Binding Materials}">
                         <!--<StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
-                        </StackPanel>-->
-                        <usercontrols:ServerTreeCtrl Server="{Binding .}"/>
+                        <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
+                    </StackPanel>-->
+                        <storeddatacontrols:ServerTreeCtrl Server="{Binding .}"/>
                     </HierarchicalDataTemplate>
                     <HierarchicalDataTemplate DataType="{x:Type StoredData:Material}" ItemsSource="{Binding Products}">
                         <!--<StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Name}"/>
-                        </StackPanel>-->
-                        <usercontrols:MaterialTreeCtrl Material="{Binding .}"/>
+                        <TextBlock Text="{Binding Name}"/>
+                    </StackPanel>-->
+                        <storeddatacontrols:MaterialTreeCtrl Material="{Binding .}"/>
                     </HierarchicalDataTemplate>
                     <HierarchicalDataTemplate DataType="{x:Type StoredData:Product}" >
                         <!--<StackPanel Orientation="Horizontal">
-                            <TextBlock>
-                                <Run Text="{Binding Name}"/>
-                                <Run Text="  -  Target: "/>
-                                <Run Text="{Binding Target}"/>
-                            </TextBlock>
-                        </StackPanel>-->
-                        <usercontrols:ProductTreeCtrl Product="{Binding .}"/>
+                        <TextBlock>
+                            <Run Text="{Binding Name}"/>
+                            <Run Text="  -  Target: "/>
+                            <Run Text="{Binding Target}"/>
+                        </TextBlock>
+                    </StackPanel>-->
+                        <storeddatacontrols:ProductTreeCtrl Product="{Binding .}"/>
                     </HierarchicalDataTemplate>
                     <!--<DataTemplate DataType="{x:Type Entities:Move}">
-                        <StackPanel HorizontalAlignment="Left">
-                            <usercontrols:MoveButton Move="{Binding .}" 
-                                                     IsEnabled="True" 
-                                                     HorizontalAlignment="Left">
-                                <usercontrols:MoveButton.ToolTip>
-                                    <TextBlock Text="{Binding .}"/>
-                                </usercontrols:MoveButton.ToolTip>
-                            </usercontrols:MoveButton>
-                        </StackPanel>
-                    </DataTemplate>-->
+                    <StackPanel HorizontalAlignment="Left">
+                        <usercontrols:MoveButton Move="{Binding .}" 
+                                                 IsEnabled="True" 
+                                                 HorizontalAlignment="Left">
+                            <usercontrols:MoveButton.ToolTip>
+                                <TextBlock Text="{Binding .}"/>
+                            </usercontrols:MoveButton.ToolTip>
+                        </usercontrols:MoveButton>
+                    </StackPanel>
+                </DataTemplate>-->
                 </TreeView.Resources>
             </TreeView>
         </Grid>
     </Border>
-</Window>
+    
+</UserControl>

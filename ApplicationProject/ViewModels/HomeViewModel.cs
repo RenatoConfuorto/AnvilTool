@@ -19,6 +19,7 @@ using WPF_Core.Attributes;
 using WPF_Core.Commands;
 using WPF_Core.Interfaces.Navigation;
 using WPF_Core.ViewModels;
+using WPF_Core.Views;
 
 namespace AnvilTool.ViewModels
 {
@@ -290,13 +291,26 @@ namespace AnvilTool.ViewModels
         #region Save
         private void SaveRecipe(object param)
         {
-            RecipesPopup p = new RecipesPopup(Cnst.RecipesMode.SaveRecipe);
+            //RecipesPopup p = new RecipesPopup(Cnst.RecipesMode.SaveRecipe);
             Product prod = new Product()
             {
                 Target = ActualTarget,
                 FinalSeq = FinalSequence
             };
-            p.OpenSave(prod);
+            //p.OpenSave(prod);
+
+
+            Dictionary<string, object> popParam = new Dictionary<string, object>()
+            {
+                {"Operation", Cnst.RecipesMode.SaveRecipe },
+                {"Product", prod },
+            };
+            PopUp p = new PopUp(ViewNames.RecipePopup, popParam);
+            if (!p.IsInitialized)
+                return;
+
+            object popResult = p.Show();
+            // TO CHECK;
         }
         private bool CanSaveRecipe(object param) => true;
         #endregion
@@ -304,8 +318,30 @@ namespace AnvilTool.ViewModels
         #region Load Recipe
         private void LoadRecipe(object param)
         {
-            RecipesPopup p = new RecipesPopup(Cnst.RecipesMode.SelectRecipe);
-            object r = p.Open();
+            //RecipesPopup p = new RecipesPopup(Cnst.RecipesMode.SelectRecipe);
+            //object r = p.Open();
+
+            Dictionary<string, object> popParam = new Dictionary<string, object>()
+            {
+                {"Operation", Cnst.RecipesMode.SelectRecipe},
+            };
+
+            PopUp p = new PopUp(ViewNames.RecipePopup, popParam);
+            if(!p.IsInitialized)
+                return;
+
+            object popResult = p.Show();
+
+            Product r = null;
+            if(popResult != null && popResult is Dictionary<string, object> par)
+            {
+                if (par.TryGetValue("Product", out object temp) && temp is Product prod)
+                {
+                    r = prod;
+                }
+                else return;
+            }
+
             if (r is Product recipe)
             {
                 // Apply recipe

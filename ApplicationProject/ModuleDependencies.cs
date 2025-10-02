@@ -19,6 +19,7 @@ namespace AnvilTool
         {
             AddDependency<IViewModelBase, MainWindowViewModel>(ViewNames.MainWindow);
             AddDependency<IViewModelBase, HomeViewModel>(ViewNames.Home);
+            AddDependency<IPopupViewModelBase, RecepiesPopupViewModel>(ViewNames.RecipePopup);
         }
     }
 }

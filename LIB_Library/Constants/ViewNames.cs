@@ -22,5 +22,7 @@ namespace LIB.Constants
         /// </summary>
         public static string Home = "Home";
 
+        public static string RecipePopup = "RecipePopup";
+
     }
 }

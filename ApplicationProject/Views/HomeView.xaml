@@ -12,8 +12,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <!--<ResourceDictionary Source="/LIB_Library;component/ResourceDictionary/CommonStyles.xaml"/>-->
-                <ResourceDictionary Source="/ResourceDictionary/CommonStyles.xaml"/>
+                <ResourceDictionary Source="/AnvilTool;component/ResourceDictionary/CommonStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
