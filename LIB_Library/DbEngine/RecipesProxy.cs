@@ -1,4 +1,8 @@
-﻿using SQLiteEngine.Helpers;
+﻿using LIB.Constants;
+using LIB.Entities;
+using LIB.Entities.StoredData;
+
+using SQLiteEngine.Helpers;
 using SQLiteEngine.Proxy;
 
 using System;
@@ -106,7 +110,7 @@ namespace LIB.DbEngine
 
         private Move GetMove(int delta)
         {
-            return Consts.Moves.FirstOrDefault(m => m.Delta == delta);
+            return Cnst.Moves.FirstOrDefault(m => m.Delta == delta);
         }
         #endregion
 

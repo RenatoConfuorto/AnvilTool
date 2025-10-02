@@ -44,6 +44,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
@@ -79,9 +80,19 @@
     <Compile Include="Constants\Cnst.cs" />
     <Compile Include="Constants\ViewNames.cs" />
     <Compile Include="DbEngine\RecipesProxy.cs" />
+    <Compile Include="Entities\Base\EntityBase.cs" />
+    <Compile Include="Entities\Move.cs" />
+    <Compile Include="Entities\StoredData\Material.cs" />
+    <Compile Include="Entities\StoredData\Product.cs" />
+    <Compile Include="Entities\StoredData\Server.cs" />
     <Compile Include="Helpers\MessageDialogHelper.cs" />
     <Compile Include="Navigation\NavigationServiceBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\IconButton.xaml.cs">
       <DependentUpon>IconButton.xaml</DependentUpon>
     </Compile>
@@ -120,12 +131,17 @@
     <Folder Include="Attributes\" />
     <Folder Include="Base\" />
     <Folder Include="Dependency\" />
-    <Folder Include="Entities\" />
     <Folder Include="Events\" />
     <Folder Include="Fonts\" />
     <Folder Include="Images\" />
     <Folder Include="Interfaces\" />
     <Folder Include="MarkupExtensions\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
