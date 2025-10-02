@@ -117,6 +117,7 @@
     <Compile Include="UserControls\StoredDataControls\ServerTreeCtrl.xaml.cs">
       <DependentUpon>ServerTreeCtrl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ValueConverters\BitmapToBitmapImageConverter.cs" />
     <Compile Include="ViewModels\MessageBoxViewModel.cs" />
     <Compile Include="Views\MessageBox.xaml.cs">
       <DependentUpon>MessageBox.xaml</DependentUpon>

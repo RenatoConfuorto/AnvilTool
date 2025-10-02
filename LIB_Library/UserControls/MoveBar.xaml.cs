@@ -39,7 +39,7 @@ namespace LIB.UserControls
             DependencyProperty.Register(nameof(MinPossible)
                 , typeof(int)
                 , typeof(MoveBar)
-                , new PropertyMetadata(Consts.MIN_POS, new PropertyChangedCallback(OnPositionsChanged)));
+                , new PropertyMetadata(Cnst.MIN_POS, new PropertyChangedCallback(OnPositionsChanged)));
         #endregion
 
         #region MaxPossible
@@ -53,7 +53,7 @@ namespace LIB.UserControls
             DependencyProperty.Register(nameof(MaxPossible)
                 , typeof(int)
                 , typeof(MoveBar)
-                , new PropertyMetadata(Consts.MAX_POS, new PropertyChangedCallback(OnPositionsChanged)));
+                , new PropertyMetadata(Cnst.MAX_POS, new PropertyChangedCallback(OnPositionsChanged)));
         #endregion
 
 
@@ -69,7 +69,7 @@ namespace LIB.UserControls
             DependencyProperty.Register(nameof(CurrentPos)
                 , typeof(int)
                 , typeof(MoveBar)
-                , new PropertyMetadata(Consts.MIN_POS, new PropertyChangedCallback(OnPositionsChanged)));
+                , new PropertyMetadata(Cnst.MIN_POS, new PropertyChangedCallback(OnPositionsChanged)));
         #endregion
 
         private static void OnPositionsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -105,13 +105,13 @@ namespace LIB.UserControls
 
             var total = barLeng - (2*MIN_OFFSET);
 
-            var movRatio = total / Consts.MAX_POS;
+            var movRatio = total / Cnst.MAX_POS;
 
             double left = 0;
             double top = 0;
-            if(pos == Consts.MIN_POS)
+            if(pos == Cnst.MIN_POS)
                 left = MIN_OFFSET;
-            else if(pos == Consts.MAX_POS)
+            else if(pos == Cnst.MAX_POS)
                 left = barLeng - MIN_OFFSET;
             else
             {

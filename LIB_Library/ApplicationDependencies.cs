@@ -1,6 +1,5 @@
 ﻿using WPF_Core.Dependency;
 using WPF_Core.Interfaces.Navigation;
-using LIB.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -13,7 +13,7 @@
     <!--#region Converters -->
     <valueConverters:BitmapToBitmapImageConverter x:Key="ImageConverter"/>
     <!--#endregion-->
-    <FontFamily x:Key="MainFontStyle">/pack://application:,,,/AnvilTool;component/Fonts/#Minecraft</FontFamily>
+    <!--<FontFamily x:Key="MainFontStyle">/pack://application:,,,/AnvilTool;component/Fonts/#Minecraft</FontFamily>-->
 
 
     <!--#region Values Definitions -->
