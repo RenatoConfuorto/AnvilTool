@@ -31,7 +31,6 @@ namespace AnvilTool.ViewModels
         #region Private Fields
         //private SQLiteProxy proxy = SQLiteHelper.Proxy;
         private RecipesProxy proxy = new RecipesProxy();
-        private Product currentProduct = null;
         #endregion
 
         #region Public Properties
@@ -178,7 +177,7 @@ namespace AnvilTool.ViewModels
                 }
                 if(param.TryGetValue("Product", out temp) && temp is Product p)
                 {
-                    currentProduct = p;
+                    ProductToSave = p;
                 }
             }
         }
