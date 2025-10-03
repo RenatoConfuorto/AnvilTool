@@ -143,6 +143,7 @@ namespace AnvilTool.ViewModels
         protected override void OnInitialized()
         {
             base.OnInitialized();
+            Servers = new ObservableCollection<Server>(proxy.GetData());
         }
         protected override void InitCommands()
         {

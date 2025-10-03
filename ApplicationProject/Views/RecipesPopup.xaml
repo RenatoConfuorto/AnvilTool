@@ -7,6 +7,7 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:StoredData="clr-namespace:LIB.Entities.StoredData;assembly=LIB_Library" xmlns:storeddatacontrols="clr-namespace:LIB.UserControls.StoredDataControls;assembly=LIB_Library"
              mc:Ignorable="d" 
+             Height="450" Width="600"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <ResourceDictionary>
