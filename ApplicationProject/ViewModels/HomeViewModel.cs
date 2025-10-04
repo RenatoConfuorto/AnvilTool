@@ -334,17 +334,13 @@ namespace AnvilTool.ViewModels
             object popResult = p.Show();
 
             Product r = null;
-            if(popResult != null && popResult is Dictionary<string, object> par)
+            if(popResult != null && popResult is Product recipe)
             {
-                if (par.TryGetValue("Product", out object temp) && temp is Product prod)
-                {
-                    r = prod;
-                }
-                else return;
-            }
-
-            if (r is Product recipe)
-            {
+                //if (par.TryGetValue("Product", out object temp) && temp is Product prod)
+                //{
+                //    r = prod;
+                //}
+                //else return;
                 // Apply recipe
                 // Reset the application
                 SetInitialConditions();
