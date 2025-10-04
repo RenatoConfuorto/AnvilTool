@@ -4,6 +4,18 @@
         <name>WPF_Core</name>
     </assembly>
     <members>
+        <member name="T:WPF_Core.Attributes.DependencyInjection.HighPriorityAssemblyAttribute">
+            <summary>
+            Defines that the assembly dependent on the WPF_Core framework must have a higher prioriry during the application loading process.
+            When the WPF_Core dependent assemblies are loaded for Dependeny Injection, the ones marked with this attribute are moved at the top of the sequence, in order to inject their dependencies first
+            </summary>
+        </member>
+        <member name="T:WPF_Core.Attributes.DependencyInjection.WpfCoreAttribute">
+            <summary>
+            Defines that the assembly is based on the WPF_Core framework
+            The output assembly is loaded and searched for Dependency Injections at the application startup
+            </summary>
+        </member>
         <member name="T:WPF_Core.Attributes.ViewRef">
             <summary>
             Links the ViewModel with the View
@@ -76,6 +88,12 @@
             </summary>
             <note>The action is performed through the application dispatcher in order to prevent exception with multi-thread applications</note>
         </member>
+        <member name="M:WPF_Core.Commands.RelayCommand.RaiseCanExecuteAll(System.Object)">
+            <summary>
+            Calls the <see cref="M:WPF_Core.Commands.RelayCommand.RaiseCanExecuteChanged"/> method to all the RelayCommand instances in a container
+            </summary>
+            <param name="container"></param>
+        </member>
         <member name="T:WPF_Core.Constants.LoggingCnst">
             <summary>
             Set of constants used for logging
@@ -111,40 +129,54 @@
             Init the module dependencies
             </summary>
         </member>
-        <member name="M:WPF_Core.Dependency.DependencyInjectionBase.AddDependency(System.Type,System.Type)">
+        <member name="M:WPF_Core.Dependency.DependencyInjectionBase.AddDependency(System.Type,System.Type,System.Boolean)">
             <summary>
             Add an anonymous dependency between an interface and a type
             </summary>
             <param name="interfaceType">Type of the interface</param>
             <param name="classType">Type of the class dependent on the interface</param>
+            <param name="_override">If true and there is already a registration, it overrides it</param>
         </member>
-        <member name="M:WPF_Core.Dependency.DependencyInjectionBase.AddDependency``2">
+        <member name="M:WPF_Core.Dependency.DependencyInjectionBase.AddDependency``2(System.Boolean)">
             <summary>
             Add an anonymous dependency between an interface and a type
             </summary>
             <typeparam name="I">The interface</typeparam>
             <typeparam name="C">The Class dependent on the interface</typeparam>
+            <param name="_override">If true and there is already a registration, it overrides it</param>
         </member>
-        <member name="M:WPF_Core.Dependency.DependencyInjectionBase.AddDependency(System.Type,System.Type,System.String)">
+        <member name="M:WPF_Core.Dependency.DependencyInjectionBase.AddDependency(System.Type,System.Type,System.String,System.Boolean)">
             <summary>
             Add a named dependency between an interface and a type 
             </summary>
             <param name="interfaceType">The type of the interface</param>
             <param name="classType">The type of the class dependent n the interface</param>
             <param name="name">The name of the dependency</param>
+            <param name="_override">If true and there is already a registration, it overrides it</param>
         </member>
-        <member name="M:WPF_Core.Dependency.DependencyInjectionBase.AddDependency``2(System.String)">
+        <member name="M:WPF_Core.Dependency.DependencyInjectionBase.AddDependency``2(System.String,System.Boolean)">
             <summary>
             Add a named dependency between an interface and a type 
             </summary>
             <typeparam name="I">The interface</typeparam>
             <typeparam name="C">The Class dependent on the interface</typeparam>
             <param name="name">The name of the dependency</param>
+            <param name="_override">If true and there is already a registration, it overrides it</param>
         </member>
         <member name="M:WPF_Core.Dependency.DependencyInjectionBase.InitDependencies">
             <summary>
             Init all the dependencies defined in all derivied class of <class cref="T:WPF_Core.Dependency.DependencyInjectionBase"/>
             </summary>
+        </member>
+        <member name="M:WPF_Core.Dependency.DependencyInjectionBase.GetApplicationDefinedAssemblies(System.Reflection.Assembly[])">
+            <summary>
+            Filters the list of assemblies found in the application folder taking.
+            Only assemblies that implement the <see cref="T:WPF_Core.Attributes.DependencyInjection.WpfCoreAttribute"/> are taken.
+            The result is ordered to put the current assembly first, the assemblies with the <see cref="T:WPF_Core.Attributes.DependencyInjection.HighPriorityAssemblyAttribute"/> after, then the remaining assemblies
+            The ordering is necessary to allow overriding dependencies defined in this and other libraries
+            </summary>
+            <param name="assemblies">Assemblies from application folder</param>
+            <returns></returns>
         </member>
         <member name="M:WPF_Core.Dependency.DependencyInjectionBase.InitViewTemplates">
             <summary>
@@ -272,6 +304,16 @@
             </summary>
             <param name="viewToCall">The new view name to call</param>
             <param name="viewParam">Parametrs to pass to the new view</param>
+        </member>
+        <member name="P:WPF_Core.Exceptions.Navigation.NavigationViewResolveException.ViewModelType">
+            <summary>
+            View Model tyoe
+            </summary>
+        </member>
+        <member name="P:WPF_Core.Exceptions.Navigation.NavigationViewResolveException.ViewName">
+            <summary>
+            View Name
+            </summary>
         </member>
         <member name="T:WPF_Core.Helpers.AssemblyHelper">
             <summary>
@@ -447,6 +489,22 @@
             <param name="whereCondition">Search condition</param>
             <returns>next int value, 1 if no elements are present in table</returns>
         </member>
+        <member name="M:WPF_Core.Interfaces.DbBrowser.IProxyBase.CheckIntValue(System.String,System.String,System.Int32,System.String)">
+            <summary>
+            Get the next integer value from a given table and column
+            </summary>
+            <param name="TableName">Table name</param>
+            <param name="FieldName">Column name</param>
+            <param name="IntValue">Value to search</param>
+            <param name="whereCondition">Search condition</param>
+            <returns>true if the value is present in column, otherwise false</returns>
+        </member>
+        <member name="M:WPF_Core.Interfaces.DbBrowser.IProxyBase.GetTransaction">
+            <summary>
+            returns a new DB transaction
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:WPF_Core.Interfaces.DbBrowser.IProxyBase.Execute(System.String,WPF_Core.Interfaces.DbBrowser.IParametersBase)">
             <summary>
             Executes a statement with parameters
@@ -599,6 +657,13 @@
             <param name="value">Object to convert</param>
             <returns>Conversion result</returns>
         </member>
+        <member name="M:WPF_Core.Interfaces.DbBrowser.IProxyBase.ConvertToNullableBoolean(System.Object)">
+            <summary>
+            Converts an object into a nullable System.Boolean type
+            </summary>
+            <param name="value">Object to convert</param>
+            <returns>Conversion result</returns>
+        </member>
         <member name="M:WPF_Core.Interfaces.DbBrowser.IProxyBase.ConvertToDateTime(System.Object)">
             <summary>
             Converts an object into a System.DateTime type
@@ -647,6 +712,7 @@
             <summary>
             Base interface for a logger object
             </summary>
+            <remarks>Needs a constructor that accepts a <see cref="T:WPF_Core.Logging.LoggerCtorParam"/> instance</remarks>
         </member>
         <member name="P:WPF_Core.Interfaces.Logging.ILogger.LogLevel">
             <summary>
@@ -747,11 +813,6 @@
         <member name="P:WPF_Core.Interfaces.Navigation.INavigationService.CurrentView">
             <summary>
             Current view model of the view loaded in the application
-            </summary>
-        </member>
-        <member name="P:WPF_Core.Interfaces.Navigation.INavigationService.CurrentControl">
-            <summary>
-            Current view control
             </summary>
         </member>
         <member name="P:WPF_Core.Interfaces.Navigation.INavigationService.ParentViewName">
@@ -962,8 +1023,18 @@
         </member>
         <member name="T:WPF_Core.Logging.LoggerCtorParam">
             <summary>
-            Class containing all parameters for the <class cref="T:WPF_Core.Logging.Logger"/> constructor
+            Class containing all parameters for the <class cref="T:WPF_Core.Interfaces.Logging.ILogger"/> constructor
             </summary>
+        </member>
+        <member name="M:WPF_Core.Logging.LoggerCtorParam.#ctor(WPF_Core.Constants.LoggingCnst.LogLevel,System.String,System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Logger parameters
+            </summary>
+            <param name="logLevel"></param>
+            <param name="logName"></param>
+            <param name="logLocation"></param>
+            <param name="groupByDay"></param>
+            <param name="isSystemLog"></param>
         </member>
         <member name="P:WPF_Core.Logging.LoggerCtorParam.LogLevel">
             <summary>
@@ -1118,6 +1189,13 @@
             </summary>
             <param name="connectionString">Connection string</param>
         </member>
+        <member name="M:WPF_Core.Proxy.ProxyCore.CreateConnection(System.String)">
+            <summary>
+            Creates the connection to Db for the proxy
+            </summary>
+            <param name="connectionString"></param>
+            <returns></returns>
+        </member>
         <member name="M:WPF_Core.Proxy.ProxyCore.OpenConnection">
             <inheritdoc/>
         </member>
@@ -1127,12 +1205,11 @@
         <member name="M:WPF_Core.Proxy.ProxyCore.GetNextIntValue(System.String,System.String,System.String)">
             <inheritdoc/>
         </member>
-        <member name="M:WPF_Core.Proxy.ProxyCore.GetCreateTableIfExistsStatement">
-            <summary>
-            Returns the create statements to initialize the tables if Db is empty 
-            </summary>
-            <returns>Create tables statement</returns>
-            <remarks>This method is mostly used for SQLite Db type</remarks>
+        <member name="M:WPF_Core.Proxy.ProxyCore.CheckIntValue(System.String,System.String,System.Int32,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.Proxy.ProxyCore.GetTransaction">
+            <inheritdoc/>
         </member>
         <member name="M:WPF_Core.Proxy.ProxyCore.Execute(System.String,WPF_Core.Interfaces.DbBrowser.IParametersBase)">
             <inheritdoc/>
@@ -1191,6 +1268,9 @@
         <member name="M:WPF_Core.Proxy.ProxyCore.ConvertToBoolean(System.Object)">
             <inheritdoc/>
         </member>
+        <member name="M:WPF_Core.Proxy.ProxyCore.ConvertToNullableBoolean(System.Object)">
+            <inheritdoc/>
+        </member>
         <member name="M:WPF_Core.Proxy.ProxyCore.ConvertToDateTime(System.Object)">
             <inheritdoc/>
         </member>
@@ -1199,6 +1279,14 @@
         </member>
         <member name="M:WPF_Core.Proxy.ProxyCore.ConvertToBytes(System.Object)">
             <inheritdoc/>
+        </member>
+        <member name="M:WPF_Core.Proxy.ProxyCore.AddQueryParametersValue(System.Data.IDataParameterCollection,WPF_Core.Interfaces.DbBrowser.IParametersBase)">
+            <summary>
+            Define the logics to add the parameters value to the System.Data.IDbCommand parameters collection according to the Db type used
+            </summary>
+            <param name="_commandParameters">Command parameters</param>
+            <param name="_parametersValues">Parameters given by the user</param>
+            <remarks>When the method is called a check for null reference and element present in collection has already been performed for <paramref name="_parametersValues"/> argument</remarks>
         </member>
         <member name="T:WPF_Core.ValueConverters.BoolToVisibilityConverter">
             <summary>
@@ -1370,12 +1458,13 @@
             PopUp
             </summary>
         </member>
-        <member name="M:WPF_Core.Views.PopUp.#ctor(System.String,System.Object)">
+        <member name="M:WPF_Core.Views.PopUp.#ctor(System.String,System.Object,System.Windows.Window)">
             <summary>
             Creates a new instance of the class
             </summary>
             <param name="ViewName">Name of the view to visualize in the popup</param>
             <param name="param">Popup parameters</param>
+            <param name="owner">View owner</param>
         </member>
         <member name="M:WPF_Core.Views.PopUp.Show">
             <summary>
@@ -1418,14 +1507,19 @@
             Name of the main view used as display
             </summary>
         </member>
-        <member name="P:WPF_Core.WpfApp.windowState">
+        <member name="P:WPF_Core.WpfApp.WindowState">
             <summary>
-            Defines the state of the application windows
+            Defines the state of the application window
             </summary>
         </member>
-        <member name="P:WPF_Core.WpfApp.windowStyle">
+        <member name="P:WPF_Core.WpfApp.WindowStyle">
             <summary>
-            Defines the style of the application windows
+            Defines the style of the application window
+            </summary>
+        </member>
+        <member name="P:WPF_Core.WpfApp.ResizeMode">
+            <summary>
+            Defines the style of the application window
             </summary>
         </member>
         <member name="P:WPF_Core.WpfApp.MustBeUniqueProcess">

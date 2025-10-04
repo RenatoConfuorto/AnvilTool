@@ -4,6 +4,8 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
 
+using WPF_Core.Attributes.DependencyInjection;
+
 // Le informazioni generali relative a un assembly sono controllate dal seguente 
 // set di attributi. Modificare i valori di questi attributi per modificare le informazioni
 // associate a un assembly.
@@ -20,7 +22,7 @@ using System.Windows;
 // ai componenti COM. Se è necessario accedere a un tipo in questo assembly da
 // COM, impostare su true l'attributo ComVisible per tale tipo.
 [assembly: ComVisible(false)]
-
+[assembly: WpfCore]
 //Per iniziare a creare applicazioni localizzabili, impostare
 //<UICulture>CultureYouAreCodingWith</UICulture> nel file .csproj
 //all'interno di un <PropertyGroup>.  Ad esempio, se si utilizza l'inglese (Stati Uniti)
